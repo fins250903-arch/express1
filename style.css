@@ -209,12 +209,17 @@ img {
    STEP 1: ファーストビュー (FV)
    ============================================================ */
 .fv-section {
-    background: linear-gradient(135deg, #0d1b2a 0%, #1b3a5c 50%, #0d1b2a 100%);
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(27, 58, 92, 0.8)), url('images/lp_fv_mechanic_1772510003552.png') no-repeat center center;
+    background-size: cover;
     color: #fff;
-    padding: 45px 15px 50px;
+    padding: 80px 15px 120px;
     text-align: center;
     position: relative;
     overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .fv-section::before {
@@ -297,14 +302,7 @@ img {
     animation: float 3s ease-in-out infinite;
 }
 
-.fv-image {
-    width: 100%;
-    max-width: 550px;
-    margin: 0 auto 30px;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    border: 3px solid rgba(255, 215, 0, 0.5);
-}
+/* fv-image removed as it is now background */
 
 .fv-cta {
     margin-top: 10px;
@@ -448,8 +446,16 @@ img {
 /* ============================================================
    STEP 3: 解決策の提示
    ============================================================ */
+#empathy .container {
+    padding-bottom: 20px;
+}
+
 .solution-section {
     background-color: var(--bg-white);
+}
+
+#solution .container {
+    padding-top: 20px;
 }
 
 .solution-card {
@@ -685,10 +691,10 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--secondary-color);
-    color: var(--primary-color);
-    padding: 0 12px;
-    font-size: 1.2rem;
+    background: transparent;
+    color: var(--secondary-color);
+    padding: 0 20px;
+    font-size: 1.5rem;
 }
 
 .benefit-image {
@@ -704,7 +710,13 @@ img {
     }
 
     .benefit-arrow {
-        padding: 8px;
+        padding: 5px 20px;
+        height: 30px;
+        justify-content: flex-end;
+        transform: none;
+    }
+
+    .benefit-arrow i {
         transform: rotate(90deg);
     }
 }
@@ -746,6 +758,17 @@ img {
     color: rgba(255, 215, 0, 0.15);
     font-family: Georgia, serif;
     line-height: 1;
+    z-index: 0;
+}
+
+.voice-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    position: relative;
+    z-index: 1;
 }
 
 .voice-header {
@@ -938,6 +961,86 @@ img {
     .reason-image {
         max-width: 100%;
     }
+
+    .comparison-table-wrapper {
+        overflow-x: visible;
+        margin-bottom: 30px;
+    }
+
+    .comparison-table {
+        min-width: 100%;
+        display: block;
+        border: none;
+    }
+
+    .comparison-table thead {
+        display: none;
+    }
+
+    .comparison-table tbody,
+    .comparison-table tr,
+    .comparison-table th,
+    .comparison-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .comparison-table tr {
+        margin-bottom: 25px;
+        background: #fff;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        border: 2px solid var(--primary-color);
+        overflow: hidden;
+    }
+
+    .comparison-table tbody th {
+        background: var(--secondary-color);
+        color: #fff;
+        padding: 12px;
+        font-size: 1.1rem;
+        border: none;
+    }
+
+    .comparison-table td {
+        text-align: left;
+        padding: 15px 20px;
+        border: none;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+    }
+
+    .comparison-table td:nth-of-type(1) {
+        background-color: #fafafa;
+    }
+
+    .comparison-table td:nth-of-type(1)::before {
+        content: "■ 大手カー用品店・ディーラー";
+        display: block;
+        font-weight: 900;
+        color: #666;
+        margin-bottom: 8px;
+        font-size: 0.85rem;
+    }
+
+    .comparison-table td:nth-of-type(2) {
+        background-color: rgba(255, 215, 0, 0.08);
+        border: none;
+        padding: 20px;
+    }
+
+    .comparison-table td:nth-of-type(2)::before {
+        content: "■ 特急便";
+        display: block;
+        font-weight: 900;
+        color: var(--accent-color);
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .comparison-table .highlight-col {
+        border: none !important;
+    }
 }
 
 /* ============================================================
@@ -1068,7 +1171,7 @@ img {
 .special-offer h3 {
     font-size: 1.4rem;
     margin-bottom: 10px;
-    color: var(--primary-color);
+    color: #fff;
 }
 
 .special-offer p {
@@ -1182,8 +1285,8 @@ img {
 
 .btn-cta-secondary {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border: 2px solid #fff;
     color: #fff;
     padding: 14px 35px;
     font-size: 1.3rem;
@@ -1196,7 +1299,7 @@ img {
 }
 
 .btn-cta-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .btn-cta-secondary small {
@@ -1204,6 +1307,7 @@ img {
     font-size: 0.85rem;
     font-weight: normal;
     margin-top: 3px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 @media (max-width: 768px) {
@@ -1411,27 +1515,28 @@ img {
 
 .btn-cta-tel {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    border: 2px solid #fff;
     color: #fff;
-    width: 100%;
-    padding: 15px;
-    font-size: 1.6rem;
+    padding: 16px 40px;
+    font-size: 1.4rem;
     font-weight: 900;
     border-radius: 50px;
-    transition: var(--transition);
+    width: 100%;
     text-align: center;
+    transition: var(--transition);
 }
 
 .btn-cta-tel:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .btn-cta-tel small {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: normal;
-    margin-top: 3px;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 @media (max-width: 768px) {
