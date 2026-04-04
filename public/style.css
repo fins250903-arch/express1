@@ -209,7 +209,7 @@ img {
    STEP 1: ファーストビュー (FV)
    ============================================================ */
 .fv-section {
-    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(27, 58, 92, 0.8)), url('images/lp_fv_mechanic_1772510003552.png') no-repeat center center;
+    background: linear-gradient(rgba(13, 27, 42, 0.7), rgba(27, 58, 92, 0.8)), url('/images/lp_fv_mechanic_1772510003552.png') no-repeat center center;
     background-size: cover;
     color: #fff;
     padding: 80px 15px 120px;

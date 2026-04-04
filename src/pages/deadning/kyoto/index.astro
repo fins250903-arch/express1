@@ -1,65 +1,17 @@
-<!DOCTYPE html>
-<html lang="ja">
+---
+import DeadningLayout from '../../../layouts/DeadningLayout.astro';
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>京都府のデッドニング＆スピーカー取付出張サービス【特急便】材料持込OK・25,000円〜</title>
-    <meta name="description" content="京都府でAmazon・楽天で買ったスピーカーの取付＋デッドニングを出張施工。材料持込大歓迎！フロントドア2枚セット工賃25,000円〜。京都市・宇治市・亀岡市など京都府全域対応。ご自宅の駐車場で完結。">
-    <meta name="google-site-verification" content="jdE4YuGRtgXmCtv4S9XqO3VXkrNluzwQu97TkQUB0ZA" />
-    <link rel="canonical" href="https://abura.site/deadning/kyoto/">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+const schemaJson = "{\"@context\": \"https://schema.org\", \"@type\": \"Service\", \"name\": \"\\u4eac\\u90fd\\u5e9c \\u683c\\u5b89\\u51fa\\u5f35\\u30c7\\u30c3\\u30c9\\u30cb\\u30f3\\u30b0\\uff06\\u30b9\\u30d4\\u30fc\\u30ab\\u30fc\\u53d6\\u4ed8\\u30bb\\u30c3\\u30c8\\u30d7\\u30e9\\u30f3\", \"provider\": {\"@type\": \"LocalBusiness\", \"name\": \"\\u8eca\\u306e\\u51fa\\u5f35\\u30d1\\u30fc\\u30c4\\u53d6\\u4ed8 \\u7279\\u6025\\u4fbf\", \"description\": \"\\u4eac\\u90fd\\u5e9c\\u5bfe\\u5fdc\\u3002\\u6750\\u6599\\u6301\\u3061\\u8fbc\\u307f\\u6b53\\u8fce\\u306e\\u8eca\\u30c7\\u30c3\\u30c9\\u30cb\\u30f3\\u30b0\\u51fa\\u5f35\\u65bd\\u5de5\\u30b5\\u30fc\\u30d3\\u30b9\\u3002\", \"telephone\": \"070-8428-0866\", \"address\": {\"@type\": \"PostalAddress\", \"addressRegion\": \"\\u4eac\\u90fd\\u5e9c\"}}, \"areaServed\": [{\"@type\": \"State\", \"name\": \"\\u4eac\\u90fd\\u5e9c\"}], \"hasOfferCatalog\": {\"@type\": \"OfferCatalog\", \"name\": \"\\u51fa\\u5f35\\u65bd\\u5de5\\u30e1\\u30cb\\u30e5\\u30fc\", \"itemListElement\": [{\"@type\": \"Offer\", \"itemOffered\": {\"@type\": \"Service\", \"name\": \"\\u30b9\\u30d4\\u30fc\\u30ab\\u30fc\\u4ea4\\u63db\\uff0b\\u30c7\\u30c3\\u30c9\\u30cb\\u30f3\\u30b0\\u540c\\u6642\\u65bd\\u5de5\\u30bb\\u30c3\\u30c8\", \"description\": \"\\u6750\\u6599\\u6301\\u3061\\u8fbc\\u307fOK\\u3002\\u30d5\\u30ed\\u30f3\\u30c8\\u30c9\\u30a22\\u679a\\u306e\\u30bb\\u30c3\\u30c8\\u5de5\\u8cc3\\u3002\"}, \"price\": \"25000\", \"priceCurrency\": \"JPY\"}]}}";
+---
+<DeadningLayout
+    title="京都府のデッドニング＆スピーカー取付出張サービス【特急便】材料持込OK・25,000円〜"
+    description="京都府でAmazon・楽天で買ったスピーカーの取付＋デッドニングを出張施工。材料持込大歓迎！フロントドア2枚セット工賃25,000円〜。京都市・宇治市・亀岡市など京都府全域対応。ご自宅の駐車場で完結。"
+    prefecture="kyoto"
+    canonicalUrl="https://abura.site/deadning/kyoto/"
+    schemaJson={schemaJson}
+    footerArea="京都府全域"
+>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "京都府 格安出張デッドニング＆スピーカー取付セットプラン",
-      "provider": {
-        "@type": "LocalBusiness",
-        "name": "車の出張パーツ取付 特急便",
-        "description": "京都府対応。材料持ち込み歓迎の車デッドニング出張施工サービス。",
-        "telephone": "070-8428-0866",
-        "address": { "@type": "PostalAddress", "addressRegion": "京都府" }
-      },
-      "areaServed": [{"@type": "State", "name": "京都府"}],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "出張施工メニュー",
-        "itemListElement": [{
-          "@type": "Offer",
-          "itemOffered": {"@type": "Service", "name": "スピーカー交換＋デッドニング同時施工セット", "description": "材料持ち込みOK。フロントドア2枚のセット工賃。"},
-          "price": "25000", "priceCurrency": "JPY"
-        }]
-      }
-    }
-    </script>
-</head>
-
-<body>
-
-    <nav class="pref-nav" id="pref-nav">
-        <div class="pref-nav-inner">
-            <span class="pref-nav-label">📍 エリア選択：</span>
-            <div class="pref-nav-links">
-                <a href="../osaka/">大阪府</a>
-                <a href="../hyogo/">兵庫県</a>
-                <a href="../kyoto/" class="active">京都府</a>
-                <a href="../shiga/">滋賀県</a>
-                <a href="../nara/">奈良県</a>
-                <a href="../wakayama/">和歌山県</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="floating-cta" id="floatingCta">
-        <a href="https://lin.ee/g4NPYZ3" target="_blank" class="btn-line" id="floating-line-btn"><i class="fab fa-line"></i> 【無料】LINE見積もり</a>
-        <a href="tel:070-8428-0866" class="btn-tel" id="floating-tel-btn"><i class="fas fa-phone-alt"></i> 今すぐ電話</a>
-    </div>
 
     <header class="fv-section" id="fv">
         <div class="fv-sound-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
@@ -146,7 +98,7 @@
     <section class="voice-section" id="voice">
         <div class="container">
             <h2 class="section-title">京都府のお客様の声</h2>
-            <img src="../../images/customer_happy.png" alt="施工に満足したお客様" class="voice-main-image fade-in">
+            <img src="/images/customer_happy.png" alt="施工に満足したお客様" class="voice-main-image fade-in">
             <div class="voice-cards fade-in">
                 <div class="voice-card">
                     <div class="voice-header"><div class="voice-stars">★★★★★</div><span class="voice-label">京都市右京区 N.K様（30代）</span></div>
@@ -232,12 +184,12 @@
         <div class="container">
             <h2>🔗 特急便の関連サービス</h2>
             <div class="related-grid fade-in">
-                <a href="../../index.html" class="related-card">
+                <a href="/" class="related-card">
                     <div class="related-card-icon"><i class="fas fa-car"></i></div>
                     <div class="related-card-text"><h3>大阪 ドラレコ・ナビ取付</h3><p>ドライブレコーダー・カーナビの出張取付サービス</p></div>
                     <i class="fas fa-chevron-right related-card-arrow"></i>
                 </a>
-                <a href="../osaka/" class="related-card">
+                <a href="/deadning/osaka/" class="related-card">
                     <div class="related-card-icon"><i class="fas fa-volume-up"></i></div>
                     <div class="related-card-text"><h3>大阪 デッドニング＆スピーカー取付</h3><p>大阪府版の出張デッドニングサービスはこちら</p></div>
                     <i class="fas fa-chevron-right related-card-arrow"></i>
@@ -281,22 +233,4 @@
             <p class="cta-micro white">※ 30分で完了・しつこい営業は一切しません</p>
         </div>
     </section>
-
-    <footer id="footer">
-        <div class="footer-info">
-            <p class="footer-name">車の出張パーツ取付 特急便</p>
-            <p>対応エリア：京都府全域（大阪・兵庫・滋賀・奈良・和歌山も対応）</p>
-            <p>TEL：<a href="tel:070-8428-0866">070-8428-0866</a></p>
-            <p>営業時間：9:00〜19:00（不定休）</p>
-        </div>
-        <p class="footer-copy">&copy; 2026 車の出張パーツ取付 特急便. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-        const floatingCta = document.getElementById('floatingCta');
-        window.addEventListener('scroll', () => { floatingCta.classList.toggle('show', window.scrollY > 300); });
-    </script>
-</body>
-</html>
+</DeadningLayout>

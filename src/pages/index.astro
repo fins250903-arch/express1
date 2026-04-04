@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+    title="大阪でドラレコ・ナビの出張取付なら特急便 | 地域最安値"
+    description="大阪でドラレコ・ナビの持ち込み取付なら、特急便が圧倒的に安い！ディーラー工賃の最大半額。ネットで買ったパーツをプロが自宅で取付けます。出張費込みの明朗会計。"
+>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大阪でドラレコ・ナビの出張取付なら特急便 | 地域最安値</title>
-    <meta name="description" content="大阪でドラレコ・ナビの持ち込み取付なら、特急便が圧倒的に安い！ディーラー工賃の最大半額。ネットで買ったパーツをプロが自宅で取付けます。出張費込みの明朗会計。">
-    <meta name="google-site-verification" content="jdE4YuGRtgXmCtv4S9XqO3VXkrNluzwQu97TkQUB0ZA" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-
-<body>
 
     <!-- Floating CTA (常時固定) -->
     <div class="floating-cta">
@@ -205,7 +195,7 @@
                     </div>
                 </div>
             </div>
-            <img src="images/lp_family_happy_1772510060065.png" alt="取付完了後の笑顔の家族" class="benefit-image fade-in">
+            <img src="/images/lp_family_happy_1772510060065.png" alt="取付完了後の笑顔の家族" class="benefit-image fade-in">
         </div>
     </section>
 
@@ -217,7 +207,7 @@
             <h2 class="section-title">お客様の声</h2>
             <div class="voice-cards fade-in">
                 <div class="voice-card">
-                    <img src="images/T.K様（30代）.png" alt="大阪市 T.K様" class="voice-image">
+                    <img src="/images/T.K様（30代）.png" alt="大阪市 T.K様" class="voice-image">
                     <div class="voice-header">
                         <div class="voice-stars">★★★★★</div>
                         <span class="voice-label">大阪市 T.K様（30代）</span>
@@ -227,7 +217,7 @@
                     </p>
                 </div>
                 <div class="voice-card">
-                    <img src="images/M.S様（40代）.png" alt="堺市 M.S様" class="voice-image">
+                    <img src="/images/M.S様（40代）.png" alt="堺市 M.S様" class="voice-image">
                     <div class="voice-header">
                         <div class="voice-stars">★★★★★</div>
                         <span class="voice-label">堺市 M.S様（40代）</span>
@@ -237,7 +227,7 @@
                     </p>
                 </div>
                 <div class="voice-card">
-                    <img src="images/A.N様（50代）.png" alt="豊中市 A.N様" class="voice-image">
+                    <img src="/images/A.N様（50代）.png" alt="豊中市 A.N様" class="voice-image">
                     <div class="voice-header">
                         <div class="voice-stars">★★★★★</div>
                         <span class="voice-label">豊中市 A.N様（50代）</span>
@@ -275,7 +265,7 @@
         <div class="container">
             <h2 class="section-title">なぜ選ばれる？<br>大手カー用品店 vs 特急便 徹底比較！</h2>
             <div class="comparison-image-wrapper fade-in">
-                <img src="images/lp_comparison_time_1772510028302.png" alt="大手店舗との比較" class="comparison-image">
+                <img src="/images/lp_comparison_time_1772510028302.png" alt="大手店舗との比較" class="comparison-image">
             </div>
             <div class="comparison-table-wrapper fade-in">
                 <table class="comparison-table">
@@ -314,7 +304,7 @@
             <div class="reason-box fade-in">
                 <h3>「安い＝手抜き」ではありません！<br>特急便の安さのヒミツ</h3>
                 <div class="reason-content">
-                    <img src="images/lp_service_tools_1772510041961.png" alt="ネット購入とプロの技術" class="reason-image">
+                    <img src="/images/lp_service_tools_1772510041961.png" alt="ネット購入とプロの技術" class="reason-image">
                     <p>特急便は、大きな店舗やガレージを持たない<strong>「出張取付専門」</strong>です。店舗の家賃、過剰な広告費、中間マージンを徹底カット！浮いたコストのすべてをお客様の工賃還元に繋げています。施工は多くの実績を持つプロの技術者が担当するため、仕上がりもご安心ください。
                     </p>
                 </div>
@@ -545,27 +535,27 @@
             <h2 style="font-size:18px;font-weight:900;text-align:center;margin-bottom:8px;color:#1a1a2e;">🔊 新サービス開始！</h2>
             <p style="text-align:center;font-size:14px;color:#666;margin-bottom:20px;">デッドニング＆スピーカー取付の出張施工も承ります。材料持込OK・25,000円〜</p>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;">
-                <a href="deadning/osaka/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid #d4af37;text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/osaka/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid #d4af37;text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">大阪府</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
-                <a href="deadning/hyogo/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/hyogo/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">兵庫県</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
-                <a href="deadning/kyoto/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/kyoto/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">京都府</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
-                <a href="deadning/shiga/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/shiga/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">滋賀県</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
-                <a href="deadning/nara/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/nara/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">奈良県</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
-                <a href="deadning/wakayama/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
+                <a href="/deadning/wakayama/" style="display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:14px;border:1px solid rgba(26,26,46,0.15);text-decoration:none;transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='none'">
                     <span style="width:36px;height:36px;background:#1a1a2e;color:#d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🔊</span>
                     <div><div style="font-size:13px;font-weight:700;color:#1a1a2e;">和歌山県</div><div style="font-size:11px;color:#999;">デッドニング取付</div></div>
                 </a>
@@ -576,43 +566,4 @@
     <!-- ============================================ -->
     <!-- STEP 16: 法的情報 / フッター -->
     <!-- ============================================ -->
-    <footer id="footer">
-        <div class="footer-info">
-            <p class="footer-name">車の出張パーツ取付 特急便</p>
-            <p>対応エリア：大阪府全域</p>
-            <p>TEL：<a href="tel:070-8428-0866">070-8428-0866</a></p>
-            <p>営業時間：9:00〜19:00（不定休）</p>
-        </div>
-        <p class="footer-copy">&copy; 2026 車の出張パーツ取付 特急便. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Scroll Animation Script -->
-    <script>
-        // Fade-in on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.15 });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Floating CTA show/hide on scroll
-        const floatingCta = document.querySelector('.floating-cta');
-        let lastScroll = 0;
-        window.addEventListener('scroll', () => {
-            const current = window.scrollY;
-            if (current > 300) {
-                floatingCta.classList.add('show');
-            } else {
-                floatingCta.classList.remove('show');
-            }
-            lastScroll = current;
-        });
-    </script>
-
-</body>
-
-</html>
+</BaseLayout>
