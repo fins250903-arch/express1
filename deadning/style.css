@@ -841,7 +841,6 @@ footer a { color: var(--color-gold); }
 .before-after-grid {
     display: flex;
     flex-direction: column;
-    gap: 0;
     align-items: stretch;
 }
 .before-after-item {
