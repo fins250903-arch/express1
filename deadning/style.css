@@ -546,6 +546,52 @@ section { padding: 50px 0; }
 }
 
 /* ================================================
+   CASE STUDY / BEFORE-AFTER
+   ================================================ */
+.case-section { background: var(--color-light-gray); }
+.case-vehicle {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.before-after-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.before-after-item {
+    position: relative;
+}
+.before-after-image {
+    width: 100%;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    display: block;
+}
+.before-after-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 12px;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 20px;
+    z-index: 1;
+}
+.before-label {
+    background: var(--color-accent);
+    color: var(--color-white);
+}
+.after-label {
+    background: var(--color-gold);
+    color: var(--color-primary);
+}
+
+/* ================================================
    VOICE / TESTIMONIALS
    ================================================ */
 .voice-section { background: var(--color-white); }
