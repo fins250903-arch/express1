@@ -1591,3 +1591,105 @@ footer {
     border-top: 1px solid #222;
     padding-top: 15px;
 }
+
+/* ============================================================
+   施工事例（コラージュギャラリー）
+   ============================================================ */
+.collage-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.collage-item {
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    background: #000;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    opacity: 0.95;
+}
+
+.collage-item:hover img {
+    transform: scale(1.05);
+    opacity: 1;
+}
+
+/* 7枚の画像をコラージュ風に配置 */
+.collage-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.collage-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+.collage-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+.collage-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+.collage-item:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+.collage-item:nth-child(6) { grid-column: span 1; grid-row: span 1; }
+.collage-item:nth-child(7) { grid-column: span 2; grid-row: span 1; }
+
+@media (max-width: 600px) {
+    .collage-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 140px;
+        gap: 8px;
+    }
+    .collage-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .collage-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+    .collage-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+    .collage-item:nth-child(4) { grid-column: span 2; grid-row: span 1; }
+    .collage-item:nth-child(5) { grid-column: span 1; grid-row: span 1; }
+    .collage-item:nth-child(6) { grid-column: span 1; grid-row: span 1; }
+    .collage-item:nth-child(7) { grid-column: span 2; grid-row: span 1; }
+}
+
+/* ============================================================
+   ブログLink
+   ============================================================ */
+.blog-link-card {
+    background: linear-gradient(135deg, var(--secondary-color), #001a33);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    text-align: center;
+    color: #fff;
+    margin-top: 40px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blog-link-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.blog-link-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.btn-blog {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 16px 35px;
+    font-size: 1.1rem;
+    font-weight: 900;
+    border-radius: 50px;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-blog:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+}
