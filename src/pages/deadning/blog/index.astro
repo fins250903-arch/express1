@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../../layouts/Layout.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	(a, b) => (b.data.pubDate || b.data.date || 0).valueOf() - (a.data.pubDate || a.data.date || 0).valueOf()
 );
 
 const jsonLd = {
@@ -17,7 +17,7 @@ const jsonLd = {
 <Layout 
   title="施工実績ブログ | 車の出張パーツ取付 特急便" 
   description="デッドニングやスピーカー交換のリアルな施工風景をご紹介。滋賀、大阪、兵庫など各地域での事例を掲載中。" 
-  canonical="https://deadning.abura.site/blog/"
+  canonical="https://abura.site/deadning/blog/"
   region="blog"
   jsonLd={jsonLd}
 >
@@ -27,11 +27,14 @@ const jsonLd = {
       <div class="blog-grid">
         {posts.map((post) => {
           const slug = post.id.replace(/\/index$/, '');
+          const imageSrc = typeof post.data.heroImage === 'string' 
+            ? post.data.heroImage 
+            : post.data.heroImage?.src || post.data.coverImage || '/images/default-blog.jpg';
           return (
-            <a href={`/blog/${slug}/`} class="blog-card">
+            <a href={`/deadning/blog/${slug}/`} class="blog-card">
               {(post.data.heroImage || post.data.coverImage) && (
                 <img 
-                  src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage?.src || post.data.coverImage} 
+                  src={imageSrc} 
                   alt="" 
                   class="card-image" 
                 />
