@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
+import BlogCTA from '../../../components/BlogCTA.astro';
+import Footer from '../../../components/Footer.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => (b.data.pubDate || b.data.date || 0).valueOf() - (a.data.pubDate || a.data.date || 0).valueOf()
@@ -10,7 +12,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Blog",
   "name": "特急便 施工実績ブログ",
-  "description": "日本全国の出張デッドニング・スピーカー取付の施工事例をご紹介します。"
+  "description": "日本全国 of 出張デッドニング・スピーカー取付の施工事例をご紹介します。"
 };
 ---
 
@@ -54,6 +56,8 @@ const jsonLd = {
       </div>
     </div>
 	</section>
+  <BlogCTA />
+  <Footer />
 </Layout>
 
 <style>
