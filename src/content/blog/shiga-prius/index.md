@@ -2,7 +2,7 @@
 title: "滋賀県でのデッドニング施工事例：トヨタ・プリウス"
 description: "滋賀県でプリウスのフロントドアデッドニングとスピーカー交換を行いました。施工後の音質の変化と、お客様の感想をご紹介します。"
 pubDate: 2026-05-06
-heroImage: "/images/deadning image0.jpg"
+heroImage: ./images/deadning image0.jpg
 ---
 
 滋賀県にお住まいのS様より、プリウスの音質改善のご相談をいただきました。

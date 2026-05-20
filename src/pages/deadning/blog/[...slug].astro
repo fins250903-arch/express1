@@ -14,12 +14,26 @@ const post = Astro.props;
 const { Content } = await render(post);
 const slug = post.id.replace(/\/index$/, '');
 
+const heroSrc = post.data.heroImage
+  ? (typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src)
+  : null;
+const coverSrc = post.data.coverImage
+  ? (typeof post.data.coverImage === 'string' ? post.data.coverImage : post.data.coverImage.src)
+  : null;
+const imageSrc = heroSrc || coverSrc || '';
+
+const absoluteImageSrc = imageSrc
+  ? (imageSrc.startsWith('http')
+      ? imageSrc
+      : `https://abura.site${imageSrc.startsWith('/') ? imageSrc : '/' + imageSrc}`)
+  : '';
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": post.data.title,
   "description": post.data.description,
-  "image": post.data.heroImage ? [`https://abura.site${typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src}`] : [],
+  "image": absoluteImageSrc ? [absoluteImageSrc] : [],
   "datePublished": (post.data.pubDate || post.data.date)?.toISOString(),
   "author": { "@type": "Organization", "name": "特急便" }
 };
@@ -37,9 +51,9 @@ const jsonLd = {
       <header class="blog-header">
         <h1>{post.data.title}</h1>
         <p class="pub-date">{(post.data.pubDate || post.data.date)?.toLocaleDateString('ja-JP')}</p>
-        {post.data.heroImage && (
+        {imageSrc && (
           <img 
-            src={typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src} 
+            src={imageSrc} 
             alt="" 
             class="hero-image" 
           />

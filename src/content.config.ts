@@ -42,8 +42,8 @@ const blog = defineCollection({
     description: z.string().optional(),
     pubDate: z.coerce.date().optional(),
     date: z.coerce.date().optional(), // For migrated posts
-    heroImage: z.union([z.string(), image()]).optional(),
-    coverImage: z.union([z.string(), image()]).optional(), // For migrated posts
+    heroImage: image().optional(),
+    coverImage: image().optional(), // For migrated posts
     categories: z.array(z.string()).optional(),
   }),
 });

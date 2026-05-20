@@ -14,9 +14,13 @@ const posts = (await getCollection('blog'))
     <div class="blog-grid fade-in">
       {posts.map((post) => {
         const slug = post.id.replace(/\/index$/, '');
-        const imageSrc = typeof post.data.heroImage === 'string' 
-          ? post.data.heroImage 
-          : post.data.heroImage?.src || post.data.coverImage || '/images/default-blog.jpg';
+        const heroSrc = post.data.heroImage
+          ? (typeof post.data.heroImage === 'string' ? post.data.heroImage : post.data.heroImage.src)
+          : null;
+        const coverSrc = post.data.coverImage
+          ? (typeof post.data.coverImage === 'string' ? post.data.coverImage : post.data.coverImage.src)
+          : null;
+        const imageSrc = heroSrc || coverSrc || '/images/default-blog.jpg';
         return (
           <a href={`/deadning/blog/${slug}/`} class="blog-card">
             <div class="card-image-wrapper">
