@@ -55,6 +55,7 @@ const data = regionEntry.data;
 const campaignData = {
   'tire-house': {
     name: 'タイヤハウスデッドニング',
+    bgImage: '/images/tirehouse-bg.jpg',
     seoKeyword: 'タイヤハウスデッドニング（ロードノイズ対策）',
     fvCatch: `走行中のゴー・シャー音を激減！<br><span class="highlight-gold">${data.prefName}で足元のロードノイズ対策</span>なら<br><span class="highlight-red">出張タイヤハウス防音</span>にお任せ！`,
     fvSub: `<strong class="text-gold">${data.prefName}全域出張！</strong>フェンダー内部への特殊制振吸音施工で、<br><span class="highlight-yellow">高速道路での会話やオーディオ音が驚くほど静かでクリアに</span>。`,
@@ -89,6 +90,7 @@ const campaignData = {
   },
   'hiace': {
     name: 'ハイエースデッドニング',
+    bgImage: '/images/hiace-bg.jpg',
     seoKeyword: 'ハイエースデッドニング（車種専用フル施工）',
     fvCatch: `ハイエース特有の騒音・熱を撃退！<br><span class="highlight-gold">${data.prefName}で乗用車並みの静粛性</span>を<br><span class="highlight-red">出張フルデッドニング</span>で実現！`,
     fvSub: `<strong class="text-gold">エンジン座席下の熱・音、天井の雨音、広い荷室の反響を徹底遮断！</strong><br><span class="highlight-yellow">長距離ドライブが驚くほど快適に、夏冬の車中泊もエアコン効率抜群。</span>`,
@@ -124,6 +126,7 @@ const campaignData = {
   },
   'insulation': {
     name: '断熱防音',
+    bgImage: '/images/insulation-bg.jpg',
     seoKeyword: '断熱防音（エアコン効率、車中泊対策）',
     fvCatch: `夏は涼しく、冬は驚くほど暖かい車内！<br><span class="highlight-gold">${data.prefName}で車中泊・エアコン効率UP</span>なら<br><span class="highlight-red">プロの出張断熱防音施工</span>！`,
     fvSub: `<strong class="text-gold">高性能アルミ遮熱断熱シートと極厚吸音材を隙間なく配置！</strong><br><span class="highlight-yellow">エアコン負荷を減らし実燃費向上！キャンプや車中泊の結露・寒さも完全解決。</span>`,
@@ -202,6 +205,7 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     fvSub={currentCampaign.fvSub}
     badgeList={currentCampaign.badgeList}
     pointsList={currentCampaign.pointsList}
+    bgImage={currentCampaign.bgImage}
   />
 
   <main>

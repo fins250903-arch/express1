@@ -6,6 +6,7 @@ interface Props {
   fvSub?: string;
   badgeList?: string[];
   pointsList?: { bold: string; normal: string }[];
+  bgImage?: string;
 }
 
 const { 
@@ -22,10 +23,11 @@ const {
     { bold: "材料持ち込み：完全無料・大歓迎！", normal: "Amazon・楽天・ヤフオク品もOK" },
     { bold: "出張施工：", normal: "ご自宅の駐車場で全作業完結" },
     { bold: "約2〜3時間で完了：", normal: "あなたは家でくつろぐだけ" }
-  ]
+  ],
+  bgImage = '/images/fv_mechanic.png'
 } = Astro.props;
 ---
-<header class="fv-section animate-fade-in" id="fv">
+<header class="fv-section animate-fade-in" id="fv" style={`background-image: linear-gradient(rgba(26, 26, 46, 0.82), rgba(26, 26, 46, 0.82)), url('${bgImage}');`}>
   <div class="fv-sound-wave">
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
