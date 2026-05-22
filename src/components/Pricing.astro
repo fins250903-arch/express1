@@ -1,9 +1,18 @@
 ---
 interface Props {
   pricingNote: string;
+  priceTable?: { menu: string; desc: string; price: string }[];
 }
 
-const { pricingNote } = Astro.props;
+const { 
+  pricingNote,
+  priceTable = [
+    { menu: "🏆 フロントドア デッドニング＋スピーカー交換セット", desc: "フロント左右2枚・材料持込OK", price: "29,000円〜" },
+    { menu: "スピーカー交換のみ", desc: "フロント左右", price: "12,000円〜" },
+    { menu: "デッドニングのみ", desc: "フロントドア左右", price: "15,000円〜" },
+    { menu: "リアドア デッドニング＋スピーカー交換セット", desc: "リア左右2枚・材料持込OK", price: "20,000円〜" }
+  ]
+} = Astro.props;
 ---
 <section class="pricing-section" id="pricing">
   <div class="container">
@@ -17,22 +26,16 @@ const { pricingNote } = Astro.props;
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>🏆 <strong>フロントドア<br class="mobile-only"> <span class="ib">デッドニング＋</span><br class="mobile-only"><span class="ib">スピーカー交換セット</span></strong><br><small>フロント左右2枚・材料持込OK</small></td>
-            <td class="price-highlight" style="text-align:right">29,000円〜</td>
-          </tr>
-          <tr>
-            <td><span class="ib">スピーカー交換のみ</span><br class="mobile-only"><small>(フロント左右)</small></td>
-            <td class="price-highlight" style="text-align:right">12,000円〜</td>
-          </tr>
-          <tr>
-            <td><span class="ib">デッドニングのみ</span><br class="mobile-only"><small>(フロントドア左右)</small></td>
-            <td class="price-highlight" style="text-align:right">15,000円〜</td>
-          </tr>
-          <tr>
-            <td><span class="ib">リアドア</span> <span class="ib">デッドニング＋</span><br class="mobile-only"><span class="ib">スピーカー交換セット</span></td>
-            <td class="price-highlight" style="text-align:right">20,000円〜</td>
-          </tr>
+          {priceTable.map(row => (
+            <tr>
+              <td>
+                <strong set:html={row.menu} />
+                <br />
+                <small class="text-white/60" set:html={row.desc} />
+              </td>
+              <td class="price-highlight" style="text-align:right" set:html={row.price} />
+            </tr>
+          ))}
         </tbody>
       </table>
       <div class="price-note-box" set:html={pricingNote.replace(/\n/g, '<br>')} />
@@ -45,3 +48,4 @@ const { pricingNote } = Astro.props;
     .mobile-only { display: none; }
   }
 </style>
+

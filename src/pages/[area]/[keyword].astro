@@ -1,0 +1,257 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import FV from '../../components/FV.astro';
+import Empathy from '../../components/Empathy.astro';
+import Solution from '../../components/Solution.astro';
+import Reasons from '../../components/Reasons.astro';
+import Flow from '../../components/Flow.astro';
+import Gallery from '../../components/Gallery.astro';
+import Voice from '../../components/Voice.astro';
+import MidCTA from '../../components/MidCTA.astro';
+import Pricing from '../../components/Pricing.astro';
+import Comparison from '../../components/Comparison.astro';
+import ServicePlan from '../../components/ServicePlan.astro';
+import FAQ from '../../components/FAQ.astro';
+import Related from '../../components/Related.astro';
+import Area from '../../components/Area.astro';
+import BlogLink from '../../components/BlogLink.astro';
+import Closing from '../../components/Closing.astro';
+import Footer from '../../components/Footer.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import CTA from '../../components/CTA.astro';
+
+export async function getStaticPaths() {
+  const regions = await getCollection('regions');
+  const targetAreaSlugs = ['osaka', 'hyogo', 'wakayama', 'nara', 'mie', 'kyoto', 'shiga', 'aichi'];
+  
+  // Filter only targeted areas
+  const filteredRegions = regions.filter(r => targetAreaSlugs.includes(r.id));
+  
+  const keywords = [
+    { slug: 'tire-house', name: 'タイヤハウスデッドニング' },
+    { slug: 'hiace', name: 'ハイエースデッドニング' },
+    { slug: 'insulation', name: '断熱防音' }
+  ];
+  
+  const paths = [];
+  for (const region of filteredRegions) {
+    for (const kw of keywords) {
+      paths.push({
+        params: { area: region.id, keyword: kw.slug },
+        props: { regionEntry: region, keywordObj: kw }
+      });
+    }
+  }
+  return paths;
+}
+
+const { regionEntry, keywordObj } = Astro.props;
+const { area, keyword } = Astro.params;
+const data = regionEntry.data;
+
+// Keyword Campaign Data Directory
+const campaignData = {
+  'tire-house': {
+    name: 'タイヤハウスデッドニング',
+    seoKeyword: 'タイヤハウスデッドニング（ロードノイズ対策）',
+    fvCatch: `走行中のゴー・シャー音を激減！<br><span class="highlight-gold">${data.prefName}で足元のロードノイズ対策</span>なら<br><span class="highlight-red">出張タイヤハウス防音</span>にお任せ！`,
+    fvSub: `<strong class="text-gold">${data.prefName}全域出張！</strong>フェンダー内部への特殊制振吸音施工で、<br><span class="highlight-yellow">高速道路での会話やオーディオ音が驚くほど静かでクリアに</span>。`,
+    badgeList: [
+      `${data.prefName}全域に出張施工`,
+      "ロードノイズ根本対策",
+      "水ハネ・石ハネ音も激減"
+    ],
+    pointsList: [
+      { bold: "ロードノイズを足元から遮断：", normal: "フェンダー内部とライナーの極厚2層施工" },
+      { bold: "完全出張型：", normal: "ご自宅の駐車場でお車をお預かりせずにスピード施工" },
+      { bold: "圧倒的な効果保証：", normal: "専門店クオリティを半額以下の工賃で実現" }
+    ],
+    problemList: [
+      "高速道路や荒れた路面での<strong>ゴー・シャーという不快な騒音がうるさい…</strong>",
+      "ロードノイズのせいで<strong>後部座席の家族との会話が聞こえない…</strong>",
+      "雨の日にタイヤハウス内で<strong>シャーと鳴る水ハネ音が耳障り…</strong>",
+      "専門店でフェンダー防音を見積もったら<strong>高額すぎて諦めていた…</strong>",
+      "タイヤハウスの防音施工って<strong>本当に静かになるのか不安…</strong>"
+    ],
+    solutionTitle: "タイヤハウスの徹底防音で、その悩みすべて解決！",
+    solutionText: `ロードノイズは、タイヤと路面の摩擦が車内に伝わることが主因です。タイヤハウスのインナーライナーとフェンダー内部に強力な制振材・吸音材を施工することで、騒音を「発生源の直近」で完全にシャットアウトします。<br><strong>${data.prefName}の出張デッドニング特急便</strong>なら、自宅にいながら店舗型の半額以下で劇的な静音化を実現します。`,
+    priceTable: [
+      { menu: "🏆 フロント左右タイヤハウス 制振＋吸音2層施工", desc: "インナーライナー脱着・高機能制振材・極厚防音シート使用", price: "39,000円〜" },
+      { menu: "リア左右タイヤハウス 制振＋吸音2層施工", desc: "荷室内部のインナーフェンダー防音も含み、ロードノイズを全域カバー", price: "45,000円〜" },
+      { menu: "前後4箇所フルタイヤハウス防音セット", desc: "最もロードノイズが低減する、一番人気の極上静音パック", price: "78,000円〜" }
+    ],
+    specificFaqs: [
+      { q: `${data.prefName}全域での出張費は本当に無料ですか？`, a: `はい、今回のキャンペーンでは${data.prefName}全域に出張料金コミでお伺いしております。当日ご自宅の駐車場で施工いたしますので、店舗へ車を預けに行く往復の手間も一切ございません。` },
+      { q: "インナーライナーに施工して、雨水などで剥がれたりしませんか？", a: "ご安心ください。当社では自動車外装専用の超強力耐水・耐熱粘着剤を使用したプロ用ブチル制振材と、水分を一切吸わない完全独立気泡（クローズドセル）吸音シートを熱着圧で施工するため、大雨の高速走行や洗車でも剥がれる心配は一切ありません。" }
+    ]
+  },
+  'hiace': {
+    name: 'ハイエースデッドニング',
+    seoKeyword: 'ハイエースデッドニング（車種専用フル施工）',
+    fvCatch: `ハイエース特有の騒音・熱を撃退！<br><span class="highlight-gold">${data.prefName}で乗用車並みの静粛性</span>を<br><span class="highlight-red">出張フルデッドニング</span>で実現！`,
+    fvSub: `<strong class="text-gold">エンジン座席下の熱・音、天井の雨音、広い荷室の反響を徹底遮断！</strong><br><span class="highlight-yellow">長距離ドライブが驚くほど快適に、夏冬の車中泊もエアコン効率抜群。</span>`,
+    badgeList: [
+      "ハイエース車種専用設計",
+      "エンジン熱・豪雨音遮断",
+      "車中泊・キャンパーに最適"
+    ],
+    pointsList: [
+      { bold: "弱点の座席下を徹底カバー：", normal: "熱と唸り音を強力熱遮断・遮音シートでシャットアウト" },
+      { bold: "天井・床・側面のフル施工：", normal: "まるで高級ミニバンのような静粛性と断熱性能へ" },
+      { bold: "ご自宅で全作業完了：", normal: "出張施工で丸1〜2日でスピーディーに仕上げます" }
+    ],
+    problemList: [
+      "お尻の下（座席下）から伝わる<strong>エンジンの熱と唸り音が熱くてうるさい…</strong>",
+      "雨の日に<strong>ルーフ（天井）を叩く雨音がバラバラと響いて会話できない…</strong>",
+      "広い車内特有の<strong>荷室からのゴーゴーという反響音が耳障り…</strong>",
+      "ハイエースのフルデッドニングは<strong>高額すぎて手が出せなかった…</strong>",
+      "キャンプや車中泊の夜、<strong>外の雑音や冷気・熱気で目が覚める…</strong>"
+    ],
+    solutionTitle: "ハイエースを知り尽くした専用施工で一挙解決！",
+    solutionText: `ハイエースはキャブオーバー（座席下エンジン）かつ広い鉄板剥き出しの荷室を持つため、騒音や温度変化が極めて激しい車です。天井・床・シート下・側面に車種専用の防音断熱材を敷き詰めることで、車内全体を「静かで快適な移動式書斎」へと生まれ変わらせます。<br><strong>${data.prefName}全域に出張</strong>し、お客様の愛車をプロの技術で美しく仕上げます。`,
+    priceTable: [
+      { menu: "🏆 フロントシート下 エンジンルーム防音＆強力断熱セット", desc: "お尻の下のエンジン唸り音と、伝わる嫌な熱気を同時に完全遮断", price: "29,000円〜" },
+      { menu: "ルーフ（天井）全面 制振・防音・アルミ遮熱断熱施工", desc: "雨音を劇的に消音し、夏の太陽光熱と冬の冷気を強力カット", price: "68,000円〜" },
+      { menu: "荷室フロア（床面）全面 高密度防音制振シート施工", desc: "床下からの走行ノイズと、荷物の反響音を徹底制圧", price: "58,000円〜" },
+      { menu: "ハイエース極上ロイヤルフルセット施工（天井・床・エンジン下）", desc: "車内全体を断熱防音シェルター化する、最強のフルパッケージ", price: "148,000円〜" }
+    ],
+    specificFaqs: [
+      { q: "ハイエースのフル施工にはどのくらい時間がかかりますか？", a: "天井・床・エンジン下などのロイヤルフルセット施工の場合、出張作業にて丸1日〜2日程度お時間をいただきます。ご自宅駐車場で施工できるため、車をショップに何日も預ける面倒が一切ありません。" },
+      { q: "施工後に車検や重量変更で問題になりませんか？", a: "全く問題ありません。フル施工を行っても総重量の増加は約40〜50kg（大人1名未満分）に収まるよう軽量・高性能な素材を厳選して使用しております。車内スペースやシートの可動域も一切犠牲にしません。" }
+    ]
+  },
+  'insulation': {
+    name: '断熱防音',
+    seoKeyword: '断熱防音（エアコン効率、車中泊対策）',
+    fvCatch: `夏は涼しく、冬は驚くほど暖かい車内！<br><span class="highlight-gold">${data.prefName}で車中泊・エアコン効率UP</span>なら<br><span class="highlight-red">プロの出張断熱防音施工</span>！`,
+    fvSub: `<strong class="text-gold">高性能アルミ遮熱断熱シートと極厚吸音材を隙間なく配置！</strong><br><span class="highlight-yellow">エアコン負荷を減らし実燃費向上！キャンプや車中泊の結露・寒さも完全解決。</span>`,
+    badgeList: [
+      "夏は冷気をキープ",
+      "冬は暖かさを逃さない",
+      "キャンプ・車中泊仕様"
+    ],
+    pointsList: [
+      { bold: "エアコンの冷え・暖まりが爆速に：", normal: "エンジン熱や外気温からの輻射熱を完全遮断" },
+      { bold: "キャンプ・車中泊での深夜の寒さ対策：", normal: "断熱材により車内の温度低下を抑え、不快な結露も防止" },
+      { bold: "撥水・難燃の最高級素材を使用：", normal: "湿気に強くカビない、自動車専用の安全安心クオリティ" }
+    ],
+    problemList: [
+      "真夏の炎天下、<strong>エアコンを最強にしてもなかなか車内が冷えない…</strong>",
+      "車中泊の際、<strong>夜中の寒さや早朝の暑さで寝苦しくて起きてしまう…</strong>",
+      "冬の朝、フロントガラスや<strong>車内の結露がびっしょりで片付けが大変…</strong>",
+      "車中泊仕様にしたいが、<strong>DIYでの内張り剥がしや断熱材選定は難しそう…</strong>",
+      "外からの走行騒音や<strong>ルーフを叩く雨音で車内が落ち着かない…</strong>"
+    ],
+    solutionTitle: "高性能ハイブリッド断熱で、車内を快適シェルター化！",
+    solutionText: `自動車のボディは鉄板1枚でできているため、熱や冷気をダイレクトに通してしまいます。宇宙工学でも使われるアルミ遮熱シートと高密度ポリエステル吸音断熱材を天井やドア、ボディ側面に隙間なく施工することで、高い静音性と極めて優れた魔法瓶のような保温・保冷効果を発揮します。<br><strong>${data.prefName}の出張デッドニング特急便</strong>なら、自宅にいながら完璧な断熱空間へ仕上げます。`,
+    priceTable: [
+      { menu: "🏆 天井ルーフ全面 遮熱アルミ＋極厚断熱防音2層施工", desc: "直射日光の熱侵入を防ぎ、豪雨の雨音も乗用車並みに消音", price: "55,000円〜" },
+      { menu: "フロントドア左右 高密度断熱・吸音デッドニング", desc: "エアコンの抜けを防ぎ、外部からの騒音をシャットアウト", price: "24,000円〜" },
+      { menu: "床面フロア全面 高機能防音断熱マット施工", desc: "マフラー熱や路面熱の侵入を抑え、足元からの底冷えを解消", price: "48,000円〜" },
+      { menu: "車中泊専用トータル断熱パッケージ（天井・ドア4枚・側面）", desc: "年中キャンプや車中泊を快適に楽しめる、フル断熱防音パッケージ", price: "118,000円〜" }
+    ],
+    specificFaqs: [
+      { q: "使用する断熱材は、湿気でカビたり臭ったりしませんか？", a: "全く心配ございません。当社で使用する吸音断熱材は、自動車メーカーの純正採用基準もクリアした「完全撥水・防湿・防カビ・自己消火性（難燃）」の最高品質ポリエステル素材およびクローズドセル発泡スポンジです。カビや臭い、劣化が発生することは絶対にありません。" },
+      { q: "部分的な施工だけでも効果はありますか？", a: "はい、大いにあります。特に最も熱の侵入と逃げが多い「ルーフ（天井）」の施工だけでも、エアコンの効きや車中泊時の冷気遮断において劇的な効果を体感いただけます。まずルーフから始められるお客様が非常に多くいらっしゃいます。" }
+    ]
+  }
+};
+
+const currentCampaign = campaignData[keyword as keyof typeof campaignData];
+
+// Format canonical URL for the 24 LPs (Self-referential Canonical URL)
+const resolvedCanonical = `https://abura.site/${area}/${keyword}/`;
+
+// Merge regional FAQs with Campaign Specific FAQs to build a powerful 5-item FAQ matrix
+const mergedFaqItems = [
+  ...currentCampaign.specificFaqs,
+  ...data.faqItems.slice(0, 3)
+];
+
+// Compile localized conclusions first for AIO Search (conclusion-first, ~50 characters)
+const localizedAioDefinition = `${data.prefName}の出張${currentCampaign.name}施工は、ご自宅の駐車場でお車をお預かりせず、プロが店舗型の半額以下で施工する防音断熱サービスです。`;
+
+// Compile dynamic description
+const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場で仕上げる出張${currentCampaign.seoKeyword}。材料持ち込み完全無料！当日追加料金一切なし。店舗型専門店の半額以下の工賃${currentCampaign.priceTable[0].price}〜で、驚きの静粛性と快適空間をご提供します！`;
+---
+
+<Layout 
+  title={`${data.prefName}の出張${currentCampaign.seoKeyword}【特急便】材料持込無料・当日追加料金なし`} 
+  description={dynamicDescription} 
+  canonical={resolvedCanonical} 
+  region={area}
+  keyword={keyword}
+>
+  <!-- Interactive Dynamic JSON-LD -->
+  <JsonLd 
+    prefName={data.prefName}
+    keywordName={currentCampaign.name}
+    description={dynamicDescription}
+    canonical={resolvedCanonical}
+    faqItems={mergedFaqItems}
+  />
+
+  <Header />
+
+  <FV 
+    prefName={data.prefName} 
+    aioDefinition={localizedAioDefinition}
+    fvCatch={currentCampaign.fvCatch}
+    fvSub={currentCampaign.fvSub}
+    badgeList={currentCampaign.badgeList}
+    pointsList={currentCampaign.pointsList}
+  />
+
+  <main>
+    <Empathy 
+      problemCity={data.problemCity} 
+      problemList={currentCampaign.problemList}
+      solutionTitle={currentCampaign.solutionTitle}
+      solutionText={currentCampaign.solutionText}
+    />
+    
+    <Solution />
+    
+    <Reasons reasonsCity={data.reasonsCity} />
+    
+    <Flow flowCity={data.flowCity} />
+    
+    <!-- Image Fallback handling included -->
+    <Gallery />
+    
+    <Voice voiceCity={data.voiceCity} voiceItems={data.voiceItems} />
+    
+    <MidCTA />
+    
+    <Pricing 
+      pricingNote={data.pricingNote} 
+      priceTable={currentCampaign.priceTable}
+    />
+    
+    <Comparison prefName={data.prefName} />
+    
+    <ServicePlan prefName={data.prefName} />
+    
+    <FAQ prefName={data.prefName} faqItems={mergedFaqItems} />
+    
+    <Related />
+    
+    <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />
+    
+    <BlogLink />
+    
+    <!-- Strong Final conversion CTA box -->
+    <div class="max-w-[760px] mx-auto px-4 py-8">
+      <CTA 
+        title={`${data.prefName}で最高の愛車空間を手に入れませんか？`}
+        subtitle={`ご自宅のガレージや駐車場で完結するため、店舗に車を預けに行く手間は一切ありません。車種や施工範囲に合わせてプロが丁寧に施工いたします。LINE相談・お見積もりは完全無料です。`}
+      />
+    </div>
+
+    <Closing prefName={data.prefName} />
+  </main>
+
+  <Footer currentArea={area} currentKeyword={keyword} />
+</Layout>

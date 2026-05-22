@@ -1,141 +1,125 @@
 ---
-import { getCollection } from 'astro:content';
-
 interface Props {
-  currentRegion?: string;
+  relatedRegions?: { name: string; slug: string; active?: boolean }[];
+  currentArea?: string;
+  currentKeyword?: string;
 }
 
-const { currentRegion } = Astro.props;
+const { relatedRegions = [], currentArea = "", currentKeyword = "" } = Astro.props;
 
-// Dynamically fetch all existing regions LPs
-const allRegions = await getCollection('regions');
-
-// Define region grouping and display order
+// All 8 core service areas
 const areas = [
-  {
-    name: '関西エリア',
-    slugs: ['osaka', 'hyogo', 'kyoto', 'shiga', 'nara', 'wakayama']
-  },
-  {
-    name: '東海エリア',
-    slugs: ['aichi', 'mie']
-  },
-  {
-    name: '四国エリア',
-    slugs: ['kagawa', 'tokushima']
-  }
+  { name: "大阪府", slug: "osaka" },
+  { name: "兵庫県", slug: "hyogo" },
+  { name: "京都府", slug: "kyoto" },
+  { name: "滋賀県", slug: "shiga" },
+  { name: "奈良県", slug: "nara" },
+  { name: "和歌山県", slug: "wakayama" },
+  { name: "三重県", slug: "mie" },
+  { name: "愛知県", slug: "aichi" }
 ];
 
-// Map regions for fast name lookups
-const regionMap = new Map(allRegions.map(r => [r.id, r.data.prefName]));
+// All 3 primary targeted keywords
+const keywords = [
+  { name: "タイヤハウスデッドニング", slug: "tire-house" },
+  { name: "ハイエース専用フル施工", slug: "hiace" },
+  { name: "車内断熱防音対策", slug: "insulation" }
+];
 ---
-<footer id="footer">
-  <div class="footer-info">
-    <p class="footer-name">車の出張パーツ取付 特急便</p>
-    <p>対応エリア：関西・東海・四国</p>
-    <p>TEL：<a href="tel:070-8428-0866">070-8428-0866</a></p>
-    <p>営業時間：9:00〜19:00（不定休）</p>
-  </div>
-
-  <!-- Unified Navigation grouped by Area -->
-  <nav class="footer-nav-area">
-    <div class="area-group-container">
-      {areas.map((area) => {
-        // Filter and map only active/existing regions in this area
-        const activeRegionsInArea = area.slugs
-          .filter(slug => regionMap.has(slug))
-          .map(slug => ({
-            slug,
-            name: regionMap.get(slug) || ''
-          }));
-
-        if (activeRegionsInArea.length === 0) return null;
-
-        return (
-          <div class="area-group">
-            <span class="area-label">{area.name}</span>
-            <div class="area-links">
-              {activeRegionsInArea.map((region) => (
-                <a 
-                  href={`/deadning/${region.slug}/`} 
-                  class={currentRegion === region.slug ? 'active' : ''}
-                >
-                  {region.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+<footer id="footer" class="bg-[#1a1a2e] text-white/80 pt-16 pb-8 border-t-2 border-gold">
+  <div class="max-w-[760px] mx-auto px-4">
+    <!-- Main Service Info -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div>
+        <p class="text-lg font-black text-white mb-3">車の出張パーツ取付 特急便</p>
+        <p class="text-xs text-white/60 mb-2">対応エリア：大阪府・兵庫県・京都府・滋賀県・奈良県・和歌山県・三重県・愛知県（出張施工専門）</p>
+        <p class="text-xs text-white/60">営業時間：9:00〜19:00（土日祝も対応、不定休）</p>
+      </div>
+      <div class="flex flex-col md:items-end">
+        <p class="text-sm font-bold text-white mb-2">お見積もり・お問い合わせ</p>
+        <p class="text-2xl font-black text-gold mb-1">
+          <a href="tel:070-8428-0866" class="hover:underline">070-8428-0866</a>
+        </p>
+        <p class="text-[10px] text-white/40">※運転中や作業中などはお電話に出られない場合がございます。その場合は折り返しいたします。</p>
+      </div>
     </div>
-  </nav>
 
-  <p class="footer-copy">&copy; 2026 車の出張パーツ取付 特急便. All Rights Reserved.</p>
+    <!-- 24-Page Local SEO Cross-Link Matrix -->
+    <div class="border-t border-white/10 pt-10 mb-12">
+      <h3 class="text-sm font-black text-gold tracking-wider text-center mb-6 flex items-center justify-center gap-2">
+        <i class="fas fa-map-marked-alt text-gold animate-pulse"></i>
+        <span>出張デッドニング 地域別メニュー一覧</span>
+      </h3>
+      
+      <!-- Responsive Scrollable Link Table (Perfect for Mobile, sleek grid for PC) -->
+      <div class="overflow-x-auto -mx-4 px-4 scrollbar-thin">
+        <table class="w-full text-xs text-left border-collapse min-w-[500px]">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="py-2.5 font-bold text-white/90 pr-4">施工地域</th>
+              {keywords.map(kw => (
+                <th class="py-2.5 font-bold text-white/90 text-center">{kw.name}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {areas.map(area => (
+              <tr class="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <td class="py-2.5 font-bold text-gold pr-4">
+                  {area.name}
+                </td>
+                {keywords.map(kw => {
+                  const isActive = currentArea === area.slug && currentKeyword === kw.slug;
+                  return (
+                    <td class="py-2 text-center">
+                      <a 
+                        href={`/${area.slug}/${kw.slug}/`} 
+                        class={`inline-block px-2 py-1 rounded transition-all duration-150 ${
+                          isActive 
+                            ? 'bg-gold text-primary font-bold' 
+                            : 'hover:text-gold hover:underline text-white/70'
+                        }`}
+                      >
+                        {kw.name.replace("デッドニング", "").replace("専用フル施工", "").replace("車内", "").replace("対策", "")}施工
+                      </a>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-[10px] text-white/30 text-center mt-3">
+        ※ご自宅の駐車スペース（普通車1台分）があれば、すべての府県で出張料金コミで同等品質の施工が可能です。
+      </p>
+    </div>
+
+    <!-- Legacy Compatibility Navigation (Safe Area Nav) -->
+    {relatedRegions.length > 0 && (
+      <nav class="pref-nav mb-8 rounded-lg overflow-hidden border border-gold/30">
+        <div class="pref-nav-inner p-3 bg-secondary/80 flex flex-wrap gap-2 items-center">
+          <span class="pref-nav-label text-gold text-xs font-bold">📍 関連エリア：</span>
+          <div class="pref-nav-links flex flex-wrap gap-1.5">
+            {relatedRegions.map((region) => (
+              <a 
+                href={`/deadning/${region.slug}/`} 
+                class={`text-xs px-2.5 py-1 rounded-full ${region.active ? 'bg-gold text-primary font-bold' : 'bg-white/10 hover:bg-white/20 text-white/80'}`}
+              >
+                {region.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+    )}
+
+    <div class="border-t border-white/10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/40">
+      <div class="flex gap-4">
+        <a href="/" class="hover:underline">ホーム</a>
+        <a href="/blog/" class="hover:underline">施工ブログ</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 車の出張パーツ取付 特急便. All Rights Reserved.</p>
+    </div>
+  </div>
 </footer>
-
-<style>
-  .footer-nav-area {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 25px;
-    padding-top: 25px;
-  }
-  .area-group-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-  }
-  @media (min-width: 768px) {
-    .area-group-container {
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 30px;
-    }
-  }
-  .area-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 16px 20px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-  .area-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--color-gold);
-    border-left: 3px solid var(--color-gold);
-    padding-left: 8px;
-    line-height: 1;
-  }
-  .area-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .area-links a {
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.7);
-    background: rgba(255, 255, 255, 0.08);
-    padding: 4px 12px;
-    border-radius: 20px;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-    white-space: nowrap;
-  }
-  .area-links a:hover {
-    color: var(--color-white);
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-  }
-  .area-links a.active {
-    background: var(--color-gold);
-    border-color: var(--color-gold);
-    color: var(--color-primary);
-    font-weight: 700;
-  }
-</style>

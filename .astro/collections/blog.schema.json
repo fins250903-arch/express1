@@ -17,10 +17,24 @@
       "format": "date-time"
     },
     "heroImage": {
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
     },
     "coverImage": {
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
     },
     "categories": {
       "type": "array",

@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CTA from '../../components/CTA.astro';
+
+// Fetch and sort posts by date or fallback to title
+const posts = await getCollection('blog');
+const sortedPosts = posts.sort((a, b) => {
+  const dateA = a.data.pubDate || a.data.date || new Date(0);
+  const dateB = b.data.pubDate || b.data.date || new Date(0);
+  return dateB.getTime() - dateA.getTime();
+});
+
+// Helper to resolve clean slug from directory index paths
+const getCleanSlug = (id: string) => {
+  return id.endsWith('/index') ? id.replace(/\/index$/, '') : id;
+};
+
+// Formatting Date helper
+const formatDate = (dateObj: Date | undefined) => {
+  if (!dateObj) return '';
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+};
+---
+<Layout 
+  title="出張デッドニング・防音施工ブログ＆事例一覧【特急便】" 
+  description="車の出張パーツ取付特急便の公式デッドニング施工ブログ。ハイエース、タイヤハウス、車内断熱防音など、実際の施工事例や効果検証、ノウハウをリアルな写真と共にご紹介します。" 
+  canonical="https://abura.site/blog/"
+>
+  <Header />
+
+  <!-- Hero Title -->
+  <section class="py-16 bg-gradient-to-b from-primary to-secondary text-white border-b border-gold/20">
+    <div class="max-w-[760px] mx-auto px-4 text-center">
+      <span class="text-xs bg-gold/20 border border-gold text-gold px-3 py-1 rounded-full font-bold uppercase tracking-widest">施工事例 & コラム</span>
+      <h1 class="text-2xl md:text-3xl font-black text-white mt-4 tracking-tight leading-snug">
+        デッドニング特急便の<br class="mobile-only"><span class="text-gold">出張施工ブログ</span>
+      </h1>
+      <p class="text-xs md:text-sm text-white/70 mt-3 leading-relaxed max-w-[500px] mx-auto">
+        ハイエース、ミニバン、軽自動車など、多様な車種のロードノイズ対策・断熱防音の様子をありのままにレポートします。
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Listing Section -->
+  <main class="max-w-[760px] mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
+      {sortedPosts.map((post) => {
+        const cleanSlug = getCleanSlug(post.id);
+        const postDate = post.data.pubDate || post.data.date;
+        const coverImage = post.data.heroImage || post.data.coverImage || "/images/blog-placeholder.jpg";
+        
+        return (
+          <article class="group bg-white rounded-xl overflow-hidden border border-black/10 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col h-full">
+            <a href={`/blog/${cleanSlug}/`} class="block overflow-hidden relative aspect-video bg-[#16213e]/20">
+              {/* Image with fallbacks */}
+              <img 
+                src={typeof coverImage === 'string' ? coverImage : coverImage.src} 
+                alt={post.data.title}
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onerror="this.src='/images/blog-placeholder.jpg';"
+              />
+              <span class="absolute top-3 left-3 bg-[#1a1a2e]/90 text-gold text-[10px] px-2.5 py-0.5 rounded font-black tracking-wider uppercase border border-gold/20 shadow-md">
+                {post.data.categories?.[0] || "施工レポート"}
+              </span>
+            </a>
+            
+            <div class="p-5 flex flex-col flex-grow">
+              <span class="text-[10px] text-black/50 font-bold block mb-1.5 flex items-center gap-1">
+                <i class="far fa-calendar-alt text-gold"></i> {formatDate(postDate)}
+              </span>
+              
+              <h2 class="text-sm font-black text-primary leading-snug group-hover:text-accent transition-colors flex-grow mb-3">
+                <a href={`/blog/${cleanSlug}/`}>
+                  {post.data.title}
+                </a>
+              </h2>
+              
+              <p class="text-xs text-black/60 line-clamp-2 leading-relaxed mb-4">
+                {post.data.description || "実際の出張施工の様子と、防音断熱の効果、お客様のリアルな反応を徹底解説いたします。"}
+              </p>
+              
+              <a 
+                href={`/blog/${cleanSlug}/`} 
+                class="inline-flex items-center gap-1.5 text-xs text-accent font-black hover:underline mt-auto self-start"
+              >
+                <span>続きを読む</span>
+                <i class="fas fa-chevron-right text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Final conversion block -->
+    <CTA 
+      title="ブログを読んで効果に納得したら、まずは無料お見積もり！"
+      subtitle="あなたの愛車に合わせた最適なデッドニングプランをご提案いたします。LINEなら車種名と気になる部分を送るだけで簡単にお答えします。"
+    />
+  </main>
+
+  <Footer />
+</Layout>

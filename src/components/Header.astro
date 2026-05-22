@@ -1,0 +1,87 @@
+---
+---
+<header class="sticky top-0 z-[9990] bg-[#1a1a2e]/98 backdrop-blur-md border-b border-gold/20 shadow-md">
+  <div class="max-w-[760px] mx-auto px-4 py-3 flex items-center justify-between">
+    <!-- Logo/Brand Name -->
+    <a href="/" class="flex flex-col">
+      <span class="text-xs text-gold font-bold tracking-wider leading-none">車の出張パーツ取付</span>
+      <span class="text-lg font-black text-white tracking-tight flex items-center gap-1">
+        特急便 <span class="text-xs bg-accent px-1.5 py-0.5 rounded text-white font-bold leading-none animate-pulse">デッドニング専門</span>
+      </span>
+    </a>
+
+    <!-- Action Buttons (Always visible on mobile & desktop for convenience) -->
+    <div class="flex items-center gap-2">
+      <!-- Call Button (Direct Action) -->
+      <a href="tel:070-8428-0866" class="flex items-center justify-center gap-1.5 bg-accent hover:bg-[#c73850] px-3.5 py-2 rounded-full text-xs font-black text-white transition-all shadow-md active:scale-95">
+        <i class="fas fa-phone-alt animate-bounce"></i>
+        <span>電話相談</span>
+      </a>
+
+      <!-- Hamburger Menu (Mobile Toggle) -->
+      <button id="menu-toggle" aria-label="メニューを開閉する" class="flex flex-col justify-center items-center w-8 h-8 rounded border border-white/20 text-white hover:bg-white/10 active:scale-95 transition-all">
+        <span class="menu-bar w-5 h-0.5 bg-white mb-1 transition-transform"></span>
+        <span class="menu-bar w-5 h-0.5 bg-white mb-1 transition-opacity"></span>
+        <span class="menu-bar w-5 h-0.5 bg-white transition-transform"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Overlay Navigation Menu (Tailwind Controlled) -->
+  <div id="mobile-menu" class="hidden absolute top-[100%] left-0 w-full bg-[#16213e]/98 border-b border-gold/30 backdrop-blur-lg shadow-2xl transition-all duration-300">
+    <nav class="max-w-[760px] mx-auto px-6 py-6 flex flex-col gap-4">
+      <a href="/" class="flex items-center gap-3 text-white/90 hover:text-gold py-2.5 border-b border-white/5 font-bold transition-colors">
+        <i class="fas fa-home text-gold w-5"></i> ホーム
+      </a>
+      <a href="/blog/" class="flex items-center gap-3 text-white/90 hover:text-gold py-2.5 border-b border-white/5 font-bold transition-colors">
+        <i class="fas fa-blog text-gold w-5"></i> 施工ブログ・事例
+      </a>
+      <a href="https://lin.ee/g4NPYZ3" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 bg-[#06c755] hover:bg-[#05a847] text-white py-3 rounded-full font-black text-center shadow-lg transition-colors mt-2">
+        <i class="fab fa-line text-xl"></i> LINEで無料お見積もり
+      </a>
+      <p class="text-[10px] text-white/40 text-center mt-2 leading-relaxed">
+        ※ご自宅の駐車場でお車をお預かりせずにスピード施工いたします。
+      </p>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Controlled Hamburger Transformations */
+  #menu-toggle.open .menu-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  #menu-toggle.open .menu-bar:nth-child(2) {
+    opacity: 0;
+  }
+  #menu-toggle.open .menu-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+</style>
+
+<script>
+  // Simple, solid JS toggle logic with zero external dependencies
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = menuToggle.classList.contains('open');
+      if (isOpen) {
+        menuToggle.classList.remove('open');
+        mobileMenu.classList.add('hidden');
+      } else {
+        menuToggle.classList.add('open');
+        mobileMenu.classList.remove('hidden');
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target as Node) && !mobileMenu.contains(e.target as Node)) {
+        menuToggle.classList.remove('open');
+        mobileMenu.classList.add('hidden');
+      }
+    });
+  }
+</script>

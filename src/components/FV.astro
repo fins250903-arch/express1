@@ -2,11 +2,30 @@
 interface Props {
   prefName: string;
   aioDefinition: string;
+  fvCatch?: string;
+  fvSub?: string;
+  badgeList?: string[];
+  pointsList?: { bold: string; normal: string }[];
 }
 
-const { prefName, aioDefinition } = Astro.props;
+const { 
+  prefName, 
+  aioDefinition, 
+  fvCatch = `Amazonで買ったその<br><span class="highlight-gold">スピーカー</span>、私が<br><span class="highlight-red">最高の音</span>で取り付けます！`,
+  fvSub = `<strong class="text-gold">${prefName}</strong>全域・出張デッドニング＆スピーカー取付<br><span class="highlight-yellow">ご自宅で施工完了します</span>`,
+  badgeList = [
+    `${prefName}全域対応`,
+    "材料持込完全無料",
+    "追加料金ゼロ宣言"
+  ],
+  pointsList = [
+    { bold: "材料持ち込み：完全無料・大歓迎！", normal: "Amazon・楽天・ヤフオク品もOK" },
+    { bold: "出張施工：", normal: "ご自宅の駐車場で全作業完結" },
+    { bold: "約2〜3時間で完了：", normal: "あなたは家でくつろぐだけ" }
+  ]
+} = Astro.props;
 ---
-<header class="fv-section" id="fv">
+<header class="fv-section animate-fade-in" id="fv">
   <div class="fv-sound-wave">
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
@@ -15,37 +34,38 @@ const { prefName, aioDefinition } = Astro.props;
     <span class="ib">”出張“車内デッドニング業者</span>
   </div>
   <div class="fv-badges">
-    <span class="badge"><i class="fas fa-map-marker-alt"></i> {prefName}全域対応</span>
-    <span class="badge"><i class="fas fa-box-open"></i> 材料持込完全無料</span>
-    <span class="badge"><i class="fas fa-shield-alt"></i> 追加料金ゼロ宣言</span>
+    {badgeList.map((badge, idx) => (
+      <span class="badge">
+        <i class={`fas ${idx === 0 ? 'fa-map-marker-alt' : idx === 1 ? 'fa-box-open' : 'fa-shield-alt'}`}></i> {badge}
+      </span>
+    ))}
   </div>
-  <h1 class="fv-catch">
-    Amazonで買ったその<br>
-    <span class="highlight-gold">スピーカー</span>、私が<br>
-    <span class="highlight-red">最高の音</span>で取り付けます！
-  </h1>
-  <p class="fv-sub">
-    <strong class="text-gold">{prefName}</strong>全域・出張デッドニング＆スピーカー取付<br>
-    <span class="highlight-yellow">ご自宅で施工完了します</span>
-  </p>
+  <h1 class="fv-catch" set:html={fvCatch} />
+  <p class="fv-sub" set:html={fvSub} />
   <div class="container">
     <div class="aio-definition">
       <p><strong>{prefName}の出張デッドニングとは</strong>、{aioDefinition}</p>
       <div class="quality-badges">
         <span class="quality-badge gold">📍 {prefName}全域対応</span>
         <span class="quality-badge">📦 材料持込無料</span>
-        <span class="quality-badge">⏱ 約2〜3時間</span>
-        <span class="quality-badge">💰 専門店の1/3〜の価格</span>
+        <span class="quality-badge">⏱ スピード施工</span>
+        <span class="quality-badge font-bold">💰 専門店の半額以下価格</span>
       </div>
     </div>
     <ul class="fv-points">
-      <li><i class="fas fa-check-circle"></i> <span><strong class="ib">材料持ち込み：完全無料・大歓迎！</strong><br class="mobile-only">Amazon・楽天・ヤフオク品もOK</span></li>
-      <li><i class="fas fa-check-circle"></i> <span><strong class="ib">出張施工：</strong>ご自宅の駐車場で全作業完結</span></li>
-      <li><i class="fas fa-check-circle"></i> <span><strong class="ib">約2〜3時間で完了：</strong>あなたは家でくつろぐだけ</span></li>
+      {pointsList.map(point => (
+        <li>
+          <i class="fas fa-check-circle text-gold mt-1"></i> 
+          <span>
+            <strong class="ib">{point.bold}</strong>
+            <br class="mobile-only">{point.normal}
+          </span>
+        </li>
+      ))}
     </ul>
     <div class="fv-cta mobile-only">
       <a href="https://lin.ee/g4NPYZ3" target="_blank" class="btn-cta-primary pulse" id="fv-line-btn">
-        <i class="fab fa-line"></i> 今すぐ無料で見積もりする
+        <i class="fab fa-line text-lg"></i> 今すぐ無料で見積もりする
       </a>
       <p class="cta-micro">※ 30分で完了・しつこい営業は一切しません</p>
     </div>
@@ -58,7 +78,7 @@ const { prefName, aioDefinition } = Astro.props;
         <i class="fab fa-line pc-conv-icon"></i> LINE無料見積もり
       </a>
       <div class="pc-conv-divider"></div>
-      <a href="tel:07084280866" class="pc-conv-item tel">
+      <a href="tel:070-8428-0866" class="pc-conv-item tel">
         <i class="fas fa-phone-alt pc-conv-icon"></i> 電話 070-8428-0866
       </a>
     </div>
@@ -89,3 +109,4 @@ const { prefName, aioDefinition } = Astro.props;
     .mobile-only { display: block; }
   }
 </style>
+

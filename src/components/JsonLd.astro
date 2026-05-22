@@ -1,0 +1,113 @@
+---
+interface Props {
+  prefName: string;
+  keywordName: string;
+  description: string;
+  canonical: string;
+  faqItems: { q: string; a: string }[];
+}
+
+const { prefName, keywordName, description, canonical, faqItems } = Astro.props;
+
+// Re-compile strict breadcrumb items based on URL path
+const isHome = canonical === "https://abura.site/";
+const pathParts = canonical.replace("https://abura.site/", "").split("/").filter(Boolean);
+
+const breadcrumbList = {
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ホーム",
+      "item": "https://abura.site/"
+    },
+    ...pathParts.map((part, index) => {
+      const currentUrl = `https://abura.site/${pathParts.slice(0, index + 1).join("/")}/`;
+      let name = part;
+      if (index === 0) name = `${prefName}施工エリア`;
+      if (index === 1) name = keywordName;
+      return {
+        "@type": "ListItem",
+        "position": index + 2,
+        "name": name,
+        "item": currentUrl
+      };
+    })
+  ]
+};
+
+const jsonGraph = [
+  {
+    "@type": "Service",
+    "@id": `${canonical}#service`,
+    "name": `${prefName}の出張${keywordName}施工サービス`,
+    "description": description,
+    "provider": {
+      "@type": "LocalBusiness",
+      "@id": "https://abura.site/#organization",
+      "name": "車の出張パーツ取付 特急便",
+      "telephone": "070-8428-0866",
+      "priceRange": "¥29,000〜",
+      "image": "https://abura.site/images/og-image.jpg"
+    },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": prefName
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "デッドニング・防音断熱メニュー",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": `フロントドア ${keywordName}基本セット`
+          },
+          "price": "29000",
+          "priceCurrency": "JPY"
+        }
+      ]
+    }
+  },
+  {
+    "@type": "LocalBusiness",
+    "@id": `${canonical}#business`,
+    "name": `車の出張パーツ取付 特急便 ${prefName}エリア窓口`,
+    "image": "https://abura.site/images/og-image.jpg",
+    "url": canonical,
+    "telephone": "070-8428-0866",
+    "priceRange": "¥29,000〜",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": prefName,
+      "addressCountry": "JP"
+    },
+    "areaServed": {
+      "@type": "State",
+      "name": prefName
+    }
+  },
+  {
+    "@type": "FAQPage",
+    "@id": `${canonical}#faq`,
+    "mainEntity": faqItems.slice(0, 5).map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.a
+      }
+    }))
+  },
+  breadcrumbList
+];
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@graph": jsonGraph
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />

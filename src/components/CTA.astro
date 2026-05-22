@@ -1,0 +1,88 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const { 
+  title = "ご自宅の駐車場でプロの施工を体感しませんか？", 
+  subtitle = "Amazonや楽天で購入した資材・スピーカーの持ち込みも完全無料で対応！当日追加料金は一切ありません。" 
+} = Astro.props;
+---
+<section class="relative overflow-hidden py-16 px-4 bg-gradient-to-br from-primary to-secondary text-white rounded-2xl my-8 border border-gold/30 shadow-2xl">
+  <!-- Glowing subtle backdrop glow -->
+  <div class="absolute -top-40 -right-40 w-96 h-96 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-accent/15 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-[620px] mx-auto text-center relative z-10">
+    <!-- Icon/Soundwave styling -->
+    <div class="flex justify-center gap-1.5 mb-4 justify-center items-center">
+      <span class="inline-block w-1 bg-gold h-4 rounded-full"></span>
+      <span class="inline-block w-1 bg-gold h-7 rounded-full animate-pulse"></span>
+      <span class="inline-block w-1 bg-gold h-10 rounded-full"></span>
+      <span class="inline-block w-1 bg-gold h-6 rounded-full"></span>
+      <i class="fas fa-car-side text-gold text-2xl mx-1 animate-bounce"></i>
+      <span class="inline-block w-1 bg-gold h-6 rounded-full"></span>
+      <span class="inline-block w-1 bg-gold h-10 rounded-full"></span>
+      <span class="inline-block w-1 bg-gold h-7 rounded-full animate-pulse"></span>
+      <span class="inline-block w-1 bg-gold h-4 rounded-full"></span>
+    </div>
+
+    <h2 class="text-xl md:text-2xl font-black text-white leading-snug mb-3">
+      {title}
+    </h2>
+    <p class="text-sm text-white/80 leading-relaxed mb-8">
+      {subtitle}
+    </p>
+
+    <!-- Call to Actions Grid -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <!-- LINE Button -->
+      <a 
+        href="https://lin.ee/g4NPYZ3" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="flex items-center justify-center gap-2.5 bg-[#06c755] hover:bg-[#05a847] hover:scale-[1.02] text-white py-4 px-6 rounded-full font-black text-base transition-all shadow-lg shadow-[#06c755]/20 active:scale-95 w-full sm:w-[260px]"
+      >
+        <i class="fab fa-line text-2xl"></i>
+        <span>LINEで無料見積もり</span>
+      </a>
+
+      <!-- Call Button -->
+      <a 
+        href="tel:070-8428-0866" 
+        class="flex items-center justify-center gap-2.5 bg-accent hover:bg-[#c73850] hover:scale-[1.02] text-white py-4 px-6 rounded-full font-black text-base transition-all shadow-lg shadow-accent/20 active:scale-95 w-full sm:w-[260px]"
+      >
+        <i class="fas fa-phone-alt text-xl animate-bounce"></i>
+        <div class="text-left flex flex-col leading-none">
+          <span class="text-[9px] opacity-75 font-bold mb-0.5">お急ぎの方はお電話で</span>
+          <span class="text-base font-black">070-8428-0866</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Assurance Items -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-10 border-t border-white/10 pt-8 text-[11px] text-white/70">
+      <div class="flex items-center justify-center gap-1.5 font-bold">
+        <i class="fas fa-check-circle text-gold"></i>
+        <span>出張費コミ工賃</span>
+      </div>
+      <div class="flex items-center justify-center gap-1.5 font-bold">
+        <i class="fas fa-check-circle text-gold"></i>
+        <span>当日追加料金なし</span>
+      </div>
+      <div class="flex items-center justify-center gap-1.5 font-bold">
+        <i class="fas fa-check-circle text-gold"></i>
+        <span>損害賠償保険完備</span>
+      </div>
+      <div class="flex items-center justify-center gap-1.5 font-bold">
+        <i class="fas fa-check-circle text-gold"></i>
+        <span>最短即日対応可能</span>
+      </div>
+    </div>
+
+    <p class="text-[10px] text-white/40 text-center mt-5 leading-relaxed">
+      営業時間：9:00〜19:00（不定休）※LINEは24時間受付中
+    </p>
+  </div>
+</section>
