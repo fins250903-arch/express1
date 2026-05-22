@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
 import FV from '../../components/FV.astro';
 import Empathy from '../../components/Empathy.astro';
 import Solution from '../../components/Solution.astro';
@@ -195,8 +194,6 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     canonical={resolvedCanonical}
     faqItems={mergedFaqItems}
   />
-
-  <Header />
 
   <FV 
     prefName={data.prefName} 
