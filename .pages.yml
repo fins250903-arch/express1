@@ -1,0 +1,47 @@
+media: public
+content:
+  - name: blog
+    label: Blog
+    type: collection
+    path: src/content/blog
+    format: frontmatter
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+      - name: pubDate
+        label: Publish Date
+        type: date
+      - name: heroImage
+        label: Hero Image
+        type: image
+      - name: body
+        label: Body
+        type: rich-text
+  - name: regions
+    label: Regions
+    type: collection
+    path: src/content/regions
+    format: json
+    fields:
+      - name: prefName
+        label: Prefecture Name
+        type: string
+        required: true
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+      - name: aioDefinition
+        label: AIO Definition
+        type: string
+      - name: pricingNote
+        label: Pricing Note
+        type: string
