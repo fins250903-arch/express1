@@ -1,0 +1,49 @@
+---
+interface Props {
+  pricingNote: string;
+  priceTable?: { menu: string; desc: string; price: string }[];
+}
+
+const { 
+  pricingNote,
+  priceTable = [
+    { menu: "🏆 左右ドア デッドニング（車の静音化）", desc: "制振材・吸音材施工・左右2枚", price: "28,000円〜" },
+    { menu: "タイヤハウス デッドニング", desc: "足元ロードノイズ根本対策", price: "39,000円〜" }
+  ]
+} = Astro.props;
+---
+<section class="pricing-section" id="pricing">
+  <div class="container">
+    <h2 class="section-title">主要メニューと料金（税込）</h2>
+    <div class="fade-in">
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th>メニュー</th>
+            <th style="text-align:right">工賃（税込）</th>
+          </tr>
+        </thead>
+        <tbody>
+          {priceTable.map(row => (
+            <tr>
+              <td>
+                <strong set:html={row.menu} />
+                <br />
+                <small class="text-white/60" set:html={row.desc} />
+              </td>
+              <td class="price-highlight" style="text-align:right" set:html={row.price} />
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div class="price-note-box" set:html={pricingNote.replace(/\n/g, '<br>')} />
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .mobile-only { display: none; }
+  }
+</style>
+

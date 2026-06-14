@@ -1,0 +1,175 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CTA from '../../components/CTA.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => {
+    // Sanitize path names like 'noteaura2604/index' to 'noteaura2604'
+    const slug = post.id.endsWith('/index') ? post.id.replace(/\/index$/, '') : post.id;
+    return {
+      params: { slug },
+      props: { post }
+    };
+  });
+}
+
+const { post } = Astro.props;
+const { slug } = Astro.params;
+const { Content } = await render(post);
+
+const postDate = post.data.pubDate || post.data.date;
+const coverImage = post.data.heroImage || post.data.coverImage || "/images/blog-placeholder.jpg";
+const resolvedCanonical = `https://abura.site/blog/${slug}/`;
+
+// Formatting Date helper
+const formatDate = (dateObj: Date | undefined) => {
+  if (!dateObj) return '';
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}.${m}.${d}`;
+};
+---
+<Layout 
+  title={`${post.data.title}【特急便】`}
+  description={post.data.description || `${post.data.title}の出張デッドニング施工事例を詳しくご紹介します。`}
+  canonical={resolvedCanonical}
+>
+  <Header />
+
+  <!-- Article Header -->
+  <header class="max-w-[760px] mx-auto px-4 pt-10 pb-6 border-b border-black/10">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="bg-[#1a1a2e] text-gold text-[10px] px-2.5 py-0.5 rounded font-black tracking-wider uppercase">
+        {post.data.categories?.[0] || "施工レポート"}
+      </span>
+      {postDate && (
+        <span class="text-[11px] text-black/50 font-bold flex items-center gap-1">
+          <i class="far fa-calendar-alt text-gold"></i> {formatDate(postDate)}
+        </span>
+      )}
+    </div>
+    
+    <h1 class="text-xl md:text-2xl font-black text-primary leading-snug mb-4">
+      {post.data.title}
+    </h1>
+    
+    {post.data.description && (
+      <p class="text-xs md:text-sm text-black/60 leading-relaxed bg-[#f4f6f8] p-4 rounded-lg border-l-4 border-gold">
+        {post.data.description}
+      </p>
+    )}
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="max-w-[760px] mx-auto px-4 py-8">
+    {coverImage && (
+      <div class="rounded-xl overflow-hidden shadow-md mb-8 max-h-[400px] bg-[#16213e]/10">
+        <img 
+          src={typeof coverImage === 'string' ? coverImage : coverImage.src} 
+          alt={post.data.title}
+          class="w-full h-full object-cover"
+          onerror="this.src='/images/blog-placeholder.jpg';"
+        />
+      </div>
+    )}
+
+    <!-- Dynamic Rendered Markdown Content with protective scoped styling -->
+    <article class="blog-body text-sm md:text-base text-primary/90 leading-relaxed mb-12">
+      <Content />
+    </article>
+
+    <!-- Strong Final conversion CTA box -->
+    <CTA 
+      title="施工事例と同じ車種、または気になるデッドニングはありませんか？"
+      subtitle="ご自宅の駐車場でお車をお預かりせずにスピード施工いたします。LINE相談なら車種とやりたいメニュー（タイヤハウス、ハイエース、断熱等）を送るだけでお答えします！"
+    />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style is:global>
+  /* Localized Scoped Styles to prevent MD/MDX layout shifts & styling losses */
+  .blog-body {
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+  
+  .blog-body h2 {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #1a1a2e;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #d4af37;
+    line-height: 1.4;
+  }
+
+  .blog-body h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: #16213e;
+    margin: 1.5rem 0 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .blog-body h3::before {
+    content: "■";
+    color: #e94560;
+    font-size: 0.9em;
+  }
+
+  .blog-body p {
+    margin-bottom: 1.25rem;
+    line-height: 1.8;
+  }
+
+  .blog-body strong {
+    font-weight: 900;
+    color: #1a1a2e;
+    background: linear-gradient(transparent 70%, rgba(212, 175, 55, 0.25) 70%);
+  }
+
+  .blog-body ul, .blog-body ol {
+    margin: 1rem 0 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .blog-body ul li {
+    list-style-type: disc;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .blog-body ol li {
+    list-style-type: decimal;
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .blog-body blockquote {
+    background: #f4f6f8;
+    border-left: 4px solid #d4af37;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #555555;
+  }
+
+  .blog-body img {
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin: 1.5rem auto;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>

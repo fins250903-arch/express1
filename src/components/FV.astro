@@ -1,0 +1,114 @@
+---
+interface Props {
+  prefName: string;
+  aioDefinition: string;
+  fvCatch?: string;
+  fvSub?: string;
+  badgeList?: string[];
+  pointsList?: { bold: string; normal: string }[];
+  bgImage?: string;
+}
+
+const { 
+  prefName, 
+  aioDefinition, 
+  fvCatch = `ロードノイズ・車内騒音にうんざり…<br><span class="highlight-gold">デッドニング</span>で実現する<br><span class="highlight-red">車の静音化</span>を出張施工！`,
+  fvSub = `<strong class="text-gold">${prefName}</strong>全域・出張デッドニングで車の静音化<br><span class="highlight-yellow">ご自宅の駐車場で施工完了・材料持込無料</span>`,
+  badgeList = [
+    `${prefName}全域対応`,
+    "材料持込完全無料",
+    "追加料金ゼロ宣言"
+  ],
+  pointsList = [
+    { bold: "材料持ち込み：完全無料・大歓迎！", normal: "レアルシルト等の制振材もOK" },
+    { bold: "出張施工：", normal: "ご自宅の駐車場で全作業完結" },
+    { bold: "約2〜3時間で完了：", normal: "あなたは家でくつろぐだけ" }
+  ],
+  bgImage = '/images/fv_mechanic.png'
+} = Astro.props;
+---
+<header class="fv-section animate-fade-in" id="fv" style={`background-image: linear-gradient(rgba(26, 26, 46, 0.52), rgba(26, 26, 46, 0.58)), url('${bgImage}');`}>
+  <div class="fv-sound-wave">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="fv-top-notif">
+    <span class="ib">３６５日２４時間受付中</span><br>
+    <span class="ib">”出張“車内デッドニング業者</span>
+  </div>
+  <div class="fv-badges">
+    {badgeList.map((badge, idx) => (
+      <span class="badge">
+        <i class={`fas ${idx === 0 ? 'fa-map-marker-alt' : idx === 1 ? 'fa-box-open' : 'fa-shield-alt'}`}></i> {badge}
+      </span>
+    ))}
+  </div>
+  <h1 class="fv-catch" set:html={fvCatch} />
+  <p class="fv-sub" set:html={fvSub} />
+  <div class="container">
+    <div class="aio-definition">
+      <p><strong>{prefName}の出張デッドニングとは</strong>、{aioDefinition}</p>
+      <div class="quality-badges">
+        <span class="quality-badge gold">📍 {prefName}全域対応</span>
+        <span class="quality-badge">📦 材料持込無料</span>
+        <span class="quality-badge">⏱ スピード施工</span>
+        <span class="quality-badge font-bold">💰 専門店の半額以下価格</span>
+      </div>
+    </div>
+    <ul class="fv-points">
+      {pointsList.map(point => (
+        <li>
+          <i class="fas fa-check-circle text-gold mt-1"></i> 
+          <span>
+            <strong class="ib">{point.bold}</strong>
+            <br class="mobile-only">{point.normal}
+          </span>
+        </li>
+      ))}
+    </ul>
+    <div class="fv-cta mobile-only">
+      <a href="https://lin.ee/g4NPYZ3" target="_blank" class="btn-cta-primary pulse" id="fv-line-btn">
+        <i class="fab fa-line text-lg"></i> 今すぐ無料で見積もりする
+      </a>
+      <p class="cta-micro">※ 30分で完了・しつこい営業は一切しません</p>
+    </div>
+  </div>
+
+  <!-- PC Conversion Bar -->
+  <div class="fv-pc-conversion">
+    <div class="pc-conv-inner">
+      <a href="https://lin.ee/g4NPYZ3" target="_blank" class="pc-conv-item line">
+        <i class="fab fa-line pc-conv-icon"></i> LINE無料見積もり
+      </a>
+      <div class="pc-conv-divider"></div>
+      <a href="tel:070-8428-0866" class="pc-conv-item tel">
+        <i class="fas fa-phone-alt pc-conv-icon"></i> 電話 070-8428-0866
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .fv-top-notif {
+    text-align: center;
+    color: var(--color-gold);
+    font-weight: 900;
+    margin-bottom: 10px;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+  }
+  .highlight-yellow {
+    background: linear-gradient(transparent 60%, rgba(255, 255, 0, 0.4) 60%);
+    font-weight: 900;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 0 4px;
+  }
+  @media (min-width: 768px) {
+    .mobile-only { display: none; }
+  }
+  @media (max-width: 767px) {
+    .fv-pc-conversion { display: none; }
+    .mobile-only { display: block; }
+  }
+</style>
+

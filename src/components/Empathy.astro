@@ -1,0 +1,40 @@
+---
+interface Props {
+  problemCity: string;
+  problemList?: string[];
+  solutionTitle?: string;
+  solutionText?: string;
+}
+
+const { 
+  problemCity,
+  problemList = [
+    "高速道路のロードノイズが<strong>うるさくて会話が聞こえない…</strong>",
+    "専門店で静音化を見積もったら<strong>10万円を超えた…</strong>",
+    "自分でデッドニングしようとしたが、<strong>ドアの分解が不安…</strong>",
+    "平日は忙しく<strong>車を預けに行く時間がない…</strong>",
+    "デッドニングって<strong>本当に効果があるの？</strong>"
+  ],
+  solutionTitle = "その悩み、特急便がすべて解決します！",
+  solutionText = `出張デッドニングなら、ご自宅の駐車場でプロが<strong>車の静音化</strong>を実現。<br>専門店の半額以下・材料持込無料。施工後は「え、こんなに静かになるの？」と<br>驚かれるお客様が<strong>${problemCity}で続出中！</strong>`
+} = Astro.props;
+---
+<section class="empathy-section" id="empathy">
+  <div class="container">
+    <h2 class="section-title">「もっと静かな車内にしたい。でも…」<br><span class="text-red">こんなお悩み、ありませんか？</span></h2>
+    <ul class="problem-list fade-in">
+      {problemList.map(item => (
+        <li>
+          <i class="fas fa-sad-cry text-accent text-lg mt-1 flex-shrink-0"></i>
+          <span set:html={item} />
+        </li>
+      ))}
+    </ul>
+    <div class="insight-box fade-in">
+      <div class="insight-icon"><i class="fas fa-lightbulb"></i></div>
+      <p class="insight-title">{solutionTitle}</p>
+      <p class="insight-text" set:html={solutionText} />
+    </div>
+  </div>
+</section>
+
