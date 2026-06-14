@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import CTA from '../../components/CTA.astro';
+import { resolveBlogHeroImage } from '../../utils/blogImages';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -22,7 +23,7 @@ const { slug } = Astro.params;
 const { Content } = await render(post);
 
 const postDate = post.data.pubDate || post.data.date;
-const coverImage = post.data.heroImage || post.data.coverImage || "/images/blog-placeholder.jpg";
+const coverImage = resolveBlogHeroImage(post);
 const resolvedCanonical = `https://abura.site/blog/${slug}/`;
 
 // Formatting Date helper
@@ -70,7 +71,7 @@ const formatDate = (dateObj: Date | undefined) => {
     {coverImage && (
       <div class="rounded-xl overflow-hidden shadow-md mb-8 max-h-[400px] bg-[#16213e]/10">
         <img 
-          src={typeof coverImage === 'string' ? coverImage : coverImage.src} 
+          src={coverImage} 
           alt={post.data.title}
           class="w-full h-full object-cover"
           onerror="this.src='/images/blog-placeholder.jpg';"
@@ -96,8 +97,8 @@ const formatDate = (dateObj: Date | undefined) => {
 <style is:global>
   /* Localized Scoped Styles to prevent MD/MDX layout shifts & styling losses */
   .blog-body {
-    word-break: break-all;
-    overflow-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: anywhere;
   }
   
   .blog-body h2 {

@@ -15,7 +15,6 @@ import ServicePlan from '../../components/ServicePlan.astro';
 import FAQ from '../../components/FAQ.astro';
 import Related from '../../components/Related.astro';
 import Area from '../../components/Area.astro';
-import BlogLink from '../../components/BlogLink.astro';
 import Closing from '../../components/Closing.astro';
 import Footer from '../../components/Footer.astro';
 
@@ -107,12 +106,11 @@ const jsonLd = {
     <Voice voiceCity={data.voiceCity} voiceItems={data.voiceItems} />
     <MidCTA />
     <Pricing pricingNote={data.pricingNote} />
-    <Comparison prefName={data.prefName} />
+    <Comparison />
     <ServicePlan prefName={data.prefName} />
     <FAQ prefName={data.prefName} faqItems={data.faqItems} />
-    <Related />
+    <Related relatedRegions={data.relatedRegions} currentRegion={entry.id} />
     <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />
-    <BlogLink />
     <Closing prefName={data.prefName} />
   </main>
   <Footer relatedRegions={data.relatedRegions} />

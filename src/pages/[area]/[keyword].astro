@@ -15,7 +15,6 @@ import ServicePlan from '../../components/ServicePlan.astro';
 import FAQ from '../../components/FAQ.astro';
 import Related from '../../components/Related.astro';
 import Area from '../../components/Area.astro';
-import BlogLink from '../../components/BlogLink.astro';
 import Closing from '../../components/Closing.astro';
 import Footer from '../../components/Footer.astro';
 import JsonLd from '../../components/JsonLd.astro';
@@ -237,11 +236,9 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     
     <FAQ prefName={data.prefName} faqItems={mergedFaqItems} />
     
-    <Related />
+    <Related relatedRegions={data.relatedRegions} currentRegion={area} />
     
     <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />
-    
-    <BlogLink />
     
     <!-- Strong Final conversion CTA box -->
     <div class="max-w-[760px] mx-auto px-4 py-8">

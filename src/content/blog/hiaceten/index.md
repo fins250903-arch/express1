@@ -4,7 +4,7 @@ categories:
   - deadning
   - joho
 pubDate: 2026-04-23T00:00:00.000Z
-heroImage: ./images/hiace.jpg
+heroImage: "/images/blog/hiaceten/hiace.jpg"
 description: >-
   ハイエースの広い室内は最高ですが、夏場のあの「じりじりした暑さ」だけは、どうにも耐えがたいものがあります。エアコンを強めても、頭の上から熱気が降り注いでくるような、独特の不快感。雨が降れば降ったで、トタン屋根の下にいるような激しい音が響き渡ります。
 ---

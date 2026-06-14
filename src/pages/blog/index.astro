@@ -4,6 +4,7 @@ import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import CTA from '../../components/CTA.astro';
+import { getCleanSlug, resolveBlogHeroImage } from '../../utils/blogImages';
 
 // Fetch and sort posts by date or fallback to title
 const posts = await getCollection('blog');
@@ -12,11 +13,6 @@ const sortedPosts = posts.sort((a, b) => {
   const dateB = b.data.pubDate || b.data.date || new Date(0);
   return dateB.getTime() - dateA.getTime();
 });
-
-// Helper to resolve clean slug from directory index paths
-const getCleanSlug = (id: string) => {
-  return id.endsWith('/index') ? id.replace(/\/index$/, '') : id;
-};
 
 // Formatting Date helper
 const formatDate = (dateObj: Date | undefined) => {
@@ -53,14 +49,14 @@ const formatDate = (dateObj: Date | undefined) => {
       {sortedPosts.map((post) => {
         const cleanSlug = getCleanSlug(post.id);
         const postDate = post.data.pubDate || post.data.date;
-        const coverImage = post.data.heroImage || post.data.coverImage || "/images/blog-placeholder.jpg";
+        const coverImage = resolveBlogHeroImage(post);
         
         return (
           <article class="group bg-white rounded-xl overflow-hidden border border-black/10 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col h-full">
             <a href={`/blog/${cleanSlug}/`} class="block overflow-hidden relative aspect-video bg-[#16213e]/20">
               {/* Image with fallbacks */}
               <img 
-                src={typeof coverImage === 'string' ? coverImage : coverImage.src} 
+                src={coverImage} 
                 alt={post.data.title}
                 loading="lazy"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

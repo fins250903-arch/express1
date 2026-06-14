@@ -4,7 +4,7 @@ categories:
   - deadning
   - jirei
 pubDate: 2026-04-29T00:00:00.000Z
-heroImage: ./images/ハイエース、後ろリアハッチ、レトニング前のA。-e1777476623642.jpg
+heroImage: "/images/blog/kythiace/cover.jpg"
 description: 今回は京都から問い合わせをいただき、入念な打ち合わせを行い
 ---
 

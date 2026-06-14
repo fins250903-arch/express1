@@ -4,7 +4,7 @@ categories:
   - deadning
   - jirei
 pubDate: 2026-04-14T00:00:00.000Z
-heroImage: ./images/202603302-1.jpg
+heroImage: "/images/blog/noteaura2604/cover.jpg"
 description: >-
   日産オーラ（FE13型）のドアを開け、その内側に手を伸ばすとき、私はいつも一種の緊張感を覚える。それは、この車が持つ「プレミアム」という看板の裏側に、メーカーが苦心して作り上げた静寂と、コストの狭間で揺れる物理的な薄氷が共存しているのを知っているからだ。
 ---

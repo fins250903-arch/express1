@@ -3,7 +3,7 @@ title: レヴォーグの不快なゴー音3割減！週末2時間のタイヤ�
 categories:
   - deadning
 pubDate: 2026-04-16T00:00:00.000Z
-heroImage: ./images/スバル・レヴォーグタイヤデッド-e1776346061143.jpg
+heroImage: "/images/blog/revogoto/cover.jpg"
 description: スバル・レヴォーグ。あの地を這うような安定感と走りの楽しさは、一度味わうとちょっと他には代えがたいですよね。
 ---
 
