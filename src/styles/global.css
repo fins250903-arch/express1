@@ -140,7 +140,7 @@ a { text-decoration: none; color: inherit; }
    FIRST VIEW
    ================================================ */
 .fv-section {
-    background: linear-gradient(rgba(26,26,46,0.52), rgba(26,26,46,0.58)), url('/images/deadning%20image1.jpg');
+    background: linear-gradient(rgba(26,26,46,0.52), rgba(26,26,46,0.58)), url('/images/fv-deadening-interior.png');
     background-size: cover;
     background-position: center;
     padding: 60px 16px 70px;
