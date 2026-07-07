@@ -15,6 +15,7 @@ const {
 <section class="pricing-section" id="pricing">
   <div class="container">
     <h2 class="section-title">主要メニューと料金（税込）</h2>
+    <p class="material-fee-note">部材費は別</p>
     <div class="fade-in">
       <table class="price-table">
         <thead>
@@ -44,6 +45,15 @@ const {
 <style>
   @media (min-width: 768px) {
     .mobile-only { display: none; }
+  }
+
+  .material-fee-note {
+    text-align: center;
+    font-size: clamp(20px, 5vw, 28px);
+    font-weight: 900;
+    color: var(--color-accent);
+    margin-top: -20px;
+    margin-bottom: 28px;
   }
 </style>
 
