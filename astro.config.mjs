@@ -7,7 +7,14 @@ import mdx from '@astrojs/mdx';
 export default defineConfig({
   site: "https://abura.site",
   integrations: [
-    sitemap(),
+    sitemap({
+      // Advertise the latest deployment date as lastmod for every URL,
+      // reinforcing content freshness for search / answer engines (AEO).
+      serialize(item) {
+        item.lastmod = new Date().toISOString();
+        return item;
+      },
+    }),
     tailwind({
       applyBaseStyles: false, // Prevents Tailwind preflight from breaking the rich hand-crafted global.css styles
     }),

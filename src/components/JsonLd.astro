@@ -7,6 +7,8 @@ interface Props {
   faqItems: { q: string; a: string }[];
 }
 
+import { buildDateISO } from '../utils/buildDate';
+
 const { prefName, keywordName, description, canonical, faqItems } = Astro.props;
 
 // Re-compile strict breadcrumb items based on URL path
@@ -38,6 +40,16 @@ const breadcrumbList = {
 };
 
 const jsonGraph = [
+  {
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    "url": canonical,
+    "name": `${prefName}の出張${keywordName}`,
+    "description": description,
+    "inLanguage": "ja-JP",
+    "datePublished": "2025-01-01",
+    "dateModified": buildDateISO
+  },
   {
     "@type": "Service",
     "@id": `${canonical}#service`,

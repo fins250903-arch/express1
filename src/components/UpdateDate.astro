@@ -1,0 +1,25 @@
+---
+import { buildDateDisplayJa, buildDateISO } from '../utils/buildDate';
+---
+<p class="update-date">
+  <i class="far fa-calendar-check"></i>
+  最終更新日：<time datetime={buildDateISO}>{buildDateDisplayJa}</time>
+</p>
+
+<style>
+  .update-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    padding: 14px 12px 0;
+    margin: 0 auto;
+  }
+  .update-date i {
+    color: var(--color-gold);
+  }
+</style>

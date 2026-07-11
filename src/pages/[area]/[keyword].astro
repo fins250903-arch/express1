@@ -19,6 +19,7 @@ import Closing from '../../components/Closing.astro';
 import Footer from '../../components/Footer.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import CTA from '../../components/CTA.astro';
+import UpdateDate from '../../components/UpdateDate.astro';
 
 export async function getStaticPaths() {
   const regions = await getCollection('regions');
@@ -205,6 +206,7 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
   />
 
   <main>
+    <UpdateDate />
     <Empathy 
       problemCity={data.problemCity} 
       problemList={currentCampaign.problemList}
