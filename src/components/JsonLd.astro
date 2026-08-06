@@ -8,6 +8,7 @@ interface Props {
 }
 
 import { buildDateISO } from '../utils/buildDate';
+import { organizationSchema } from '../data/trustSignals';
 
 const { prefName, keywordName, description, canonical, faqItems } = Astro.props;
 
@@ -40,6 +41,7 @@ const breadcrumbList = {
 };
 
 const jsonGraph = [
+  organizationSchema(),
   {
     "@type": "WebPage",
     "@id": `${canonical}#webpage`,
@@ -55,14 +57,7 @@ const jsonGraph = [
     "@id": `${canonical}#service`,
     "name": `${prefName}の出張${keywordName}施工サービス`,
     "description": description,
-    "provider": {
-      "@type": "LocalBusiness",
-      "@id": "https://abura.site/#organization",
-      "name": "車の出張パーツ取付 特急便",
-      "telephone": "070-8428-0866",
-      "priceRange": "¥28,000〜",
-      "image": "https://abura.site/images/og-image.jpg"
-    },
+    "provider": { "@id": "https://abura.site/#organization" },
     "areaServed": {
       "@type": "AdministrativeArea",
       "name": prefName
@@ -75,7 +70,7 @@ const jsonGraph = [
           "@type": "Offer",
           "itemOffered": {
             "@type": "Service",
-            "name": `左右ドア ${keywordName}基本セット`
+            "name": `${keywordName}基本セット`
           },
           "price": "28000",
           "priceCurrency": "JPY"
@@ -99,12 +94,13 @@ const jsonGraph = [
     "areaServed": {
       "@type": "State",
       "name": prefName
-    }
+    },
+    "parentOrganization": { "@id": "https://abura.site/#organization" }
   },
   {
     "@type": "FAQPage",
     "@id": `${canonical}#faq`,
-    "mainEntity": faqItems.slice(0, 5).map(item => ({
+    "mainEntity": faqItems.map(item => ({
       "@type": "Question",
       "name": item.q,
       "acceptedAnswer": {

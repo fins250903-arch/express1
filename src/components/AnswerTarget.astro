@@ -1,0 +1,155 @@
+---
+import { TRUST } from '../data/trustSignals';
+
+interface Props {
+  prefName: string;
+  variant?: 'deadning' | 'insulation' | 'tire-house' | 'hiace';
+}
+
+const { prefName, variant = 'deadning' } = Astro.props;
+
+const copy = {
+  deadning: {
+    title: '出張デッドニングとは？結論',
+    lead: `ご自宅駐車場で、${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、車を預けずにデッドニング（静音・断熱）を完了するサービスです。左右ドアは${TRUST.doorPrice}（税込・部材別）。作業は約2〜3時間、損害保険加入済み、制振材・オーディオ機器の持ち込み同時取付OK。`,
+  },
+  insulation: {
+    title: '車内断熱・雨音対策の結論',
+    lead: `熱と雨音は天井（ルーフ）から入りやすいため、遮熱＋断熱防音の2層施工が最短ルートです。${TRUST.years}・${TRUST.annualJobs}の専門員が${prefName}のご自宅へ出張し、天井は${TRUST.roofPrice}から対応。預けず目の前で確認でき、損害保険加入済みです。`,
+  },
+  'tire-house': {
+    title: 'ロードノイズ対策の結論',
+    lead: `足元のゴー音が主なら、発生源に近いタイヤハウス施工（${TRUST.tireHousePrice}）が優先です。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、${prefName}の駐車場で預けずに施工。材料持込無料・損害保険対応です。`,
+  },
+  hiace: {
+    title: 'ハイエース静音・断熱の結論',
+    lead: `座席下エンジンの熱・唸り、天井雨音、荷室反響をまとめて抑えたい方向けの出張施工です。${TRUST.years}・${TRUST.annualJobs}の専門員が${prefName}へ直行し、預からない現場施工と損害保険で安心できます。`,
+  },
+}[variant];
+---
+<section class="answer-target" id="answer" aria-labelledby="answer-title">
+  <div class="container">
+    <div class="answer-card fade-in">
+      <p class="answer-eyebrow">40秒でわかる・依頼前の結論</p>
+      <h2 id="answer-title">{copy.title}</h2>
+      <p class="answer-lead"><strong>{copy.lead}</strong></p>
+      <ul class="answer-list">
+        <li><span>どこに依頼？</span><strong>出張専門「特急便」（店舗持ち込み不要）</strong></li>
+        <li><span>いくら？</span><strong>ドア {TRUST.doorPrice}／タイヤハウス {TRUST.tireHousePrice}／天井 {TRUST.roofPrice}</strong></li>
+        <li><span>誰が来る？</span><strong>{TRUST.years}・{TRUST.annualJobs}の専門員が直接訪問</strong></li>
+        <li><span>安心材料</span><strong>損害保険対応・目の前で確認・追加料金なし</strong></li>
+        <li><span>対応エリア</span><strong>{prefName}全域（近隣府県も対応）</strong></li>
+      </ul>
+      <div class="answer-micro">
+        <p>愛車を預けたくない方へ——専門員がご自宅へ直行。作業は目の前で確認できます。</p>
+        <p>安い＝手抜きではありません。——年間300台以上の現場経験で、見えない箇所まで同一基準。</p>
+      </div>
+      <div class="answer-cta">
+        <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary" id="answer-line-btn">
+          <i class="fab fa-line"></i> LINEで金額だけ聞く（無料）
+        </a>
+        <a href={`tel:${TRUST.phone}`} class="answer-tel" id="answer-tel-btn">
+          <i class="fas fa-phone-alt"></i> {TRUST.phone}
+        </a>
+      </div>
+      <p class="cta-micro">※ 30分目安で見積返信・しつこい営業はしません</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .answer-target {
+    padding: 8px 0 28px;
+    background: linear-gradient(180deg, #fff9ef 0%, #ffffff 100%);
+  }
+  .answer-card {
+    background: #fff;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    border-radius: 14px;
+    padding: 18px 16px 16px;
+    box-shadow: 0 8px 28px rgba(26, 26, 46, 0.08);
+  }
+  .answer-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+  }
+  .answer-card h2 {
+    font-size: clamp(18px, 4.5vw, 22px);
+    font-weight: 900;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+    line-height: 1.35;
+  }
+  .answer-lead {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #333;
+    margin-bottom: 14px;
+  }
+  .answer-list {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin: 0 0 14px;
+  }
+  .answer-list li {
+    display: grid;
+    grid-template-columns: 6.5em 1fr;
+    gap: 8px;
+    align-items: start;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 10px 12px;
+    background: #f7f8fb;
+    border-radius: 10px;
+  }
+  .answer-list li span {
+    color: #666;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .answer-list li strong {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+  .answer-micro {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .answer-micro p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: #444;
+    background: rgba(233, 69, 96, 0.06);
+    border-left: 3px solid var(--color-accent);
+    padding: 8px 10px;
+    border-radius: 0 8px 8px 0;
+  }
+  .answer-cta {
+    display: grid;
+    gap: 10px;
+  }
+  .answer-tel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 9999px;
+    border: 2px solid var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 900;
+    font-size: 15px;
+  }
+  @media (min-width: 768px) {
+    .answer-card { padding: 24px 22px 18px; }
+    .answer-cta {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+    }
+  }
+</style>

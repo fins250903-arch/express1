@@ -1027,6 +1027,11 @@ footer a { color: var(--color-gold); }
     user-select: none;
     transition: background 0.2s;
     background: #fff;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    line-height: 1.5;
 }
 .faq-q:hover { background: #f8f9fb; }
 .faq-q span {

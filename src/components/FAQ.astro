@@ -9,11 +9,13 @@ const { prefName, faqItems } = Astro.props;
 <section class="faq-section" id="faq">
   <div class="container">
     <h2 class="section-title">よくある質問</h2>
-    <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:20px;">{prefName}の出張デッドニングに関するご質問をまとめました。気になる項目をタップしてご確認ください。</p>
+    <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:20px;">{prefName}の出張施工に関するご質問です。気になる項目をタップしてご確認ください。</p>
     <div class="faq-list fade-in">
-      {faqItems.slice(0, 5).map((item) => (
-        <div class="faq-item">
-          <div class="faq-q"><span>Q</span> {item.q}</div>
+      {faqItems.map((item, index) => (
+        <div class={`faq-item${index === 0 ? ' open' : ''}`}>
+          <button type="button" class="faq-q" aria-expanded={index === 0 ? 'true' : 'false'}>
+            <span>Q</span> {item.q}
+          </button>
           <div class="faq-a"><span>A</span> {item.a}</div>
         </div>
       ))}

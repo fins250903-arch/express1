@@ -1,30 +1,55 @@
 ---
 interface Props {
   prefName: string;
+  planTitle?: string;
+  planHeading?: string;
+  badge?: string;
+  price?: string;
+  priceNote?: string;
+  items?: string[];
+  prText?: string;
 }
 
-const { prefName } = Astro.props;
+const {
+  prefName,
+  planTitle = '一番人気！<br><span class="text-gold">「車の静音化」左右ドアプラン</span>',
+  planHeading = '左右ドア デッドニング施工（制振＋吸音）',
+  badge = `${prefName}No.1人気`,
+  price = '28,000',
+  priceNote = '専門店の相場 70,000〜120,000円と比較してください',
+  items = [
+    '<strong>左右ドアデッドニング</strong>（制振材・吸音材施工）',
+    '<strong>ロードノイズ低減</strong>・車内会話がクリアに',
+    '所要時間：<strong>約2〜3時間</strong>で完了',
+    `施工場所：<strong>ご自宅の駐車場</strong>でOK（${prefName}全域出張）`,
+  ],
+  prText = '「え、こんなに静かになるの？」と、施工直後に驚かれるお客様が続出しています。',
+} = Astro.props;
+
+const icons = ['fa-check-circle', 'fa-check-circle', 'fa-clock', 'fa-home'];
 ---
 <section class="service-section" id="service">
   <div class="container">
-    <h2 class="section-title">一番人気！<br><span class="text-gold">「車の静音化」左右ドアプラン</span></h2>
+    <h2 class="section-title" set:html={planTitle} />
     <div class="set-plan-card fade-in">
       <div class="set-plan-header">
-        <span class="set-plan-badge">🏆 {prefName}No.1人気</span>
-        <h3>左右ドア デッドニング施工（制振＋吸音）</h3>
+        <span class="set-plan-badge">🏆 {badge}</span>
+        <h3>{planHeading}</h3>
       </div>
       <div class="set-plan-body">
         <div class="set-plan-price">
-          <div class="price-num">28,000<span>円〜（税込）</span></div>
-          <p class="price-note">専門店の相場 70,000〜120,000円と比較してください</p>
+          <div class="price-num">{price}<span>円〜（税込）</span></div>
+          <p class="price-note">{priceNote}</p>
         </div>
         <ul class="set-plan-items">
-          <li><i class="fas fa-check-circle"></i> <span><strong>左右ドアデッドニング</strong>（制振材・吸音材施工）</span></li>
-          <li><i class="fas fa-check-circle"></i> <span><strong>ロードノイズ低減</strong>・車内会話がクリアに</span></li>
-          <li><i class="fas fa-clock"></i> <span>所要時間：<strong>約2〜3時間</strong>で完了</span></li>
-          <li><i class="fas fa-home"></i> <span>施工場所：<strong>ご自宅の駐車場</strong>でOK（{prefName}全域出張）</span></li>
+          {items.map((item, i) => (
+            <li>
+              <i class={`fas ${icons[i] || 'fa-check-circle'}`}></i>
+              <span set:html={item} />
+            </li>
+          ))}
         </ul>
-        <p class="plan-pr">「え、こんなに静かになるの？」と、施工直後に驚かれるお客様が続出しています。</p>
+        <p class="plan-pr">{prText}</p>
       </div>
     </div>
   </div>

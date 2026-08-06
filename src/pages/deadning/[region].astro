@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import FV from '../../components/FV.astro';
+import AnswerTarget from '../../components/AnswerTarget.astro';
 import Empathy from '../../components/Empathy.astro';
 import Solution from '../../components/Solution.astro';
 import Reasons from '../../components/Reasons.astro';
@@ -19,6 +20,8 @@ import Closing from '../../components/Closing.astro';
 import Footer from '../../components/Footer.astro';
 import UpdateDate from '../../components/UpdateDate.astro';
 import { buildDateISO } from '../../utils/buildDate';
+import { buildDeadningFaqs } from '../../data/faqs';
+import { organizationSchema, TRUST } from '../../data/trustSignals';
 
 export async function getStaticPaths() {
   const excludedRegions = new Set(['tokushima', 'kagawa']);
@@ -34,19 +37,26 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const data = entry.data;
 
-// AIO Definition (Conclusion first, ~50 characters)
-const aioDefinitionShort = `${data.prefName}の出張デッドニングとは、自宅駐車場でプロが制振・吸音施工を行い、車の静音化を実現する専門サービスです。`;
+const faqItems = buildDeadningFaqs(data.prefName);
 
-// Generate JSON-LD @graph
+const aioDefinitionShort = `${data.prefName}のご自宅駐車場へ、${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、車を預けずに制振・吸音施工で静音化を実現するサービスです。左右ドア${TRUST.doorPrice}、材料・機器持込OK、損害保険対応。`;
+
+const title = data.title.includes('300')
+  ? data.title
+  : data.title.replace('材料持込OK', '専門員直接訪問・材料持込OK');
+
+const description = `${data.prefName}の出張デッドニング。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問。左右ドア${TRUST.doorPrice}、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。`;
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
+    organizationSchema(),
     {
       "@type": "WebPage",
       "@id": `${data.canonical}#webpage`,
       "url": data.canonical,
-      "name": data.title,
-      "description": data.description,
+      "name": title,
+      "description": description,
       "inLanguage": "ja-JP",
       "datePublished": "2025-01-01",
       "dateModified": buildDateISO
@@ -55,6 +65,7 @@ const jsonLd = {
       "@type": "Service",
       "@id": `${data.canonical}#service`,
       "name": "車内デッドニング施工サービス",
+      "description": aioDefinitionShort,
       "provider": { "@id": "https://abura.site/#organization" },
       "areaServed": { "@type": "State", "name": data.prefName },
       "hasOfferCatalog": {
@@ -66,6 +77,12 @@ const jsonLd = {
             "itemOffered": { "@type": "Service", "name": "左右ドア デッドニング施工（車の静音化）" },
             "price": "28000",
             "priceCurrency": "JPY"
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": { "@type": "Service", "name": "タイヤハウス デッドニング" },
+            "price": "39000",
+            "priceCurrency": "JPY"
           }
         ]
       }
@@ -76,14 +93,15 @@ const jsonLd = {
       "name": `車の出張パーツ取付 特急便 ${data.prefName}拠点`,
       "image": "https://abura.site/images/deadning%20image0.jpg",
       "url": data.canonical,
-      "telephone": "070-8428-0866",
+      "telephone": TRUST.phone,
       "priceRange": "¥28,000〜",
-      "address": { "@type": "PostalAddress", "addressRegion": data.prefName, "addressCountry": "JP" }
+      "address": { "@type": "PostalAddress", "addressRegion": data.prefName, "addressCountry": "JP" },
+      "parentOrganization": { "@id": "https://abura.site/#organization" }
     },
     {
       "@type": "FAQPage",
       "@id": `${data.canonical}#faq`,
-      "mainEntity": data.faqItems.slice(0, 5).map(item => ({
+      "mainEntity": faqItems.map(item => ({
         "@type": "Question",
         "name": item.q,
         "acceptedAnswer": { "@type": "Answer", "text": item.a }
@@ -99,11 +117,16 @@ const jsonLd = {
     }
   ]
 };
+
+const pricingNote = `✅ 施工歴3年以上・年間300台以上の専門員が直接訪問
+✅ 材料持ち込み完全無料／機器同時取付も相談可
+✅ 出張費は見積もりに含まれます（${data.prefName}全域）
+✅ 損害保険対応・当日追加料金なし`;
 ---
 
 <Layout 
-  title={data.title} 
-  description={data.description} 
+  title={title} 
+  description={description} 
   canonical={data.canonical} 
   region={entry.id}
   jsonLd={jsonLd}
@@ -111,6 +134,7 @@ const jsonLd = {
   <FV prefName={data.prefName} aioDefinition={aioDefinitionShort} />
   <main>
     <UpdateDate />
+    <AnswerTarget prefName={data.prefName} variant="deadning" />
     <Empathy problemCity={data.problemCity} />
     <Solution />
     <Reasons reasonsCity={data.reasonsCity} />
@@ -118,10 +142,14 @@ const jsonLd = {
     <Gallery />
     <Voice voiceCity={data.voiceCity} voiceItems={data.voiceItems} />
     <MidCTA />
-    <Pricing pricingNote={data.pricingNote} />
+    <Pricing pricingNote={pricingNote} priceTable={[
+      { menu: "🏆 左右ドア デッドニング（車の静音化）", desc: "制振材・吸音材施工・左右2枚", price: "28,000円〜" },
+      { menu: "タイヤハウス デッドニング", desc: "足元ロードノイズ根本対策", price: "39,000円〜" },
+      { menu: "天井ルーフ 遮熱断熱防音", desc: "雨音低減・車中泊の快適化", price: "55,000円〜" }
+    ]} />
     <Comparison />
     <ServicePlan prefName={data.prefName} />
-    <FAQ prefName={data.prefName} faqItems={data.faqItems} />
+    <FAQ prefName={data.prefName} faqItems={faqItems} />
     <Related relatedRegions={data.relatedRegions} currentRegion={entry.id} />
     <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />
     <Closing prefName={data.prefName} />
