@@ -20,6 +20,9 @@ import Footer from '../../components/Footer.astro';
 import JsonLd from '../../components/JsonLd.astro';
 import CTA from '../../components/CTA.astro';
 import UpdateDate from '../../components/UpdateDate.astro';
+import AnswerTarget from '../../components/AnswerTarget.astro';
+import { buildInsulationFaqs, buildTireHouseFaqs, buildHiaceFaqs } from '../../data/faqs';
+import { TRUST } from '../../data/trustSignals';
 
 export async function getStaticPaths() {
   const regions = await getCollection('regions');
@@ -166,27 +169,85 @@ const currentCampaign = campaignData[keyword as keyof typeof campaignData];
 // Format canonical URL for the 24 LPs (Self-referential Canonical URL)
 const resolvedCanonical = `https://abura.site/${area}/${keyword}/`;
 
-// Merge regional FAQs with Campaign Specific FAQs to build a powerful 5-item FAQ matrix
+const faqBuilders = {
+  insulation: buildInsulationFaqs,
+  'tire-house': buildTireHouseFaqs,
+  hiace: buildHiaceFaqs,
+} as const;
+
 const mergedFaqItems = [
+  ...faqBuilders[keyword as keyof typeof faqBuilders](data.prefName),
   ...currentCampaign.specificFaqs,
-  ...data.faqItems.slice(0, 3)
 ];
 
-// Compile localized conclusions first for AIO Search (conclusion-first, ~50 characters)
-const localizedAioDefinition = `${data.prefName}の出張${currentCampaign.name}施工は、ご自宅の駐車場でお車をお預かりせず、プロが店舗型の半額以下で施工する防音断熱サービスです。`;
+const answerVariant = (keyword === 'insulation' || keyword === 'tire-house' || keyword === 'hiace')
+  ? keyword
+  : 'deadning';
 
-// Compile dynamic description
-const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場で仕上げる出張${currentCampaign.seoKeyword}。材料持ち込み完全無料！当日追加料金一切なし。店舗型専門店の半額以下の工賃${currentCampaign.priceTable[0].price}〜で、驚きの静粛性と快適空間をご提供します！`;
+const localizedAioDefinition = `${data.prefName}のご自宅駐車場へ、${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、お車をお預かりせずに${currentCampaign.name}を仕上げる出張サービスです。材料持込無料・損害保険対応・店舗型より抑えめの工賃。`;
+
+const dynamicDescription = `${data.prefName}の出張${currentCampaign.seoKeyword}。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問。材料持込無料・当日追加料金なし・損害保険対応。工賃${currentCampaign.priceTable[0].price}から。`;
+
+const servicePlans = {
+  'tire-house': {
+    planTitle: '一番人気！<br><span class="text-gold">フロントタイヤハウス防音</span>',
+    planHeading: 'フロント左右タイヤハウス 制振＋吸音2層',
+    badge: `${data.prefName}ロードノイズ対策人気`,
+    price: '39,000',
+    priceNote: '足元のゴー音を発生源近くで抑える定番メニュー',
+    items: [
+      '<strong>インナーライナー脱着</strong>＋制振・吸音2層',
+      '<strong>ロードノイズ低減</strong>・高速での会話がしやすく',
+      '所要時間：内容により<strong>半日前後</strong>',
+      `施工場所：<strong>ご自宅の駐車場</strong>（${data.prefName}全域出張）`,
+    ],
+    prText: '「足元のゴー音が違う」と体感される方が多いメニューです。',
+  },
+  insulation: {
+    planTitle: '一番人気！<br><span class="text-gold">天井ルーフ遮熱断熱</span>',
+    planHeading: '天井ルーフ全面 遮熱アルミ＋極厚断熱防音',
+    badge: `${data.prefName}車中泊・雨音対策人気`,
+    price: '55,000',
+    priceNote: '熱と雨音の侵入口であるルーフから対策',
+    items: [
+      '<strong>遮熱アルミ＋断熱防音</strong>の2層施工',
+      '<strong>雨音低減</strong>・エアコン効率アップを狙いやすく',
+      '所要時間：内容により<strong>半日前後</strong>',
+      `施工場所：<strong>ご自宅の駐車場</strong>（${data.prefName}全域出張）`,
+    ],
+    prText: 'まずは天井から、という段階的プランもご提案します。',
+  },
+  hiace: {
+    planTitle: '一番人気！<br><span class="text-gold">ハイエース座席下対策</span>',
+    planHeading: 'フロントシート下 エンジンルーム防音＆断熱',
+    badge: `${data.prefName}ハイエース人気`,
+    price: '29,000',
+    priceNote: '座席下の熱と唸りを抑える入口メニュー',
+    items: [
+      '<strong>エンジン唸り・熱気</strong>への集中対策',
+      '天井・フロアへの<strong>段階的アップグレード</strong>可',
+      '所要時間：メニューにより<strong>数時間〜1日</strong>',
+      `施工場所：<strong>ご自宅の駐車場</strong>（${data.prefName}全域出張）`,
+    ],
+    prText: '預けずに、目の前でハイエース専用施工を進められます。',
+  },
+} as const;
+
+const plan = servicePlans[keyword as keyof typeof servicePlans];
+
+const pricingNote = `✅ ${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問
+✅ 材料持ち込み完全無料／機器同時取付も相談可
+✅ ${data.prefName}全域・出張費込みの明朗会計
+✅ 損害保険対応・当日追加料金なし`;
 ---
 
 <Layout 
-  title={`${data.prefName}の出張${currentCampaign.seoKeyword}【特急便】材料持込無料・当日追加料金なし`} 
+  title={`${data.prefName}の出張${currentCampaign.seoKeyword}【特急便】専門員直接訪問・材料持込無料`} 
   description={dynamicDescription} 
   canonical={resolvedCanonical} 
   region={area}
   keyword={keyword}
 >
-  <!-- Interactive Dynamic JSON-LD -->
   <JsonLd 
     prefName={data.prefName}
     keywordName={currentCampaign.name}
@@ -203,10 +264,12 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     badgeList={currentCampaign.badgeList}
     pointsList={currentCampaign.pointsList}
     bgImage={currentCampaign.bgImage}
+    priceSignal={`人気メニュー <strong>${currentCampaign.priceTable[0].price}</strong>（税込・部材別）`}
   />
 
   <main>
     <UpdateDate />
+    <AnswerTarget prefName={data.prefName} variant={answerVariant} />
     <Empathy 
       problemCity={data.problemCity} 
       problemList={currentCampaign.problemList}
@@ -220,7 +283,6 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     
     <Flow flowCity={data.flowCity} />
     
-    <!-- Image Fallback handling included -->
     <Gallery />
     
     <Voice voiceCity={data.voiceCity} voiceItems={data.voiceItems} />
@@ -228,13 +290,13 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     <MidCTA />
     
     <Pricing 
-      pricingNote={data.pricingNote} 
+      pricingNote={pricingNote} 
       priceTable={currentCampaign.priceTable}
     />
     
-    <Comparison prefName={data.prefName} />
+    <Comparison />
     
-    <ServicePlan prefName={data.prefName} />
+    <ServicePlan prefName={data.prefName} {...plan} />
     
     <FAQ prefName={data.prefName} faqItems={mergedFaqItems} />
     
@@ -242,11 +304,10 @@ const dynamicDescription = `${data.prefName}にてプロがご自宅の駐車場
     
     <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />
     
-    <!-- Strong Final conversion CTA box -->
     <div class="max-w-[760px] mx-auto px-4 py-8">
       <CTA 
         title={`${data.prefName}で最高の愛車空間を手に入れませんか？`}
-        subtitle={`ご自宅のガレージや駐車場で完結するため、店舗に車を預けに行く手間は一切ありません。車種や施工範囲に合わせてプロが丁寧に施工いたします。LINE相談・お見積もりは完全無料です。`}
+        subtitle={`施工歴3年以上・年間300台以上の専門員がご自宅へ直行。預けずに目の前で確認でき、材料・機器の持込同時取付も相談可能です。LINE見積もり無料。`}
       />
     </div>
 

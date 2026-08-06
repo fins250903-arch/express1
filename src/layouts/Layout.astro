@@ -171,10 +171,14 @@ const defaultOgImage = `${siteDomain}/images/og-image.jpg`; // Fallback OGP Imag
               const item = q.closest('.faq-item');
               if (item) {
                   const isOpen = item.classList.contains('open');
-                  // Close other open FAQ items to keep a clean viewport
-                  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+                  document.querySelectorAll('.faq-item.open').forEach(el => {
+                      el.classList.remove('open');
+                      const btn = el.querySelector('.faq-q');
+                      if (btn) btn.setAttribute('aria-expanded', 'false');
+                  });
                   if (!isOpen) {
                       item.classList.add('open');
+                      q.setAttribute('aria-expanded', 'true');
                   }
               }
           });

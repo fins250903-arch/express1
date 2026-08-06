@@ -1,8 +1,266 @@
-<html>
-  <head>
-    <meta http-equiv="refresh" content="0;url=/deadning/osaka/" />
-  </head>
-  <body>
-    <p>Redirecting to <a href="/deadning/osaka/">Osaka page</a>...</p>
-  </body>
-</html>
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import FAQ from '../../components/FAQ.astro';
+import MidCTA from '../../components/MidCTA.astro';
+import { TRUST, organizationSchema } from '../../data/trustSignals';
+import { buildDeadningFaqs } from '../../data/faqs';
+import { buildDateISO } from '../../utils/buildDate';
+
+const title = '出張デッドニング・車の静音化【特急便】材料持込OK・28,000円〜｜関西〜愛知';
+const description =
+  '施工歴3年以上・年間300台以上の専門員が直接訪問する出張デッドニング。左右ドア28,000円〜、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。大阪・兵庫・京都・滋賀・奈良・和歌山・三重・愛知。';
+const canonical = 'https://abura.site/deadning/';
+
+const regions = [
+  { name: '大阪府', slug: 'osaka' },
+  { name: '兵庫県', slug: 'hyogo' },
+  { name: '京都府', slug: 'kyoto' },
+  { name: '滋賀県', slug: 'shiga' },
+  { name: '奈良県', slug: 'nara' },
+  { name: '和歌山県', slug: 'wakayama' },
+  { name: '三重県', slug: 'mie' },
+  { name: '愛知県', slug: 'aichi' },
+];
+
+const menus = [
+  { name: '左右ドア静音化', price: TRUST.doorPrice, note: '音質・会話クリア' },
+  { name: 'タイヤハウス', price: TRUST.tireHousePrice, note: 'ロードノイズ対策' },
+  { name: '天井遮熱断熱', price: TRUST.roofPrice, note: '雨音・車中泊' },
+];
+
+const faqItems = buildDeadningFaqs('対応エリア');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    organizationSchema(),
+    {
+      '@type': 'WebPage',
+      '@id': `${canonical}#webpage`,
+      url: canonical,
+      name: title,
+      description,
+      inLanguage: 'ja-JP',
+      datePublished: '2025-01-01',
+      dateModified: buildDateISO,
+    },
+    {
+      '@type': 'Service',
+      '@id': `${canonical}#service`,
+      name: '出張デッドニング・車の静音化',
+      provider: { '@id': 'https://abura.site/#organization' },
+      areaServed: regions.map((r) => ({ '@type': 'State', name: r.name })),
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'デッドニングメニュー',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: '左右ドア デッドニング' },
+            price: '28000',
+            priceCurrency: 'JPY',
+          },
+        ],
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        '@type': 'Question',
+        name: item.q,
+        acceptedAnswer: { '@type': 'Answer', text: item.a },
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://abura.site/' },
+        { '@type': 'ListItem', position: 2, name: 'デッドニング出張施工', item: canonical },
+      ],
+    },
+  ],
+};
+---
+<Layout title={title} description={description} canonical={canonical} jsonLd={jsonLd}>
+  <header class="hub-hero">
+    <div class="container">
+      <p class="hub-brand">{TRUST.brand}</p>
+      <h1>出張デッドニングで、<br />預けずに車内を静かに。</h1>
+      <p class="hub-lead">
+        <strong>{TRUST.years}・{TRUST.annualJobs}の専門員が直接訪問。</strong>
+        ご自宅駐車場で完結／材料・機器持込OK／損害保険対応／左右ドア {TRUST.doorPrice}
+      </p>
+      <ul class="hub-points">
+        <li>店舗へ車を預けない（目の前で確認・変更可）</li>
+        <li>関西〜愛知の8府県に出張</li>
+        <li>LINE見積もり無料・追加料金なし</li>
+      </ul>
+      <div class="hub-cta">
+        <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse">
+          <i class="fab fa-line"></i> LINEで無料見積もり
+        </a>
+        <a href={`tel:${TRUST.phone}`} class="hub-tel">
+          <i class="fas fa-phone-alt"></i> {TRUST.phone}
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hub-section">
+      <div class="container">
+        <h2 class="section-title">主要メニューと料金目安</h2>
+        <div class="hub-menu-grid">
+          {menus.map((m) => (
+            <div class="hub-menu-card">
+              <p class="hub-menu-name">{m.name}</p>
+              <p class="hub-menu-price">{m.price}</p>
+              <p class="hub-menu-note">{m.note}（部材費別）</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="hub-section hub-alt">
+      <div class="container">
+        <h2 class="section-title">お住まいの地域を選ぶ</h2>
+        <p class="hub-sub">地域ページで料金・エリア・FAQを確認できます。</p>
+        <div class="hub-region-grid">
+          {regions.map((r) => (
+            <a class="hub-region-card" href={`/deadning/${r.slug}/`}>
+              <span>{r.name}</span>
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          ))}
+        </div>
+        <div class="hub-keyword-links">
+          <a href="/osaka/tire-house/">タイヤハウス（ロードノイズ）</a>
+          <a href="/osaka/insulation/">天井遮熱・車内断熱</a>
+          <a href="/osaka/hiace/">ハイエース専用</a>
+        </div>
+      </div>
+    </section>
+
+    <MidCTA />
+    <FAQ prefName="出張対応エリア" faqItems={faqItems} />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .hub-hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #2a1f3d 100%);
+    color: #fff;
+    padding: 36px 0 32px;
+  }
+  .hub-brand {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-gold);
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .hub-hero h1 {
+    font-size: clamp(24px, 6vw, 34px);
+    font-weight: 900;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .hub-lead {
+    font-size: 14px;
+    line-height: 1.75;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 14px;
+  }
+  .hub-lead strong { color: var(--color-gold); }
+  .hub-points {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .hub-points li {
+    font-size: 13px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+  }
+  .hub-cta { display: grid; gap: 10px; }
+  .hub-tel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 9999px;
+    border: 2px solid var(--color-gold);
+    color: var(--color-gold);
+    font-weight: 900;
+  }
+  .hub-section { padding: 40px 0; }
+  .hub-alt { background: #f7f8fb; }
+  .hub-sub {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin: -8px 0 18px;
+  }
+  .hub-menu-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .hub-menu-card {
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  }
+  .hub-menu-name { font-weight: 800; color: var(--color-primary); }
+  .hub-menu-price {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--color-accent);
+    margin: 4px 0;
+  }
+  .hub-menu-note { font-size: 12px; color: #666; }
+  .hub-region-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .hub-region-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 12px;
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+  .hub-keyword-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    justify-content: center;
+  }
+  .hub-keyword-links a {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    color: #fff;
+  }
+  @media (min-width: 768px) {
+    .hub-menu-grid { grid-template-columns: repeat(3, 1fr); }
+    .hub-region-grid { grid-template-columns: repeat(4, 1fr); }
+    .hub-cta { grid-template-columns: 1.4fr 1fr; align-items: center; }
+  }
+</style>
