@@ -9,6 +9,7 @@ interface Props {
 
 import { buildDateISO } from '../utils/buildDate';
 import { organizationSchema } from '../data/trustSignals';
+import { DEADNING_OFFERS } from '../data/faqs';
 
 const { prefName, keywordName, description, canonical, faqItems } = Astro.props;
 
@@ -65,17 +66,7 @@ const jsonGraph = [
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "デッドニング・防音断熱メニュー",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": `${keywordName}基本セット`
-          },
-          "price": "28000",
-          "priceCurrency": "JPY"
-        }
-      ]
+      "itemListElement": [...DEADNING_OFFERS]
     }
   },
   {

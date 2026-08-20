@@ -298,7 +298,7 @@ const pricingNote = `✅ ${TRUST.years}・${TRUST.annualJobs}の専門員が直�
     
     <ServicePlan prefName={data.prefName} {...plan} />
     
-    <FAQ prefName={data.prefName} faqItems={mergedFaqItems} />
+    <FAQ prefName={data.prefName} faqItems={mergedFaqItems} initiallyOpen={3} />
     
     <Related relatedRegions={data.relatedRegions} currentRegion={area} />
     

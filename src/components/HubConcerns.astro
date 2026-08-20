@@ -1,0 +1,128 @@
+---
+import { TRUST } from '../data/trustSignals';
+---
+<section class="hub-concerns" id="concerns" aria-labelledby="concerns-title">
+  <div class="container">
+    <h2 id="concerns-title" class="section-title">お悩み別・最短の施工ルート</h2>
+    <p class="hub-concerns-lead">
+      「何から頼めばいいかわからない」方へ。結論だけ先に置きます。
+    </p>
+
+    <div class="concern-grid">
+      <article class="concern-card fade-in" id="road-noise">
+        <p class="concern-kicker">ロードノイズ低減</p>
+        <h3>足元のゴー音が主なら、タイヤハウスが先</h3>
+        <p class="concern-answer">
+          <strong>結論：</strong>発生源に近いタイヤハウス施工（{TRUST.tireHousePrice}・部材費別）が費用対効果が高いです。
+          {TRUST.years}・{TRUST.annualJobs}の専門員が直接訪問し、預けずに目の前で仕上げます。
+        </p>
+        <ul>
+          <li>高速のゴー・シャー音を抑えたい</li>
+          <li>会話やナビ音声が聞き取りにくい</li>
+        </ul>
+        <a class="concern-link" href="/osaka/tire-house/">タイヤハウス（大阪）の詳細 →</a>
+        <a class="concern-link subtle" href="/aichi/tire-house/">愛知のロードノイズ対策 →</a>
+      </article>
+
+      <article class="concern-card fade-in" id="insulation">
+        <p class="concern-kicker">車内断熱・天井遮熱</p>
+        <h3>雨音・暑さ・車中泊なら、天井が最短</h3>
+        <p class="concern-answer">
+          <strong>結論：</strong>熱と雨音はルーフ鉄板から入りやすいため、制振＋遮熱断熱の2層（{TRUST.roofPrice}）が基本です。
+          ご自宅駐車場で完結。損害保険対応・材料持込無料。
+        </p>
+        <ul>
+          <li>雨音で眠れない／車中泊を快適にしたい</li>
+          <li>夏のエアコン効率を上げたい</li>
+        </ul>
+        <a class="concern-link" href="/osaka/insulation/">天井遮熱・断熱（大阪）→</a>
+        <a class="concern-link subtle" href="/hyogo/insulation/">兵庫の断熱防音 →</a>
+      </article>
+
+      <article class="concern-card fade-in" id="sound-quality">
+        <p class="concern-kicker">音響効果アップ</p>
+        <h3>音楽・YouTube・映画を大きく聴くならドアから</h3>
+        <p class="concern-answer">
+          <strong>結論：</strong>左右ドアの制振＋吸音（{TRUST.doorPrice}）でビビリを抑え、音の輪郭がクリアになります。
+          こだわり部材の持込無料、スピーカー同時取付も相談可。
+        </p>
+        <ul>
+          <li>純正スピーカーのままでも音を良くしたい</li>
+          <li>大音量でも車内の響きを整えたい</li>
+        </ul>
+        <a class="concern-link" href="/deadning/osaka/">大阪の出張デッドニング詳細 →</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hub-concerns {
+    padding: 44px 0;
+    background: #fff;
+  }
+  .hub-concerns-lead {
+    text-align: center;
+    font-size: 13px;
+    color: #555;
+    margin: -6px 0 20px;
+    line-height: 1.7;
+  }
+  .concern-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .concern-card {
+    border: 1px solid #e8ecf0;
+    border-radius: 14px;
+    padding: 18px 16px;
+    background: linear-gradient(180deg, #fffdf8 0%, #fff 55%);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  }
+  .concern-kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+  }
+  .concern-card h3 {
+    font-size: clamp(16px, 4vw, 18px);
+    font-weight: 900;
+    color: var(--color-primary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+  .concern-answer {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .concern-card ul {
+    margin: 0 0 12px;
+    padding-left: 1.1em;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .concern-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-accent);
+    margin-right: 12px;
+    margin-top: 4px;
+  }
+  .concern-link.subtle {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+  @media (min-width: 768px) {
+    .concern-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+</style>

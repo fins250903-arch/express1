@@ -170,15 +170,15 @@ const defaultOgImage = `${siteDomain}/images/og-image.jpg`; // Fallback OGP Imag
           }, { passive: true });
       }
 
-      // Smooth toggles for custom FAQ Accordions
-      document.querySelectorAll('.faq-q').forEach(q => {
+      // Legacy button-based FAQ accordion only (native <details> FAQs need no JS)
+      document.querySelectorAll('button.faq-q').forEach(q => {
           q.addEventListener('click', () => {
               const item = q.closest('.faq-item');
               if (item) {
                   const isOpen = item.classList.contains('open');
                   document.querySelectorAll('.faq-item.open').forEach(el => {
                       el.classList.remove('open');
-                      const btn = el.querySelector('.faq-q');
+                      const btn = el.querySelector('button.faq-q');
                       if (btn) btn.setAttribute('aria-expanded', 'false');
                   });
                   if (!isOpen) {

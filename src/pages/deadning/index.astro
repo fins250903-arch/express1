@@ -3,8 +3,13 @@ import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
 import FAQ from '../../components/FAQ.astro';
 import MidCTA from '../../components/MidCTA.astro';
+import AnswerTarget from '../../components/AnswerTarget.astro';
+import Comparison from '../../components/Comparison.astro';
+import HubConcerns from '../../components/HubConcerns.astro';
+import InfoGain from '../../components/InfoGain.astro';
+import UpdateDate from '../../components/UpdateDate.astro';
 import { TRUST, organizationSchema } from '../../data/trustSignals';
-import { buildDeadningFaqs } from '../../data/faqs';
+import { buildDeadningFaqs, DEADNING_OFFERS } from '../../data/faqs';
 import { buildDateISO } from '../../utils/buildDate';
 
 const title = '出張デッドニング・車の静音化【特急便】材料持込OK・28,000円〜｜関西〜愛知';
@@ -24,12 +29,27 @@ const regions = [
 ];
 
 const menus = [
-  { name: '左右ドア静音化', price: TRUST.doorPrice, note: '音質・会話クリア' },
-  { name: 'タイヤハウス', price: TRUST.tireHousePrice, note: 'ロードノイズ対策' },
-  { name: '天井遮熱断熱', price: TRUST.roofPrice, note: '雨音・車中泊' },
+  {
+    name: '左右ドア静音化',
+    price: TRUST.doorPrice,
+    note: '音質・会話クリア',
+    href: '#sound-quality',
+  },
+  {
+    name: 'タイヤハウス',
+    price: TRUST.tireHousePrice,
+    note: 'ロードノイズ対策',
+    href: '#road-noise',
+  },
+  {
+    name: '天井遮熱断熱',
+    price: TRUST.roofPrice,
+    note: '雨音・車中泊',
+    href: '#insulation',
+  },
 ];
 
-const faqItems = buildDeadningFaqs('対応エリア');
+const faqItems = buildDeadningFaqs('関西〜愛知');
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -49,19 +69,14 @@ const jsonLd = {
       '@type': 'Service',
       '@id': `${canonical}#service`,
       name: '出張デッドニング・車の静音化',
+      description:
+        '施工歴3年以上・年間300台以上の専門員が直接訪問。車を預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。',
       provider: { '@id': 'https://abura.site/#organization' },
       areaServed: regions.map((r) => ({ '@type': 'State', name: r.name })),
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'デッドニングメニュー',
-        itemListElement: [
-          {
-            '@type': 'Offer',
-            itemOffered: { '@type': 'Service', name: '左右ドア デッドニング' },
-            price: '28000',
-            priceCurrency: 'JPY',
-          },
-        ],
+        itemListElement: [...DEADNING_OFFERS],
       },
     },
     {
@@ -98,33 +113,42 @@ const jsonLd = {
         <li>LINE見積もり無料・追加料金なし</li>
       </ul>
       <div class="hub-cta">
-        <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse">
+        <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="hub-fv-line">
           <i class="fab fa-line"></i> LINEで無料見積もり
         </a>
-        <a href={`tel:${TRUST.phone}`} class="hub-tel">
+        <a href={`tel:${TRUST.phone}`} class="hub-tel" id="hub-fv-tel">
           <i class="fas fa-phone-alt"></i> {TRUST.phone}
         </a>
       </div>
+      <p class="hub-micro">※ 車種と気になる音を送るだけ。30分目安で金額の目安をお返しします。</p>
     </div>
   </header>
 
   <main>
-    <section class="hub-section">
+    <UpdateDate />
+    <AnswerTarget prefName="関西〜愛知" variant="deadning" />
+
+    <section class="hub-section" id="pricing">
       <div class="container">
         <h2 class="section-title">主要メニューと料金目安</h2>
+        <p class="hub-sub">部材費別・出張費込みの目安です。タップでお悩み別の解説へ。</p>
         <div class="hub-menu-grid">
           {menus.map((m) => (
-            <div class="hub-menu-card">
+            <a class="hub-menu-card" href={m.href}>
               <p class="hub-menu-name">{m.name}</p>
               <p class="hub-menu-price">{m.price}</p>
               <p class="hub-menu-note">{m.note}（部材費別）</p>
-            </div>
+            </a>
           ))}
         </div>
       </div>
     </section>
 
-    <section class="hub-section hub-alt">
+    <HubConcerns />
+    <Comparison />
+    <InfoGain prefName="関西〜愛知" />
+
+    <section class="hub-section hub-alt" id="areas">
       <div class="container">
         <h2 class="section-title">お住まいの地域を選ぶ</h2>
         <p class="hub-sub">地域ページで料金・エリア・FAQを確認できます。</p>
@@ -132,7 +156,7 @@ const jsonLd = {
           {regions.map((r) => (
             <a class="hub-region-card" href={`/deadning/${r.slug}/`}>
               <span>{r.name}</span>
-              <i class="fas fa-chevron-right"></i>
+              <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </a>
           ))}
         </div>
@@ -140,12 +164,14 @@ const jsonLd = {
           <a href="/osaka/tire-house/">タイヤハウス（ロードノイズ）</a>
           <a href="/osaka/insulation/">天井遮熱・車内断熱</a>
           <a href="/osaka/hiace/">ハイエース専用</a>
+          <a href="/aichi/tire-house/">愛知・ロードノイズ</a>
+          <a href="/hyogo/insulation/">兵庫・車内断熱</a>
         </div>
       </div>
     </section>
 
     <MidCTA />
-    <FAQ prefName="出張対応エリア" faqItems={faqItems} />
+    <FAQ prefName="関西〜愛知" faqItems={faqItems} initiallyOpen={3} />
   </main>
   <Footer />
 </Layout>
@@ -172,10 +198,12 @@ const jsonLd = {
   .hub-lead {
     font-size: 14px;
     line-height: 1.75;
-    color: rgba(255,255,255,0.92);
+    color: rgba(255, 255, 255, 0.92);
     margin-bottom: 14px;
   }
-  .hub-lead strong { color: var(--color-gold); }
+  .hub-lead strong {
+    color: var(--color-gold);
+  }
   .hub-points {
     list-style: none;
     display: grid;
@@ -185,10 +213,13 @@ const jsonLd = {
   .hub-points li {
     font-size: 13px;
     padding: 8px 12px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     border-radius: 8px;
   }
-  .hub-cta { display: grid; gap: 10px; }
+  .hub-cta {
+    display: grid;
+    gap: 10px;
+  }
   .hub-tel {
     display: flex;
     align-items: center;
@@ -200,8 +231,19 @@ const jsonLd = {
     color: var(--color-gold);
     font-weight: 900;
   }
-  .hub-section { padding: 40px 0; }
-  .hub-alt { background: #f7f8fb; }
+  .hub-micro {
+    margin-top: 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.65);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .hub-section {
+    padding: 40px 0;
+  }
+  .hub-alt {
+    background: #f7f8fb;
+  }
   .hub-sub {
     text-align: center;
     font-size: 13px;
@@ -217,16 +259,29 @@ const jsonLd = {
     border: 1px solid #e8ecf0;
     border-radius: 12px;
     padding: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    display: block;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .hub-menu-name { font-weight: 800; color: var(--color-primary); }
+  .hub-menu-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  .hub-menu-name {
+    font-weight: 800;
+    color: var(--color-primary);
+  }
   .hub-menu-price {
     font-size: 28px;
     font-weight: 900;
     color: var(--color-accent);
     margin: 4px 0;
   }
-  .hub-menu-note { font-size: 12px; color: #666; }
+  .hub-menu-note {
+    font-size: 12px;
+    color: #666;
+  }
   .hub-region-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -242,6 +297,7 @@ const jsonLd = {
     border: 1px solid #e5e7eb;
     font-weight: 800;
     color: var(--color-primary);
+    min-height: 48px;
   }
   .hub-keyword-links {
     display: flex;
@@ -259,8 +315,15 @@ const jsonLd = {
     color: #fff;
   }
   @media (min-width: 768px) {
-    .hub-menu-grid { grid-template-columns: repeat(3, 1fr); }
-    .hub-region-grid { grid-template-columns: repeat(4, 1fr); }
-    .hub-cta { grid-template-columns: 1.4fr 1fr; align-items: center; }
+    .hub-menu-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .hub-region-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .hub-cta {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+    }
   }
 </style>
