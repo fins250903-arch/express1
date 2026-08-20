@@ -1,0 +1,151 @@
+---
+import { TRUST } from '../data/trustSignals';
+
+interface Props {
+  prefName?: string;
+}
+
+const { prefName = '関西〜愛知' } = Astro.props;
+---
+<section class="info-gain" id="info-gain" aria-labelledby="info-gain-title">
+  <div class="container">
+    <p class="info-gain-eyebrow">独自情報（Information Gain）</p>
+    <h2 id="info-gain-title" class="section-title">
+      預けない出張デッドニング実録<br />
+      <span class="info-gain-sub">{TRUST.annualJobs}の専門員が、自宅駐車場で何をするか</span>
+    </h2>
+    <p class="info-gain-lead">
+      <strong>結論：</strong>{TRUST.brand}は店舗を持たず、{TRUST.years}・{TRUST.annualJobs}の専門員が{prefName}のご自宅へ直行します。
+      車の預かりゼロ、損害保険対応、材料・機器の持込同時取付が標準。店舗相場より工賃を抑えやすいのは、固定費を乗せず現場施工に集中しているからです。
+    </p>
+
+    <div class="table-scroll">
+      <table class="info-gain-table">
+        <thead>
+          <tr>
+            <th>流れ</th>
+            <th>お客様側</th>
+            <th>専門員側</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 見積</td>
+            <td>車種と気になる音をLINE</td>
+            <td>部位と金額目安を返信</td>
+          </tr>
+          <tr>
+            <td>2. 当日</td>
+            <td>駐車場で立ち会い可</td>
+            <td>養生→内張脱着→制振／遮熱</td>
+          </tr>
+          <tr>
+            <td>3. 確認</td>
+            <td>「もう少し貼って」などその場で指示</td>
+            <td>組み付け・最終チェック</td>
+          </tr>
+          <tr>
+            <td>所要</td>
+            <td>ドア約2〜3時間／天井・タイヤハウスは半日〜</td>
+            <td>最短翌日調整も相談可</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="info-gain-points">
+      <li><strong>誰が来る？</strong> 下請け丸投げではなく、見積から施工まで一貫対応</li>
+      <li><strong>いくら？</strong> ドア {TRUST.doorPrice}／タイヤハウス {TRUST.tireHousePrice}／天井 {TRUST.roofPrice}（部材費別・出張費込み目安）</li>
+      <li><strong>安心は？</strong> 損害保険対応。預けなくても作業の透明性が高い</li>
+    </ul>
+
+    <div class="info-gain-cta">
+      <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="infogain-line-btn">
+        <i class="fab fa-line"></i> まずは金額だけLINEで聞く
+      </a>
+      <p class="cta-micro">※ しつこい営業なし・見積後の追加請求なし</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .info-gain {
+    padding: 44px 0;
+    background: linear-gradient(180deg, #f4f6fb 0%, #ffffff 100%);
+  }
+  .info-gain-eyebrow {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    margin-bottom: 8px;
+  }
+  .info-gain-sub {
+    display: block;
+    font-size: clamp(14px, 3.5vw, 16px);
+    font-weight: 700;
+    color: #555;
+    margin-top: 8px;
+  }
+  .info-gain-lead {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+    margin: 0 auto 18px;
+    max-width: 720px;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 16px;
+  }
+  .info-gain-table {
+    width: 100%;
+    min-width: 520px;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  }
+  .info-gain-table th,
+  .info-gain-table td {
+    padding: 12px 10px;
+    font-size: 13px;
+    line-height: 1.55;
+    border-bottom: 1px solid #eef1f5;
+    text-align: left;
+    vertical-align: top;
+  }
+  .info-gain-table th {
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 800;
+  }
+  .info-gain-table td:first-child {
+    font-weight: 800;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+  .info-gain-points {
+    list-style: none;
+    display: grid;
+    gap: 8px;
+    margin: 0 0 18px;
+  }
+  .info-gain-points li {
+    font-size: 13.5px;
+    line-height: 1.65;
+    padding: 10px 12px;
+    background: #fff;
+    border-radius: 10px;
+    border-left: 3px solid var(--color-gold);
+  }
+  .info-gain-cta {
+    text-align: center;
+  }
+  .info-gain-cta .btn-cta-primary {
+    max-width: 420px;
+  }
+</style>

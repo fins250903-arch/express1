@@ -718,12 +718,12 @@ section { padding: 50px 0; }
 .btn-cta-secondary:hover { border-color: var(--color-white); background: rgba(255,255,255,0.1); }
 
 /* ================================================
-   FAQ
+   FAQ (base + legacy button accordion)
    ================================================ */
 .faq-section { background: var(--color-white); }
 .faq-list { display: flex; flex-direction: column; gap: 12px; }
-.faq-item { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
-.faq-q {
+div.faq-item { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-card); }
+button.faq-q {
     background: var(--color-primary);
     color: var(--color-white);
     padding: 14px 18px;
@@ -733,7 +733,7 @@ section { padding: 50px 0; }
     gap: 10px;
     align-items: flex-start;
 }
-.faq-q span {
+button.faq-q span {
     background: var(--color-gold);
     color: var(--color-primary);
     font-size: 13px;
@@ -742,7 +742,7 @@ section { padding: 50px 0; }
     border-radius: 20px;
     flex-shrink: 0;
 }
-.faq-a {
+div.faq-item > .faq-a {
     background: var(--color-light-gray);
     padding: 14px 18px;
     font-size: 14px;
@@ -751,7 +751,7 @@ section { padding: 50px 0; }
     gap: 10px;
     align-items: flex-start;
 }
-.faq-a span {
+div.faq-item > .faq-a span {
     background: var(--color-accent);
     color: var(--color-white);
     font-size: 13px;
@@ -1005,8 +1005,8 @@ footer a { color: var(--color-gold); }
     .comparison-table td:first-child { font-size: 13px; }
 }
 
-/* --- FAQ アコーディオン強化 --- */
-.faq-item {
+/* --- FAQ アコーディオン強化（button / div.faq-item レガシーのみ） --- */
+div.faq-item {
     border: 1px solid #e8ecf0;
     border-radius: var(--radius-card);
     margin-bottom: 10px;
@@ -1014,7 +1014,7 @@ footer a { color: var(--color-gold); }
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.faq-q {
+button.faq-q {
     cursor: pointer;
     padding: 16px 48px 16px 20px;
     font-weight: 700;
@@ -1033,8 +1033,8 @@ footer a { color: var(--color-gold); }
     font-family: inherit;
     line-height: 1.5;
 }
-.faq-q:hover { background: #f8f9fb; }
-.faq-q span {
+button.faq-q:hover { background: #f8f9fb; }
+button.faq-q > span:first-child {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1048,7 +1048,7 @@ footer a { color: var(--color-gold); }
     flex-shrink: 0;
     margin-top: 1px;
 }
-.faq-q::after {
+button.faq-q::after {
     content: '+';
     position: absolute;
     right: 18px;
@@ -1060,11 +1060,12 @@ footer a { color: var(--color-gold); }
     transition: transform 0.25s;
     line-height: 1;
 }
-.faq-item.open .faq-q::after {
+div.faq-item.open > button.faq-q::after {
     content: '−';
     transform: translateY(-50%);
 }
-.faq-a {
+/* Legacy button accordion only — native <details> FAQs use component-scoped CSS */
+div.faq-item > .faq-a {
     display: none;
     padding: 0 20px 16px 58px;
     font-size: 13.5px;
@@ -1073,7 +1074,7 @@ footer a { color: var(--color-gold); }
     border-top: 1px solid #f0f2f5;
     background: #fafbfc;
 }
-.faq-a span {
+div.faq-item > .faq-a span {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1088,7 +1089,7 @@ footer a { color: var(--color-gold); }
     margin-right: 8px;
     vertical-align: middle;
 }
-.faq-item.open .faq-a { display: block; padding-top: 14px; }
+div.faq-item.open > .faq-a { display: block; padding-top: 14px; }
 
 /* --- 施工品質バッジ（定義文内） --- */
 .quality-badges {

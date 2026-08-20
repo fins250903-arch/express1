@@ -2,23 +2,135 @@
 interface Props {
   prefName: string;
   faqItems: { q: string; a: string }[];
+  /** How many items start expanded (AIO + mobile scanability) */
+  initiallyOpen?: number;
 }
 
-const { prefName, faqItems } = Astro.props;
+const { prefName, faqItems, initiallyOpen = 3 } = Astro.props;
 ---
 <section class="faq-section" id="faq">
   <div class="container">
     <h2 class="section-title">よくある質問</h2>
-    <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:20px;">{prefName}の出張施工に関するご質問です。気になる項目をタップしてご確認ください。</p>
+    <p class="faq-intro">
+      {prefName}の出張施工について、結論ファーストでまとめました。タップで開閉できます（回答は最初からページ内に記載）。
+    </p>
     <div class="faq-list fade-in">
-      {faqItems.map((item, index) => (
-        <div class={`faq-item${index === 0 ? ' open' : ''}`}>
-          <button type="button" class="faq-q" aria-expanded={index === 0 ? 'true' : 'false'}>
-            <span>Q</span> {item.q}
-          </button>
-          <div class="faq-a"><span>A</span> {item.a}</div>
-        </div>
-      ))}
+      {faqItems.map((item, index) => {
+        const isOpen = index < initiallyOpen;
+        return (
+          <details class="faq-item" open={isOpen || undefined}>
+            <summary class="faq-q">
+              <span>Q</span>
+              <span class="faq-q-text">{item.q}</span>
+            </summary>
+            <div class="faq-a">
+              <span>A</span>
+              <p class="faq-a-text">{item.a}</p>
+            </div>
+          </details>
+        );
+      })}
     </div>
   </div>
 </section>
+
+<style>
+  .faq-intro {
+    text-align: center;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  .faq-q {
+    cursor: pointer;
+    list-style: none;
+    padding: 16px 44px 16px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-primary);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+    line-height: 1.5;
+    background: #fff;
+  }
+  .faq-q::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q::after {
+    content: '+';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: var(--color-accent);
+    font-weight: 300;
+    line-height: 1;
+  }
+  .faq-item[open] .faq-q::after {
+    content: '−';
+  }
+  .faq-q > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .faq-q-text {
+    flex: 1;
+  }
+  .faq-a {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 0 16px 16px 16px;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--color-text, #333);
+    border-top: 1px solid #f0f2f5;
+    background: #fafbfc;
+  }
+  .faq-item[open] .faq-a {
+    padding-top: 14px;
+  }
+  .faq-a > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .faq-a-text {
+    margin: 0;
+    flex: 1;
+  }
+</style>
