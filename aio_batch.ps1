@@ -22,7 +22,7 @@ function Get-JsonLd($pref, $prefName, $url, $city) {
           "openingHours": "Mo-Su 09:00-19:00",
           "address": {"@type": "PostalAddress", "addressRegion": "$pref", "addressCountry": "JP"},
           "areaServed": [{"@type": "State", "name": "$pref"}],
-          "sameAs": ["https://blog.deadning.abura.site/"],
+          "sameAs": ["https://abura.site/blog/"],
           "hasOfferCatalog": {
             "@type": "OfferCatalog", "name": "出張施工メニュー",
             "itemListElement": [

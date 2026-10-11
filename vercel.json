@@ -8,7 +8,7 @@
           "value": "blog.deadning.abura.site"
         }
       ],
-      "destination": "https://deadning.abura.site/blog/:path*",
+      "destination": "https://abura.site/blog/:path*",
       "permanent": true
     }
   ]
