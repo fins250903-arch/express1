@@ -1,6 +1,39 @@
 {
   "redirects": [
     {
+      "source": "/blog",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.deadning.abura.site"
+        }
+      ],
+      "destination": "https://abura.site/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.deadning.abura.site"
+        }
+      ],
+      "destination": "https://abura.site/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "blog.deadning.abura.site"
+        }
+      ],
+      "destination": "https://abura.site/blog/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [
         {
