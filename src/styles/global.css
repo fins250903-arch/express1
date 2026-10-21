@@ -5,6 +5,12 @@
 /* --- Google Fonts --- */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap');
 
+/* Utilities only. Preflight stays off so the hand-written reset below is unchanged. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@config "../../tailwind.config.mjs";
+
 /* --- CSS Variables --- */
 :root {
     --color-primary: #1a1a2e;
