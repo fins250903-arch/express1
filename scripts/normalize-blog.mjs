@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
+import yaml from 'js-yaml';
 
 const blogDir = 'src/content/blog';
 
@@ -19,11 +19,27 @@ function walk(dir) {
     return results;
 }
 
+function parseFrontmatter(content) {
+    if (!content.startsWith('---')) return { data: {}, content };
+    const end = content.indexOf('\n---', 3);
+    if (end === -1) return { data: {}, content };
+    const raw = content.slice(3, end).replace(/^\n/, '');
+    const body = content.slice(end + 4).replace(/^\n/, '');
+    const data = yaml.load(raw) || {};
+    return { data, content: body };
+}
+
+function stringifyFrontmatter(body, data) {
+    const yamlText = yaml.dump(data, { lineWidth: -1 }).trimEnd();
+    const normalizedBody = body.startsWith('\n') ? body.slice(1) : body;
+    return `---\n${yamlText}\n---\n${normalizedBody}`;
+}
+
 const files = walk(blogDir);
 
 files.forEach(file => {
     const content = fs.readFileSync(file, 'utf8');
-    const { data, content: body } = matter(content);
+    const { data, content: body } = parseFrontmatter(content);
     let changed = false;
 
     // Normalize date -> pubDate
@@ -64,7 +80,7 @@ files.forEach(file => {
     }
 
     if (changed) {
-        const newContent = matter.stringify(body, data);
+        const newContent = stringifyFrontmatter(body, data);
         fs.writeFileSync(file, newContent);
         console.log(`Updated ${file}`);
     }
