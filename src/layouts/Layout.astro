@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { SHARE_IMAGE_URL } from '../data/trustSignals';
 
 interface Props {
 	title: string;
@@ -11,8 +12,7 @@ interface Props {
 }
 
 const { title, description, canonical, region, keyword, jsonLd } = Astro.props;
-const siteDomain = "https://abura.site";
-const defaultOgImage = `${siteDomain}/images/og-image.jpg`; // Fallback OGP Image
+const defaultOgImage = SHARE_IMAGE_URL;
 ---
 
 <!DOCTYPE html>

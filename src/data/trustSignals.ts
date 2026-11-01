@@ -16,6 +16,13 @@ export const TRUST = {
 
 export const ORGANIZATION_ID = 'https://abura.site/#organization';
 
+/**
+ * Share image used by og:image, twitter:image, and LocalBusiness JSON-LD.
+ * File is a URL-safe copy of `public/images/deadning image0.jpg`
+ * (the source filename contains a space and is a poor share URL).
+ */
+export const SHARE_IMAGE_URL = 'https://abura.site/images/og-image.jpg';
+
 export function organizationSchema() {
   return {
     '@type': 'Organization',
