@@ -22,6 +22,7 @@ import CTA from '../../components/CTA.astro';
 import UpdateDate from '../../components/UpdateDate.astro';
 import AnswerTarget from '../../components/AnswerTarget.astro';
 import { buildInsulationFaqs, buildTireHouseFaqs, buildHiaceFaqs } from '../../data/faqs';
+import { offersFromPriceTable, priceRangeFromPriceTable } from '../../data/priceSchema';
 import { TRUST } from '../../data/trustSignals';
 
 export async function getStaticPaths() {
@@ -85,10 +86,6 @@ const campaignData = {
       { menu: "リア左右タイヤハウス 制振＋吸音2層施工", desc: "荷室内部のインナーフェンダー防音も含み、ロードノイズを全域カバー", price: "45,000円〜" },
       { menu: "前後4箇所フルタイヤハウス防音セット", desc: "最もロードノイズが低減する、一番人気の極上静音パック", price: "78,000円〜" }
     ],
-    specificFaqs: [
-      { q: `${data.prefName}全域での出張費は本当に無料ですか？`, a: `はい、今回のキャンペーンでは${data.prefName}全域に出張料金コミでお伺いしております。当日ご自宅の駐車場で施工いたしますので、店舗へ車を預けに行く往復の手間も一切ございません。` },
-      { q: "インナーライナーに施工して、雨水などで剥がれたりしませんか？", a: "ご安心ください。当社では自動車外装専用の超強力耐水・耐熱粘着剤を使用したプロ用ブチル制振材と、水分を一切吸わない完全独立気泡（クローズドセル）吸音シートを熱着圧で施工するため、大雨の高速走行や洗車でも剥がれる心配は一切ありません。" }
-    ]
   },
   'hiace': {
     name: 'ハイエースデッドニング',
@@ -121,10 +118,6 @@ const campaignData = {
       { menu: "荷室フロア（床面）全面 高密度防音制振シート施工", desc: "床下からの走行ノイズと、荷物の反響音を徹底制圧", price: "58,000円〜" },
       { menu: "ハイエースセット施工（天井・床・エンジン下）", desc: "車内全体を断熱防音シェルター化する、最強のフルパッケージ", price: "148,000円〜" }
     ],
-    specificFaqs: [
-      { q: "ハイエースのフル施工にはどのくらい時間がかかりますか？", a: "天井・床・エンジン下などのロイヤルフルセット施工の場合、出張作業にて丸1日〜2日程度お時間をいただきます。ご自宅駐車場で施工できるため、車をショップに何日も預ける面倒が一切ありません。" },
-      { q: "施工後に車検や重量変更で問題になりませんか？", a: "全く問題ありません。フル施工を行っても総重量の増加は約40〜50kg（大人1名未満分）に収まるよう軽量・高性能な素材を厳選して使用しております。車内スペースやシートの可動域も一切犠牲にしません。" }
-    ]
   },
   'insulation': {
     name: '断熱防音',
@@ -157,10 +150,6 @@ const campaignData = {
       { menu: "床面フロア全面 高機能防音断熱マット施工", desc: "マフラー熱や路面熱の侵入を抑え、足元からの底冷えを解消", price: "48,000円〜" },
       { menu: "車中泊専用トータル断熱パッケージ（天井・ドア4枚・側面）", desc: "年中キャンプや車中泊を快適に楽しめる、フル断熱防音パッケージ", price: "118,000円〜" }
     ],
-    specificFaqs: [
-      { q: "使用する断熱材は、湿気でカビたり臭ったりしませんか？", a: "全く心配ございません。当社で使用する吸音断熱材は、自動車メーカーの純正採用基準もクリアした「完全撥水・防湿・防カビ・自己消火性（難燃）」の最高品質ポリエステル素材およびクローズドセル発泡スポンジです。カビや臭い、劣化が発生することは絶対にありません。" },
-      { q: "部分的な施工だけでも効果はありますか？", a: "はい、大いにあります。特に最も熱の侵入と逃げが多い「ルーフ（天井）」の施工だけでも、エアコンの効きや車中泊時の冷気遮断において劇的な効果を体感いただけます。まずルーフから始められるお客様が非常に多くいらっしゃいます。" }
-    ]
   }
 };
 
@@ -175,10 +164,9 @@ const faqBuilders = {
   hiace: buildHiaceFaqs,
 } as const;
 
-const mergedFaqItems = [
-  ...faqBuilders[keyword as keyof typeof faqBuilders](data.prefName),
-  ...currentCampaign.specificFaqs,
-];
+const faqItems = faqBuilders[keyword as keyof typeof faqBuilders](data.prefName);
+const pageOffers = offersFromPriceTable(currentCampaign.priceTable);
+const pagePriceRange = priceRangeFromPriceTable(currentCampaign.priceTable);
 
 const answerVariant = (keyword === 'insulation' || keyword === 'tire-house' || keyword === 'hiace')
   ? keyword
@@ -253,7 +241,9 @@ const pricingNote = `✅ ${TRUST.years}・${TRUST.annualJobs}の専門員が直�
     keywordName={currentCampaign.name}
     description={dynamicDescription}
     canonical={resolvedCanonical}
-    faqItems={mergedFaqItems}
+    faqItems={faqItems}
+    offers={pageOffers}
+    priceRange={pagePriceRange}
   />
 
   <FV 
@@ -298,7 +288,7 @@ const pricingNote = `✅ ${TRUST.years}・${TRUST.annualJobs}の専門員が直�
     
     <ServicePlan prefName={data.prefName} {...plan} />
     
-    <FAQ prefName={data.prefName} faqItems={mergedFaqItems} initiallyOpen={3} />
+    <FAQ prefName={data.prefName} faqItems={faqItems} initiallyOpen={3} />
     
     <Related relatedRegions={data.relatedRegions} currentRegion={area} />
     

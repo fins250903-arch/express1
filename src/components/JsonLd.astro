@@ -5,13 +5,19 @@ interface Props {
   description: string;
   canonical: string;
   faqItems: { q: string; a: string }[];
+  offers: {
+    '@type': 'Offer';
+    itemOffered: { '@type': 'Service'; name: string; description?: string };
+    price: string;
+    priceCurrency: 'JPY';
+  }[];
+  priceRange: string;
 }
 
 import { buildDateISO } from '../utils/buildDate';
-import { organizationSchema } from '../data/trustSignals';
-import { DEADNING_OFFERS } from '../data/faqs';
+import { organizationSchema, SHARE_IMAGE_URL } from '../data/trustSignals';
 
-const { prefName, keywordName, description, canonical, faqItems } = Astro.props;
+const { prefName, keywordName, description, canonical, faqItems, offers, priceRange } = Astro.props;
 
 // Re-compile strict breadcrumb items based on URL path
 const isHome = canonical === "https://abura.site/";
@@ -65,18 +71,18 @@ const jsonGraph = [
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "デッドニング・防音断熱メニュー",
-      "itemListElement": [...DEADNING_OFFERS]
+      "name": `${keywordName}の料金メニュー`,
+      "itemListElement": offers
     }
   },
   {
     "@type": "LocalBusiness",
     "@id": `${canonical}#business`,
     "name": `車の出張パーツ取付 特急便 ${prefName}エリア窓口`,
-    "image": "https://abura.site/images/og-image.jpg",
+    "image": SHARE_IMAGE_URL,
     "url": canonical,
     "telephone": "070-8428-0866",
-    "priceRange": "¥28,000〜",
+    "priceRange": priceRange,
     "address": {
       "@type": "PostalAddress",
       "addressRegion": prefName,
