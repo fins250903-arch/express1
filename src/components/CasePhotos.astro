@@ -1,0 +1,196 @@
+---
+import { Image } from 'astro:assets';
+import atraiDoor from '../../public/images/blog/atraiosaka/cover.png';
+import hiaceHatch from '../content/blog/kythiace/images/ハイエース、後ろリアハッチ、レトニング前のA。-e1777476623642.jpg';
+import hiaceCeiling from '../content/blog/hiaceten/images/hiace.jpg';
+import levorgTire from '../content/blog/revogoto/images/スバル・レヴォーグタイヤデッド-e1776346061143.jpg';
+import auraDoor from '../content/blog/noteaura2604/images/202603301-576x1024.jpg';
+
+// Captions are limited to the car and the treatment named in each post.
+// hiacekazoku reuses the same ceiling photo as hiaceten, so it is not shown twice.
+// The generic red-sheet photo in the Aura post is the unlabeled gallery image, so it is omitted.
+const cases = [
+  {
+    image: atraiDoor,
+    alt: 'スズキ・アトレーのドア内側。制振シートが貼ってある',
+    car: 'スズキ・アトレー',
+    work: 'ドア内側の制振シート',
+    href: '/blog/atraiosaka/',
+  },
+  {
+    image: hiaceHatch,
+    alt: 'ハイエースのリアハッチ。内張りを外して内側の鉄板が見えている',
+    car: 'ハイエース',
+    work: '京都市・リアハッチ内側（内張りを外した段階）',
+    href: '/blog/kythiace/',
+  },
+  {
+    image: hiaceCeiling,
+    alt: 'ハイエースの天井内側。内張りを外して資材を貼ってある',
+    car: 'ハイエース',
+    work: '天井のデッドニング（雨音・遮熱）',
+    href: '/blog/hiaceten/',
+  },
+  {
+    image: levorgTire,
+    alt: 'スバル・レヴォーグのタイヤハウス内側。制振シートが貼ってある',
+    car: 'スバル・レヴォーグ',
+    work: 'タイヤハウスの制振（ロードノイズ）',
+    href: '/blog/revogoto/',
+  },
+  {
+    image: auraDoor,
+    alt: '日産ノート オーラのドアを開けたところ',
+    car: '日産ノート オーラ（FE13）',
+    work: 'ドアのデッドニング',
+    href: '/blog/noteaura2604/',
+  },
+].map((item) => ({
+  ...item,
+  widths: [...[320, 480, 640, 800].filter((width) => width < item.image.width), item.image.width],
+}));
+---
+
+<section class="case-photos" id="case-photos" aria-labelledby="case-photos-title">
+  <div class="container">
+    <h2 id="case-photos-title" class="section-title">施工写真・施工事例</h2>
+    <p class="case-lead">
+      施工ブログに載せている写真です。車種と箇所は、記事に書いてあることだけを抜いています。
+    </p>
+    <ul class="case-grid">
+      {
+        cases.map((item) => (
+          <li>
+            <a class="case-card" href={item.href}>
+              <span class="case-photo">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  widths={item.widths}
+                  sizes="(min-width: 640px) 340px, calc(100vw - 32px)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="case-body">
+                <span class="case-car">{item.car}</span>
+                <span class="case-work">{item.work}</span>
+                <span class="case-read">記事を読む</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="case-index">
+      <a href="/blog/">施工ブログの一覧を見る</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .case-photos {
+    padding: 40px 0;
+    background: #f7f8fb;
+  }
+  .case-lead {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+    margin: -18px 0 18px;
+  }
+  .case-grid {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+  }
+  .case-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .case-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  .case-card:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  .case-photo {
+    display: block;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: #e8edf3;
+    overflow: hidden;
+  }
+  .case-photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .case-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 14px 16px;
+    flex-grow: 1;
+  }
+  .case-car {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.4;
+  }
+  .case-work {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .case-read {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--color-accent);
+  }
+  .case-index {
+    text-align: center;
+    margin-top: 18px;
+  }
+  .case-index a {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-gold);
+    padding: 4px 2px 2px;
+    min-height: 44px;
+  }
+  .case-index a:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+  @media (min-width: 640px) {
+    .case-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-card {
+      transition: none;
+    }
+  }
+</style>

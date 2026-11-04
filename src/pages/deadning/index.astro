@@ -8,6 +8,7 @@ import Comparison from '../../components/Comparison.astro';
 import HubConcerns from '../../components/HubConcerns.astro';
 import InfoGain from '../../components/InfoGain.astro';
 import UpdateDate from '../../components/UpdateDate.astro';
+import CasePhotos from '../../components/CasePhotos.astro';
 import { TRUST, organizationSchema } from '../../data/trustSignals';
 import { buildDeadningFaqs, DEADNING_OFFERS } from '../../data/faqs';
 import { buildDateISO } from '../../utils/buildDate';
@@ -144,6 +145,7 @@ const jsonLd = {
       </div>
     </section>
 
+    <CasePhotos />
     <HubConcerns />
     <Comparison />
     <InfoGain prefName="関西〜愛知" />
