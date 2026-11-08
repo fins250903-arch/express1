@@ -2,6 +2,8 @@
 interface Props {
   prefName: string;
   aioDefinition: string;
+  /** Replaces 「{prefName}全域」. Omit to keep the whole-prefecture wording. */
+  areaLabel?: string;
   fvCatch?: string;
   fvSub?: string;
   badgeList?: string[];
@@ -14,6 +16,7 @@ interface Props {
 const { 
   prefName, 
   aioDefinition, 
+  areaLabel,
   fvCatch = `ロードノイズ・車内騒音にうんざり…<br><span class="highlight-gold">デッドニング</span>で実現する<br><span class="highlight-red">車の静音化</span>を出張施工！`,
   fvSub = `<strong class="text-gold">${prefName}</strong>全域・出張デッドニングで車の静音化<br><span class="highlight-yellow">ご自宅の駐車場で施工完了・専門員が直接訪問</span>`,
   badgeList = [
@@ -30,6 +33,14 @@ const {
   priceSignal = '左右ドア工賃 <strong>28,000円〜</strong>（税込・部材別）',
   showPriceSignal = true,
 } = Astro.props;
+
+const fvSubHtml = areaLabel
+  ? `<strong class="text-gold">${areaLabel}</strong>・出張デッドニングで車の静音化<br><span class="highlight-yellow">ご自宅の駐車場で施工完了・専門員が直接訪問</span>`
+  : fvSub;
+const badges = areaLabel
+  ? [`${areaLabel}対応`, badgeList[1], badgeList[2]]
+  : badgeList;
+const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域対応`;
 ---
 <header class="fv-section animate-fade-in" id="fv" style={`background-image: linear-gradient(rgba(26, 26, 46, 0.52), rgba(26, 26, 46, 0.58)), url('${bgImage}');`}>
   <div class="fv-sound-wave">
@@ -40,7 +51,7 @@ const {
     <span class="ib">”出張“車内デッドニング業者</span>
   </div>
   <div class="fv-badges">
-    {badgeList.map((badge, idx) => (
+    {badges.map((badge, idx) => (
       <span class="badge">
         <i class={`fas ${idx === 0 ? 'fa-map-marker-alt' : idx === 1 ? 'fa-user-tie' : 'fa-shield-alt'}`}></i> {badge}
       </span>
@@ -48,12 +59,12 @@ const {
   </div>
   {showPriceSignal && <p class="fv-price-signal" set:html={priceSignal} />}
   <h1 class="fv-catch" set:html={fvCatch} />
-  <p class="fv-sub" set:html={fvSub} />
+  <p class="fv-sub" set:html={fvSubHtml} />
   <div class="container">
     <div class="aio-definition">
       <p><strong>{prefName}の出張施工とは</strong>、{aioDefinition}</p>
       <div class="quality-badges">
-        <span class="quality-badge gold">📍 {prefName}全域対応</span>
+        <span class="quality-badge gold">📍 {coverageBadgeText}</span>
         <span class="quality-badge">👷 年300台超の専門員</span>
         <span class="quality-badge">🛡 損害保険対応</span>
         <span class="quality-badge font-bold">💰 専門店の半額以下価格</span>

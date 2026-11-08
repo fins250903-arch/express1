@@ -13,6 +13,10 @@ const regions = defineCollection({
     reasonsCity: z.string(),
     flowCity: z.string(),
     voiceCity: z.string(),
+    // Replaces the default "${prefName}全域" phrase. Omit for a whole prefecture.
+    coverageLabel: z.string().optional(),
+    // Narrower service area than the prefecture name (schema.org AdministrativeArea).
+    areaServedName: z.string().optional(),
     areaBlocks: z.array(z.object({
       title: z.string(),
       content: z.string(),

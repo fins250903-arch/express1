@@ -13,12 +13,16 @@ import { TRUST, organizationSchema } from '../../data/trustSignals';
 import { buildDeadningFaqs, DEADNING_OFFERS } from '../../data/faqs';
 import { buildDateISO } from '../../utils/buildDate';
 
-const title = '出張デッドニング・車の静音化【特急便】材料持込OK・28,000円〜｜関西〜愛知';
+const title = '出張デッドニング・車の静音化【特急便】材料持込OK・28,000円〜｜関西〜愛知・沖縄本島';
 const description =
-  '施工歴3年以上・年間300台以上の専門員が直接訪問する出張デッドニング。左右ドア28,000円〜、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。大阪・兵庫・京都・滋賀・奈良・和歌山・三重・愛知。';
+  '施工歴3年以上・年間300台以上の専門員が直接訪問する出張デッドニング。左右ドア28,000円〜、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。大阪・兵庫・京都・滋賀・奈良・和歌山・三重・愛知、および沖縄本島（離島は対象外）。';
 const canonical = 'https://abura.site/deadning/';
 
-const regions = [
+const regions: {
+  name: string;
+  slug: string;
+  areaServed?: { '@type': string; name: string };
+}[] = [
   { name: '大阪府', slug: 'osaka' },
   { name: '兵庫県', slug: 'hyogo' },
   { name: '京都府', slug: 'kyoto' },
@@ -27,6 +31,11 @@ const regions = [
   { name: '和歌山県', slug: 'wakayama' },
   { name: '三重県', slug: 'mie' },
   { name: '愛知県', slug: 'aichi' },
+  {
+    name: '沖縄県（本島）',
+    slug: 'okinawa',
+    areaServed: { '@type': 'AdministrativeArea', name: '沖縄本島' },
+  },
 ];
 
 const menus = [
@@ -73,7 +82,7 @@ const jsonLd = {
       description:
         '施工歴3年以上・年間300台以上の専門員が直接訪問。車を預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。',
       provider: { '@id': 'https://abura.site/#organization' },
-      areaServed: regions.map((r) => ({ '@type': 'State', name: r.name })),
+      areaServed: regions.map((r) => r.areaServed ?? { '@type': 'State', name: r.name }),
       hasOfferCatalog: {
         '@type': 'OfferCatalog',
         name: 'デッドニングメニュー',
@@ -110,7 +119,7 @@ const jsonLd = {
       </p>
       <ul class="hub-points">
         <li>店舗へ車を預けない（目の前で確認・変更可）</li>
-        <li>関西〜愛知の8府県に出張</li>
+        <li>関西〜愛知の8府県と沖縄本島に出張（離島は対象外）</li>
         <li>LINE見積もり無料・追加料金なし</li>
       </ul>
       <div class="hub-cta">
@@ -162,6 +171,7 @@ const jsonLd = {
             </a>
           ))}
         </div>
+        <p class="hub-area-note">沖縄県は沖縄本島のみ対応です。離島（宮古・石垣・久米島など）は対象外です。</p>
         <div class="hub-keyword-links">
           <a href="/osaka/tire-house/">タイヤハウス（ロードノイズ）</a>
           <a href="/osaka/insulation/">天井遮熱・車内断熱</a>
@@ -300,6 +310,14 @@ const jsonLd = {
     font-weight: 800;
     color: var(--color-primary);
     min-height: 48px;
+  }
+  .hub-area-note {
+    margin: 14px 0 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #9a3412;
+    line-height: 1.6;
   }
   .hub-keyword-links {
     display: flex;
