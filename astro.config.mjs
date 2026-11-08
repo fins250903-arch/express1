@@ -10,6 +10,8 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
+      // The inquiry thank-you page is noindex and is not a landing page.
+      filter: (page) => !page.includes('/deadning/thanks'),
       // Advertise the latest deployment date as lastmod for every URL,
       // reinforcing content freshness for search / answer engines (AEO).
       serialize(item) {

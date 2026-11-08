@@ -1,0 +1,186 @@
+---
+/**
+ * Deadning inquiry form.
+ * Posts to FormSubmit. Japanese `name` attributes become the email labels.
+ * `_captcha=false` keeps the visitor on our thank-you page (dataLayer) instead of
+ * FormSubmit's intermediate captcha. Spam is filtered by the `_honey` honeypot.
+ * Set `_captcha` to "true" if the inbox needs the extra captcha step.
+ */
+const nextUrl = 'https://abura.site/deadning/thanks/';
+---
+
+<section class="inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
+  <div class="container">
+    <h2 class="section-title" id="inquiry-heading">フォームで相談する</h2>
+    <p class="inquiry-lead">
+      LINEやお電話が難しいときは、こちらからどうぞ。車種・気になる音・ご希望を書くと、担当者から折り返します。
+    </p>
+
+    <form
+      class="inquiry-form"
+      action="https://formsubmit.co/info@insbs.net"
+      method="POST"
+      accept-charset="UTF-8"
+    >
+      <input type="hidden" name="_subject" value="【デッドニング】お問い合わせ" />
+      <input type="hidden" name="_template" value="box" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value={nextUrl} />
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+      <div class="inquiry-field">
+        <label for="inquiry-name">お名前<span class="inquiry-req">必須</span></label>
+        <input
+          id="inquiry-name"
+          name="お名前"
+          type="text"
+          required
+          autocomplete="name"
+          maxlength="80"
+          placeholder="山田 太郎"
+        />
+      </div>
+
+      <div class="inquiry-field">
+        <label for="inquiry-tel">電話番号<span class="inquiry-req">必須</span></label>
+        <input
+          id="inquiry-tel"
+          name="電話番号"
+          type="tel"
+          required
+          autocomplete="tel"
+          inputmode="tel"
+          maxlength="20"
+          placeholder="090-1234-5678"
+        />
+      </div>
+
+      <div class="inquiry-field">
+        <label for="inquiry-postal">郵便番号<span class="inquiry-req">必須</span></label>
+        <input
+          id="inquiry-postal"
+          name="郵便番号"
+          type="text"
+          required
+          autocomplete="postal-code"
+          inputmode="numeric"
+          maxlength="8"
+          pattern="\d{3}-?\d{4}"
+          title="郵便番号は7桁で入力してください（例: 123-4567 または 1234567）"
+          placeholder="123-4567"
+        />
+        <p class="inquiry-hint">ハイフンあり・なし、どちらでも送れます。</p>
+      </div>
+
+      <div class="inquiry-field">
+        <label for="inquiry-message">相談内容<span class="inquiry-req">必須</span></label>
+        <textarea
+          id="inquiry-message"
+          name="相談内容"
+          required
+          rows="5"
+          maxlength="2000"
+          placeholder="車種、気になる音、ご希望の箇所（ドア・タイヤハウス・天井など）"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="inquiry-submit">この内容で送信する</button>
+      <p class="inquiry-note">送信後、確認画面に移動します。営業時間内に折り返します。</p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .inquiry-section {
+    background: #f7f8fb;
+  }
+  .inquiry-lead {
+    text-align: center;
+    font-size: 14px;
+    color: var(--color-text-light);
+    line-height: 1.75;
+    margin: -16px 0 22px;
+  }
+  .inquiry-form {
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    padding: 20px 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+    display: grid;
+    gap: 16px;
+  }
+  .inquiry-field {
+    display: grid;
+    gap: 6px;
+  }
+  .inquiry-field label {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .inquiry-req {
+    font-size: 11px;
+    font-weight: 800;
+    color: #fff;
+    background: var(--color-accent);
+    border-radius: 9999px;
+    padding: 2px 8px;
+    line-height: 1.4;
+  }
+  .inquiry-field input,
+  .inquiry-field textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--color-text);
+    background: #fff;
+    border: 1px solid #d5dbe3;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .inquiry-field textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  .inquiry-field input:focus,
+  .inquiry-field textarea:focus {
+    outline: 2px solid var(--color-gold);
+    border-color: var(--color-gold);
+  }
+  .inquiry-hint,
+  .inquiry-note {
+    font-size: 12px;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+  .inquiry-submit {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    width: 100%;
+    min-height: 52px;
+    border-radius: 9999px;
+    background: var(--color-primary);
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    padding: 14px 24px;
+  }
+  .inquiry-submit:hover {
+    background: #0f3460;
+  }
+  .inquiry-note {
+    text-align: center;
+  }
+  @media (min-width: 768px) {
+    .inquiry-form {
+      padding: 28px 28px;
+    }
+  }
+</style>
