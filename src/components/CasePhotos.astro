@@ -5,6 +5,14 @@ import hiaceHatch from '../content/blog/kythiace/images/ハイエース、後ろ
 import hiaceCeiling from '../content/blog/hiaceten/images/hiace.jpg';
 import levorgTire from '../content/blog/revogoto/images/スバル・レヴォーグタイヤデッド-e1776346061143.jpg';
 import auraDoor from '../content/blog/noteaura2604/images/202603301-576x1024.jpg';
+import floorBluePedals from '../assets/cases/floor-blue-pedals.jpg';
+import floorBlue from '../assets/cases/floor-blue.jpg';
+import roofBlue from '../assets/cases/roof-blue.jpg';
+import slideDoorBlue from '../assets/cases/slide-door-blue.jpg';
+import sideDoorSilverEgg from '../assets/cases/side-door-silver-egg.jpg';
+import rearHatchTrimOff from '../assets/cases/rear-hatch-trim-off.jpg';
+import sideFloorQuilt from '../assets/cases/side-floor-quilt.jpg';
+import sidePanelQuilt from '../assets/cases/side-panel-quilt.jpg';
 
 // Captions are limited to the car and the treatment named in each post.
 // hiacekazoku reuses the same ceiling photo as hiaceten, so it is not shown twice.
@@ -45,10 +53,68 @@ const cases = [
     work: 'ドアのデッドニング',
     href: '/blog/noteaura2604/',
   },
-].map((item) => ({
-  ...item,
-  widths: [...[320, 480, 640, 800].filter((width) => width < item.image.width), item.image.width],
-}));
+].map(withSrcWidths);
+
+// Shop photos of a Toyota Hiace and a Nissan Caravan. The owner did not say
+// which frame is which vehicle, so every caption stays on the shared label
+// plus only the material and place that are visible in that frame.
+const shopShots = [
+  {
+    image: floorBluePedals,
+    alt: 'ハイエース・キャラバンの施工例。ペダル付近のフロアに青い制振シートが貼ってある',
+    label: 'ハイエース・キャラバンの施工例',
+    work: 'フロア（ペダル付近）に青い制振シート',
+  },
+  {
+    image: floorBlue,
+    alt: 'ハイエース・キャラバンの施工例。フロアに青い制振シートが貼ってあり、中央に部品が見える',
+    label: 'ハイエース・キャラバンの施工例',
+    work: 'フロアに青い制振シート',
+  },
+  {
+    image: roofBlue,
+    alt: 'ハイエース・キャラバンの施工例。天井に青い制振シートが貼ってあり、左右の端はシルバーの制振シート',
+    label: 'ハイエース・キャラバンの施工例',
+    work: '天井に青い制振シート（左右の端はシルバー）',
+  },
+  {
+    image: slideDoorBlue,
+    alt: 'ハイエース・キャラバンの施工例。スライドドアの内側に青い制振シートが貼ってある',
+    label: 'ハイエース・キャラバンの施工例',
+    work: 'スライドドアに青い制振シート',
+  },
+  {
+    image: sideDoorSilverEgg,
+    alt: 'ハイエース・キャラバンの施工例。側面のドアパネルにシルバーの制振シートと、黒い卵型の吸音材が貼ってある',
+    label: 'ハイエース・キャラバンの施工例',
+    work: '側面のドアパネルにシルバーの制振シートと卵型の吸音材',
+  },
+  {
+    image: rearHatchTrimOff,
+    alt: 'ハイエース・キャラバンの施工例。リアゲートの内張りを外し、内側の鉄板と配線が見えている',
+    label: 'ハイエース・キャラバンの施工例',
+    work: 'リアゲート（内張りを外した状態）',
+  },
+  {
+    image: sideFloorQuilt,
+    alt: 'ハイエース・キャラバンの施工例。側面とフロアに黒いキルティングの吸音材があり、端に青い制振シートと卵型の吸音材が見える',
+    label: 'ハイエース・キャラバンの施工例',
+    work: '側面とフロアに黒いキルティングの吸音材。端に青い制振シートと卵型の吸音材',
+  },
+  {
+    image: sidePanelQuilt,
+    alt: 'ハイエース・キャラバンの施工例。側面パネルに黒いキルティングの吸音材が貼ってある',
+    label: 'ハイエース・キャラバンの施工例',
+    work: '側面パネルに黒いキルティングの吸音材',
+  },
+].map(withSrcWidths);
+
+function withSrcWidths<T extends { image: { width: number } }>(item: T) {
+  return {
+    ...item,
+    widths: [...[320, 480, 640, 800].filter((width) => width < item.image.width), item.image.width],
+  };
+}
 ---
 
 <section class="case-photos" id="case-photos" aria-labelledby="case-photos-title">
@@ -85,6 +151,36 @@ const cases = [
     <p class="case-index">
       <a href="/blog/">施工ブログの一覧を見る</a>
     </p>
+
+    <h3 id="hiace-caravan-gallery-title" class="case-subhead">ハイエース・キャラバン施工ギャラリー</h3>
+    <p class="case-note">
+      トヨタ ハイエースと日産 キャラバンの施工写真です。写真だけでは車種を分けられないため、どちらも同じ見出しにし、写っている箇所と資材だけを書いています。
+    </p>
+    <ul class="case-grid shot-grid">
+      {
+        shopShots.map((item) => (
+          <li>
+            <figure class="shot-card">
+              <span class="case-photo">
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  format="webp"
+                  widths={item.widths}
+                  sizes="(min-width: 640px) 340px, calc(100vw - 32px)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <figcaption class="case-body">
+                <span class="case-car">{item.label}</span>
+                <span class="case-work">{item.work}</span>
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
@@ -181,6 +277,35 @@ const cases = [
   .case-index a:focus-visible {
     outline: 3px solid var(--color-gold);
     outline-offset: 2px;
+  }
+  .case-subhead {
+    font-size: clamp(18px, 4.4vw, 22px);
+    font-weight: 900;
+    text-align: center;
+    color: var(--color-primary);
+    line-height: 1.4;
+    margin: 36px 0 12px;
+  }
+  .case-note {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 18px;
+  }
+  .shot-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    background: #fff;
+    border: 1px solid #e8ecf0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  }
+  .shot-card .case-photo {
+    aspect-ratio: 3 / 4;
   }
   @media (min-width: 640px) {
     .case-grid {
