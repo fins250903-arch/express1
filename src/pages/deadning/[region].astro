@@ -38,15 +38,27 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const data = entry.data;
 
-const faqItems = buildDeadningFaqs(data.prefName);
+const areaLabel = data.coverageLabel;
+const faqItems = buildDeadningFaqs(data.prefName, areaLabel);
 
-const aioDefinitionShort = `${data.prefName}のご自宅駐車場へ、${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、車を預けずに制振・吸音施工で静音化を実現するサービスです。左右ドア${TRUST.doorPrice}、材料・機器持込OK、損害保険対応。`;
+const aioSubject = areaLabel ?? data.prefName;
+const aioDefinitionShort = `${aioSubject}のご自宅駐車場へ、${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問し、車を預けずに制振・吸音施工で静音化を実現するサービスです。左右ドア${TRUST.doorPrice}、材料・機器持込OK、損害保険対応。`;
 
 const title = data.title.includes('300')
   ? data.title
   : data.title.replace('材料持込OK', '専門員直接訪問・材料持込OK');
 
-const description = `${data.prefName}の出張デッドニング。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問。左右ドア${TRUST.doorPrice}、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。`;
+const description = areaLabel
+  ? `${data.prefName}の出張デッドニング（${areaLabel}）。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問。左右ドア${TRUST.doorPrice}、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。`
+  : `${data.prefName}の出張デッドニング。${TRUST.years}・${TRUST.annualJobs}の専門員が直接訪問。左右ドア${TRUST.doorPrice}、預けず目の前で確認、材料・機器持込同時取付OK、損害保険対応。`;
+
+const areaServed = data.areaServedName
+  ? {
+      "@type": "AdministrativeArea",
+      "name": data.areaServedName,
+      "containedInPlace": { "@type": "State", "name": data.prefName }
+    }
+  : { "@type": "State", "name": data.prefName };
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -68,7 +80,7 @@ const jsonLd = {
       "name": "車内デッドニング施工サービス",
       "description": aioDefinitionShort,
       "provider": { "@id": "https://abura.site/#organization" },
-      "areaServed": { "@type": "State", "name": data.prefName },
+      "areaServed": areaServed,
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "デッドニングメニュー",
@@ -106,9 +118,10 @@ const jsonLd = {
   ]
 };
 
+const travelArea = areaLabel ?? `${data.prefName}全域`;
 const pricingNote = `✅ 施工歴3年以上・年間300台以上の専門員が直接訪問
 ✅ 材料持ち込み完全無料／機器同時取付も相談可
-✅ 出張費は見積もりに含まれます（${data.prefName}全域）
+✅ 出張費は見積もりに含まれます（${travelArea}）
 ✅ 損害保険対応・当日追加料金なし`;
 ---
 
@@ -119,10 +132,10 @@ const pricingNote = `✅ 施工歴3年以上・年間300台以上の専門員が
   region={entry.id}
   jsonLd={jsonLd}
 >
-  <FV prefName={data.prefName} aioDefinition={aioDefinitionShort} />
+  <FV prefName={data.prefName} aioDefinition={aioDefinitionShort} areaLabel={areaLabel} />
   <main>
     <UpdateDate />
-    <AnswerTarget prefName={data.prefName} variant="deadning" />
+    <AnswerTarget prefName={data.prefName} variant="deadning" areaLabel={areaLabel} />
     <Empathy problemCity={data.problemCity} />
     <Solution />
     <Reasons reasonsCity={data.reasonsCity} />
@@ -136,7 +149,7 @@ const pricingNote = `✅ 施工歴3年以上・年間300台以上の専門員が
       { menu: "天井ルーフ 遮熱断熱防音", desc: "雨音低減・車中泊の快適化", price: "55,000円〜" }
     ]} />
     <Comparison />
-    <ServicePlan prefName={data.prefName} />
+    <ServicePlan prefName={data.prefName} areaLabel={areaLabel} />
     <FAQ prefName={data.prefName} faqItems={faqItems} initiallyOpen={3} />
     <Related relatedRegions={data.relatedRegions} currentRegion={entry.id} />
     <Area prefName={data.prefName} areaBlocks={data.areaBlocks} />

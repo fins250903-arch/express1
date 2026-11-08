@@ -1,7 +1,8 @@
 export type FaqItem = { q: string; a: string };
 
 /** Core FAQs optimized for AIO citation + conversion (conclusion-first). */
-export function buildDeadningFaqs(prefName: string): FaqItem[] {
+export function buildDeadningFaqs(prefName: string, areaLabel?: string): FaqItem[] {
+  const area = areaLabel ?? `${prefName}全域`;
   return [
     {
       q: `${prefName}で出張デッドニングは信頼できる？店舗と何が違う？`,
@@ -17,7 +18,7 @@ export function buildDeadningFaqs(prefName: string): FaqItem[] {
     },
     {
       q: `${prefName}での出張デッドニングの工賃はいくらですか？`,
-      a: `左右ドアセットで28,000円（税込）から、タイヤハウスは39,000円〜、天井遮熱断熱は55,000円〜です（部材費別）。${prefName}全域、出張費込みの明朗会計で、見積もり後の追加請求はありません。店舗相場（7〜12万円帯）と比べて半額以下を目指せる価格です。`,
+      a: `左右ドアセットで28,000円（税込）から、タイヤハウスは39,000円〜、天井遮熱断熱は55,000円〜です（部材費別）。${area}、出張費込みの明朗会計で、見積もり後の追加請求はありません。店舗相場（7〜12万円帯）と比べて半額以下を目指せる価格です。`,
     },
     {
       q: '誰が施工に来ますか？実績はありますか？',
@@ -33,7 +34,7 @@ export function buildDeadningFaqs(prefName: string): FaqItem[] {
     },
     {
       q: `${prefName}の対応エリアと出張費はどうなっていますか？`,
-      a: `${prefName}全域に出張対応し、基本は出張費込みでお見積もりします。ご自宅・マンション駐車場など、普通車1台分のスペースがあれば施工可能です。遠方や特殊条件は事前にLINEで確認し、追加がある場合も当日請求はしません。`,
+      a: `${area}に出張対応し、基本は出張費込みでお見積もりします。ご自宅・マンション駐車場など、普通車1台分のスペースがあれば施工可能です。遠方や特殊条件は事前にLINEで確認し、追加がある場合も当日請求はしません。`,
     },
     {
       q: '車を預けずに立ち会い・仕様変更はできますか？',

@@ -29,6 +29,12 @@
     "voiceCity": {
       "type": "string"
     },
+    "coverageLabel": {
+      "type": "string"
+    },
+    "areaServedName": {
+      "type": "string"
+    },
     "areaBlocks": {
       "type": "array",
       "items": {

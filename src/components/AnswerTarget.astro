@@ -4,9 +4,12 @@ import { TRUST } from '../data/trustSignals';
 interface Props {
   prefName: string;
   variant?: 'deadning' | 'insulation' | 'tire-house' | 'hiace';
+  /** Full coverage line. Omit to keep 「{prefName}全域（近隣府県も対応）」. */
+  areaLabel?: string;
 }
 
-const { prefName, variant = 'deadning' } = Astro.props;
+const { prefName, variant = 'deadning', areaLabel } = Astro.props;
+const areaLine = areaLabel ?? `${prefName}全域（近隣府県も対応）`;
 
 const copy = {
   deadning: {
@@ -38,7 +41,7 @@ const copy = {
         <li><span>いくら？</span><strong>ドア {TRUST.doorPrice}／タイヤハウス {TRUST.tireHousePrice}／天井 {TRUST.roofPrice}</strong></li>
         <li><span>誰が来る？</span><strong>{TRUST.years}・{TRUST.annualJobs}の専門員が直接訪問</strong></li>
         <li><span>安心材料</span><strong>損害保険対応・目の前で確認・追加料金なし</strong></li>
-        <li><span>対応エリア</span><strong>{prefName}全域（近隣府県も対応）</strong></li>
+        <li><span>対応エリア</span><strong>{areaLine}</strong></li>
       </ul>
       <div class="answer-micro">
         <p>愛車を預けたくない方へ——専門員がご自宅へ直行。作業は目の前で確認できます。</p>

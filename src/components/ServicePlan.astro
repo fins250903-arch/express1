@@ -1,6 +1,8 @@
 ---
 interface Props {
   prefName: string;
+  /** Replaces 「{prefName}全域」 in the default parking line. */
+  areaLabel?: string;
   planTitle?: string;
   planHeading?: string;
   badge?: string;
@@ -12,6 +14,7 @@ interface Props {
 
 const {
   prefName,
+  areaLabel,
   planTitle = '一番人気！<br><span class="text-gold">「車の静音化」左右ドアプラン</span>',
   planHeading = '左右ドア デッドニング施工（制振＋吸音）',
   badge = `${prefName}No.1人気`,
@@ -21,7 +24,7 @@ const {
     '<strong>左右ドアデッドニング</strong>（制振材・吸音材施工）',
     '<strong>ロードノイズ低減</strong>・車内会話がクリアに',
     '所要時間：<strong>約2〜3時間</strong>で完了',
-    `施工場所：<strong>ご自宅の駐車場</strong>でOK（${prefName}全域出張）`,
+    `施工場所：<strong>ご自宅の駐車場</strong>でOK（${areaLabel ?? `${prefName}全域`}出張）`,
   ],
   prText = '「え、こんなに静かになるの？」と、施工直後に驚かれるお客様が続出しています。',
 } = Astro.props;
