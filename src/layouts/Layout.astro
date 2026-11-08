@@ -9,9 +9,10 @@ interface Props {
 	region?: string;
   keyword?: string;
   jsonLd?: any;
+  noindex?: boolean;
 }
 
-const { title, description, canonical, region, keyword, jsonLd } = Astro.props;
+const { title, description, canonical, region, keyword, jsonLd, noindex = false } = Astro.props;
 const defaultOgImage = SHARE_IMAGE_URL;
 ---
 
@@ -32,6 +33,7 @@ const defaultOgImage = SHARE_IMAGE_URL;
     <!-- SEO Meta Tags -->
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		{noindex && <meta name="robots" content="noindex, nofollow" />}
 		<meta name="google-site-verification" content="jdE4YuGRtgXmCtv4S9XqO3VXkrNluzwQu97TkQUB0ZA" />
 		<link rel="canonical" href={canonical} />
     
