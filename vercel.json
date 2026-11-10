@@ -43,6 +43,12 @@
       ],
       "destination": "https://abura.site/blog/:path*",
       "permanent": true
+    },
+    {
+      "source": "/",
+      "destination": "/deadning/",
+      "permanent": true,
+      "statusCode": 301
     }
   ]
 }

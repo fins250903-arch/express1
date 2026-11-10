@@ -44,6 +44,20 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 
+/* Inline Font Awesome stand-ins. 1em tall, width follows the glyph viewBox. */
+.fa-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    flex-shrink: 0;
+    vertical-align: -0.125em;
+}
+.fa-icon svg {
+    display: block;
+    overflow: visible;
+}
+
 /* --- Container --- */
 .container { max-width: 760px; margin: 0 auto; padding: 0 16px; }
 

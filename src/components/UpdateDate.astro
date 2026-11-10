@@ -1,8 +1,9 @@
 ---
 import { buildDateDisplayJa, buildDateISO } from '../utils/buildDate';
+import Icon from './Icon.astro';
 ---
 <p class="update-date">
-  <i class="far fa-calendar-check"></i>
+  <Icon name="calendar-check" class="text-gold" />
   最終更新日：<time datetime={buildDateISO}>{buildDateDisplayJa}</time>
 </p>
 
@@ -19,7 +20,7 @@ import { buildDateDisplayJa, buildDateISO } from '../utils/buildDate';
     padding: 14px 12px 0;
     margin: 0 auto;
   }
-  .update-date i {
+  .update-date :global(.fa-icon) {
     color: var(--color-gold);
   }
 </style>

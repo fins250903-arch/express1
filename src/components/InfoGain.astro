@@ -1,5 +1,6 @@
 ---
 import { TRUST } from '../data/trustSignals';
+import Icon from './Icon.astro';
 
 interface Props {
   prefName?: string;
@@ -61,7 +62,7 @@ const { prefName = '関西〜愛知' } = Astro.props;
 
     <div class="info-gain-cta">
       <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="infogain-line-btn">
-        <i class="fab fa-line"></i> まずは金額だけLINEで聞く
+        <Icon name="line" /> まずは金額だけLINEで聞く
       </a>
       <p class="cta-micro">※ しつこい営業なし・見積後の追加請求なし</p>
     </div>

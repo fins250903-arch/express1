@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   prefName: string;
   /** Replaces 「{prefName}全域」 in the default parking line. */
@@ -47,7 +49,7 @@ const icons = ['fa-check-circle', 'fa-check-circle', 'fa-clock', 'fa-home'];
         <ul class="set-plan-items">
           {items.map((item, i) => (
             <li>
-              <i class={`fas ${icons[i] || 'fa-check-circle'}`}></i>
+              <Icon name={icons[i] || 'fa-check-circle'} />
               <span set:html={item} />
             </li>
           ))}

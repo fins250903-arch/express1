@@ -13,6 +13,7 @@ import CasePhotos from '../../components/CasePhotos.astro';
 import { TRUST, organizationSchema } from '../../data/trustSignals';
 import { buildDeadningFaqs, DEADNING_OFFERS } from '../../data/faqs';
 import { buildDateISO } from '../../utils/buildDate';
+import Icon from '../../components/Icon.astro';
 
 const title = '出張デッドニング・車の静音化【特急便】材料持込OK・28,000円〜｜関西〜愛知・沖縄本島';
 const description =
@@ -102,8 +103,7 @@ const jsonLd = {
     {
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'ホーム', item: 'https://abura.site/' },
-        { '@type': 'ListItem', position: 2, name: 'デッドニング出張施工', item: canonical },
+        { '@type': 'ListItem', position: 1, name: 'デッドニング出張施工', item: canonical },
       ],
     },
   ],
@@ -125,10 +125,10 @@ const jsonLd = {
       </ul>
       <div class="hub-cta">
         <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="hub-fv-line">
-          <i class="fab fa-line"></i> LINEで無料見積もり
+          <Icon name="line" /> LINEで無料見積もり
         </a>
         <a href={`tel:${TRUST.phone}`} class="hub-tel" id="hub-fv-tel">
-          <i class="fas fa-phone-alt"></i> {TRUST.phone}
+          <Icon name="phone-alt" /> {TRUST.phone}
         </a>
       </div>
       <p class="hub-micro">※ 車種と気になる音を送るだけ。30分目安で金額の目安をお返しします。</p>
@@ -168,7 +168,7 @@ const jsonLd = {
           {regions.map((r) => (
             <a class="hub-region-card" href={`/deadning/${r.slug}/`}>
               <span>{r.name}</span>
-              <i class="fas fa-chevron-right" aria-hidden="true"></i>
+              <Icon name="chevron-right" />
             </a>
           ))}
         </div>

@@ -1,5 +1,6 @@
 ---
 import { TRUST } from '../data/trustSignals';
+import Icon from './Icon.astro';
 ---
 <section class="mid-cta-section" id="mid-cta">
   <div class="container">
@@ -9,10 +10,10 @@ import { TRUST } from '../data/trustSignals';
     </p>
     <div class="mid-cta-buttons">
       <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="mid-line-btn">
-        <i class="fab fa-line"></i> LINEで無料見積もり・相談
+        <Icon name="line" /> LINEで無料見積もり・相談
       </a>
       <a href={`tel:${TRUST.phone}`} class="btn-cta-secondary" id="mid-tel-btn">
-        <i class="fas fa-phone-alt"></i> {TRUST.phone}<br><small>お急ぎの方はお電話で</small>
+        <Icon name="phone-alt" /> {TRUST.phone}<br><small>お急ぎの方はお電話で</small>
       </a>
     </div>
     <p class="cta-micro" style="color:rgba(255,255,255,0.6)">※ しつこい営業は一切しません。金額だけでもOKです。</p>

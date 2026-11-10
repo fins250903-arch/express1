@@ -5,6 +5,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import CTA from '../../components/CTA.astro';
 import { getCleanSlug, resolveBlogHeroImage } from '../../utils/blogImages';
+import Icon from '../../components/Icon.astro';
 
 // Fetch and sort posts by date or fallback to title
 const posts = await getCollection('blog');
@@ -69,7 +70,7 @@ const formatDate = (dateObj: Date | undefined) => {
             
             <div class="p-5 flex flex-col flex-grow">
               <span class="text-[10px] text-black/50 font-bold block mb-1.5 flex items-center gap-1">
-                <i class="far fa-calendar-alt text-gold"></i> {formatDate(postDate)}
+                <Icon name="calendar-alt" class="text-gold" /> {formatDate(postDate)}
               </span>
               
               <h2 class="text-sm font-black text-primary leading-snug group-hover:text-accent transition-colors flex-grow mb-3">
@@ -87,7 +88,7 @@ const formatDate = (dateObj: Date | undefined) => {
                 class="inline-flex items-center gap-1.5 text-xs text-accent font-black hover:underline mt-auto self-start"
               >
                 <span>続きを読む</span>
-                <i class="fas fa-chevron-right text-[10px] transform group-hover:translate-x-1 transition-transform"></i>
+                <Icon name="chevron-right" class="text-[10px] transform group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </article>

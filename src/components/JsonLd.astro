@@ -19,8 +19,8 @@ import { organizationSchema, SHARE_IMAGE_URL } from '../data/trustSignals';
 
 const { prefName, keywordName, description, canonical, faqItems, offers, priceRange } = Astro.props;
 
-// Re-compile strict breadcrumb items based on URL path
-const isHome = canonical === "https://abura.site/";
+// Re-compile strict breadcrumb items based on URL path.
+// `/` is a permanent redirect, so the visible home is the deadning hub.
 const pathParts = canonical.replace("https://abura.site/", "").split("/").filter(Boolean);
 
 const breadcrumbList = {
@@ -30,7 +30,7 @@ const breadcrumbList = {
       "@type": "ListItem",
       "position": 1,
       "name": "ホーム",
-      "item": "https://abura.site/"
+      "item": "https://abura.site/deadning/"
     },
     ...pathParts.map((part, index) => {
       const currentUrl = `https://abura.site/${pathParts.slice(0, index + 1).join("/")}/`;
