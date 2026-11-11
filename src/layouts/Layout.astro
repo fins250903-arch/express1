@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Icon from '../components/Icon.astro';
 import { SHARE_IMAGE_URL } from '../data/trustSignals';
 
 interface Props {
@@ -62,7 +63,6 @@ const defaultOgImage = SHARE_IMAGE_URL;
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
 
     <!-- Dynamic Schema JSON-LD -->
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
@@ -76,10 +76,10 @@ const defaultOgImage = SHARE_IMAGE_URL;
     <!-- Floating CTA (Mobile Only: 375px - 767px) -->
     <div class="floating-cta shadow-hover" id="floatingCta">
         <a href="https://lin.ee/g4NPYZ3" target="_blank" rel="noopener noreferrer" class="btn-line" id="floating-line-btn">
-            <i class="fab fa-line text-lg"></i> LINEで無料相談
+            <Icon name="line" class="text-lg" /> LINEで無料相談
         </a>
         <a href="tel:070-8428-0866" class="btn-tel" id="floating-tel-btn">
-            <i class="fas fa-phone-alt text-lg animate-bounce"></i> 電話で相談
+            <Icon name="phone-alt" class="text-lg animate-bounce" /> 電話で相談
         </a>
     </div>
 

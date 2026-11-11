@@ -11,7 +11,12 @@ export default defineConfig({
   integrations: [
     sitemap({
       // The inquiry thank-you page is noindex and is not a landing page.
-      filter: (page) => !page.includes('/deadning/thanks'),
+      // `/` is a Vercel 301 to `/deadning/`, not its own content page.
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        if (path === '/' || path === '') return false;
+        return !page.includes('/deadning/thanks');
+      },
       // Advertise the latest deployment date as lastmod for every URL,
       // reinforcing content freshness for search / answer engines (AEO).
       serialize(item) {

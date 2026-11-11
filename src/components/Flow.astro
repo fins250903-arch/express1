@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   flowCity: string;
 }
@@ -14,19 +16,19 @@ const { flowCity } = Astro.props;
         <div class="step-title">LINEで無料見積もり</div>
         <p>車種と施工箇所（フロントドア・リアドア等）をLINEで送るだけ！最短30分でお見積もりをお返しします。</p>
       </div>
-      <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+      <div class="arrow"><Icon name="chevron-down" /></div>
       <div class="step">
         <div class="step-num">STEP 2</div>
         <div class="step-title">日程調整</div>
         <p>お見積もりにご納得いただけたら、ご都合のいい日時を調整します。最短翌日OK！</p>
       </div>
-      <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+      <div class="arrow"><Icon name="chevron-down" /></div>
       <div class="step">
         <div class="step-num">STEP 3</div>
         <div class="step-title">{flowCity}のご自宅で出張施工</div>
         <p>ご指定の場所にお伺い。約2〜3時間作業。あなたは家でくつろいでいるだけでOK！</p>
       </div>
-      <div class="arrow"><i class="fas fa-chevron-down"></i></div>
+      <div class="arrow"><Icon name="chevron-down" /></div>
       <div class="step">
         <div class="step-num">STEP 4</div>
         <div class="step-title">静音効果の確認・作業完了</div>
