@@ -54,16 +54,17 @@ const formatDate = (dateObj: Date | undefined) => {
         
         return (
           <article class="group bg-white rounded-xl overflow-hidden border border-black/10 shadow-card hover:shadow-hover transition-all duration-300 flex flex-col h-full">
-            <a href={`/blog/${cleanSlug}/`} class="block overflow-hidden relative aspect-video bg-[#16213e]/20">
-              {/* Image with fallbacks */}
-              <img 
-                src={coverImage} 
-                alt={post.data.title}
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                onerror="this.src='/images/blog-placeholder.jpg';"
-              />
-              <span class="absolute top-3 left-3 bg-[#1a1a2e]/90 text-gold text-[10px] px-2.5 py-0.5 rounded font-black tracking-wider uppercase border border-gold/20 shadow-md">
+            <a href={`/blog/${cleanSlug}/`} class:list={["block overflow-hidden relative bg-[#16213e]/20", coverImage && "aspect-video"]}>
+              {coverImage && (
+                <img 
+                  src={coverImage} 
+                  alt={post.data.title}
+                  loading="lazy"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  onerror="this.src='/images/blog-placeholder.jpg';"
+                />
+              )}
+              <span class:list={["bg-[#1a1a2e]/90 text-gold text-[10px] px-2.5 py-0.5 rounded font-black tracking-wider uppercase border border-gold/20 shadow-md", coverImage ? "absolute top-3 left-3" : "inline-block m-4"]}>
                 {post.data.categories?.[0] || "施工レポート"}
               </span>
             </a>
