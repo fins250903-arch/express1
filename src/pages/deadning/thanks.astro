@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Icon from '../../components/Icon.astro';
 import { TRUST } from '../../data/trustSignals';
 
 const title = '送信しました｜出張デッドニング 特急便';
@@ -28,10 +27,10 @@ const canonical = 'https://abura.site/deadning/thanks/';
       <p class="thanks-lead">お急ぎの場合は、LINEかお電話でもご相談いただけます。</p>
       <div class="thanks-actions">
         <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary">
-          <Icon name="line" /> LINEで無料見積もり
+          <i class="fab fa-line"></i> LINEで無料見積もり
         </a>
         <a href={`tel:${TRUST.phone}`} class="thanks-tel">
-          <Icon name="phone-alt" /> {TRUST.phone}
+          <i class="fas fa-phone-alt"></i> {TRUST.phone}
         </a>
         <a href="/deadning/" class="thanks-back">デッドニングのページへ戻る</a>
       </div>

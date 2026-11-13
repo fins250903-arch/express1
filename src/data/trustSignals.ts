@@ -28,7 +28,7 @@ export function organizationSchema() {
     '@type': 'Organization',
     '@id': ORGANIZATION_ID,
     name: TRUST.brand,
-    url: 'https://abura.site/deadning/',
+    url: 'https://abura.site/',
     telephone: TRUST.phone,
     description: `${TRUST.years}・${TRUST.annualJobs}の専門員がご自宅駐車場へ直接訪問する出張デッドニング専門サービス。車を預けず目の前で確認でき、材料・機器の持ち込み同時取付、損害保険対応。`,
     areaServed: [

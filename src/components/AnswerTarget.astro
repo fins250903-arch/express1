@@ -1,6 +1,5 @@
 ---
 import { TRUST } from '../data/trustSignals';
-import Icon from './Icon.astro';
 
 interface Props {
   prefName: string;
@@ -50,10 +49,10 @@ const copy = {
       </div>
       <div class="answer-cta">
         <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary" id="answer-line-btn">
-          <Icon name="line" /> LINEで金額だけ聞く（無料）
+          <i class="fab fa-line"></i> LINEで金額だけ聞く（無料）
         </a>
         <a href={`tel:${TRUST.phone}`} class="answer-tel" id="answer-tel-btn">
-          <Icon name="phone-alt" /> {TRUST.phone}
+          <i class="fas fa-phone-alt"></i> {TRUST.phone}
         </a>
       </div>
       <p class="cta-micro">※ 30分目安で見積返信・しつこい営業はしません</p>

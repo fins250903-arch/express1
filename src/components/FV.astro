@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
   prefName: string;
   aioDefinition: string;
@@ -55,7 +53,7 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
   <div class="fv-badges">
     {badges.map((badge, idx) => (
       <span class="badge">
-        <Icon name={idx === 0 ? 'map-marker-alt' : idx === 1 ? 'user-tie' : 'shield-alt'} /> {badge}
+        <i class={`fas ${idx === 0 ? 'fa-map-marker-alt' : idx === 1 ? 'fa-user-tie' : 'fa-shield-alt'}`}></i> {badge}
       </span>
     ))}
   </div>
@@ -75,7 +73,7 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
     <ul class="fv-points">
       {pointsList.map(point => (
         <li>
-          <Icon name="check-circle" class="text-gold mt-1" /> 
+          <i class="fas fa-check-circle text-gold mt-1"></i> 
           <span>
             <strong class="ib">{point.bold}</strong>
             <br class="mobile-only">{point.normal}
@@ -85,7 +83,7 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
     </ul>
     <div class="fv-cta mobile-only">
       <a href="https://lin.ee/g4NPYZ3" target="_blank" rel="noopener noreferrer" class="btn-cta-primary pulse" id="fv-line-btn">
-        <Icon name="line" class="text-lg" /> 今すぐ無料で見積もりする
+        <i class="fab fa-line text-lg"></i> 今すぐ無料で見積もりする
       </a>
       <p class="cta-micro">※ 30分で完了・しつこい営業は一切しません</p>
     </div>
@@ -95,11 +93,11 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
   <div class="fv-pc-conversion">
     <div class="pc-conv-inner">
       <a href="https://lin.ee/g4NPYZ3" target="_blank" rel="noopener noreferrer" class="pc-conv-item line">
-        <Icon name="line" class="pc-conv-icon" /> LINE無料見積もり
+        <i class="fab fa-line pc-conv-icon"></i> LINE無料見積もり
       </a>
       <div class="pc-conv-divider"></div>
       <a href="tel:070-8428-0866" class="pc-conv-item tel">
-        <Icon name="phone-alt" class="pc-conv-icon" /> 電話 070-8428-0866
+        <i class="fas fa-phone-alt pc-conv-icon"></i> 電話 070-8428-0866
       </a>
     </div>
   </div>

@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
   relatedRegions?: { name: string; slug: string; active?: boolean }[];
   currentRegion?: string;
@@ -17,12 +15,12 @@ const regionLinks = relatedRegions.filter((region) => region.slug !== currentReg
       <div class="related-grid fade-in">
         {regionLinks.map((region) => (
           <a href={`/deadning/${region.slug}/`} class="related-card">
-            <div class="related-card-icon"><Icon name="volume-up" /></div>
+            <div class="related-card-icon"><i class="fas fa-volume-up"></i></div>
             <div class="related-card-text">
               <h3>{region.name} デッドニング施工</h3>
               <p>{region.name}全域に対応。左右ドア静音化 2.8万円〜</p>
             </div>
-            <Icon name="chevron-right" class="related-card-arrow" />
+            <i class="fas fa-chevron-right related-card-arrow"></i>
           </a>
         ))}
       </div>

@@ -5,7 +5,6 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import CTA from '../../components/CTA.astro';
 import { resolveBlogHeroImage } from '../../utils/blogImages';
-import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -51,7 +50,7 @@ const formatDate = (dateObj: Date | undefined) => {
       </span>
       {postDate && (
         <span class="text-[11px] text-black/50 font-bold flex items-center gap-1">
-          <Icon name="calendar-alt" class="text-gold" /> {formatDate(postDate)}
+          <i class="far fa-calendar-alt text-gold"></i> {formatDate(postDate)}
         </span>
       )}
     </div>
