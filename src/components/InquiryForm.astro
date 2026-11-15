@@ -5,11 +5,13 @@
  * `_captcha=false` keeps the visitor on our thank-you page (dataLayer) instead of
  * FormSubmit's intermediate captcha. Spam is filtered by the `_honey` honeypot.
  * Set `_captcha` to "true" if the inbox needs the extra captcha step.
+ * `_replyto` is copied from 返信用メールアドレス on submit (Reply-To header).
+ * The visible field keeps the Japanese name so that label shows in the email.
  */
 const nextUrl = 'https://abura.site/deadning/thanks/';
 ---
 
-<section class="inquiry-section" id="inquiry" aria-labelledby="inquiry-heading">
+<section class="inquiry-section" id="contact-form" aria-labelledby="inquiry-heading">
   <div class="container">
     <h2 class="section-title" id="inquiry-heading">フォームで相談する</h2>
     <p class="inquiry-lead">
@@ -26,6 +28,8 @@ const nextUrl = 'https://abura.site/deadning/thanks/';
       <input type="hidden" name="_template" value="box" />
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_next" value={nextUrl} />
+      <!-- Filled from 返信用メールアドレス on submit so Reply goes to the customer. -->
+      <input type="hidden" name="_replyto" value="" disabled />
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
       <div class="inquiry-field">
@@ -73,6 +77,21 @@ const nextUrl = 'https://abura.site/deadning/thanks/';
       </div>
 
       <div class="inquiry-field">
+        <label for="inquiry-email">返信用メールアドレス<span class="inquiry-req">必須</span></label>
+        <input
+          id="inquiry-email"
+          name="返信用メールアドレス"
+          type="email"
+          required
+          autocomplete="email"
+          inputmode="email"
+          maxlength="254"
+          spellcheck="false"
+          placeholder="yamada@example.com"
+        />
+      </div>
+
+      <div class="inquiry-field">
         <label for="inquiry-message">相談内容<span class="inquiry-req">必須</span></label>
         <textarea
           id="inquiry-message"
@@ -90,9 +109,74 @@ const nextUrl = 'https://abura.site/deadning/thanks/';
   </div>
 </section>
 
+<script>
+  // FormSubmit uses `_replyto` for the email Reply-To header. The visible
+  // field keeps a Japanese name so that label appears in the message body.
+  document.querySelectorAll('form.inquiry-form').forEach((node) => {
+    if (!(node instanceof HTMLFormElement)) return;
+    const email = node.elements.namedItem('返信用メールアドレス');
+    const replyTo = node.elements.namedItem('_replyto');
+    if (!(email instanceof HTMLInputElement) || !(replyTo instanceof HTMLInputElement)) return;
+
+    const sync = () => {
+      const value = email.value.trim();
+      replyTo.value = value;
+      // An empty `_replyto` would override FormSubmit's reply address.
+      replyTo.disabled = value.length === 0;
+    };
+
+    email.addEventListener('input', sync);
+    node.addEventListener('submit', sync);
+  });
+
+  const contact = document.getElementById('contact-form');
+  if (contact) {
+    // Gallery images are lazy. A smooth jump from the hero can finish before
+    // those images expand, leaving the form below the fold. Re-align until
+    // the layout settles.
+    const alignContact = (behavior: ScrollBehavior) => {
+      const delta = contact.getBoundingClientRect().top - 16;
+      if (Math.abs(delta) > 24) {
+        window.scrollBy({ top: delta, behavior });
+      }
+    };
+
+    const followLayout = () => {
+      let lastY = -1;
+      let stable = 0;
+      let ticks = 0;
+      const timer = window.setInterval(() => {
+        ticks += 1;
+        const y = window.scrollY;
+        if (y === lastY) stable += 1;
+        else stable = 0;
+        lastY = y;
+        const misaligned = Math.abs(contact.getBoundingClientRect().top - 16) > 24;
+        // Wait until the smooth scroll stops, then correct if lazy images shifted the form.
+        if (misaligned && (stable >= 2 || ticks > 12)) {
+          alignContact('auto');
+          stable = 0;
+        }
+        if ((!misaligned && stable >= 2) || ticks > 20) window.clearInterval(timer);
+      }, 150);
+    };
+
+    document.querySelectorAll('a[href="#contact-form"]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        history.pushState(null, '', '#contact-form');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        alignContact(reduce ? 'auto' : 'smooth');
+        followLayout();
+      });
+    });
+  }
+</script>
+
 <style>
   .inquiry-section {
     background: #f7f8fb;
+    scroll-margin-top: 16px;
   }
   .inquiry-lead {
     text-align: center;
