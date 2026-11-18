@@ -130,6 +130,9 @@ const jsonLd = {
         <a href={`tel:${TRUST.phone}`} class="hub-tel" id="hub-fv-tel">
           <Icon name="phone-alt" /> {TRUST.phone}
         </a>
+        <a href="#contact-form" class="hub-form" id="hub-fv-form">
+          <Icon name="envelope" /> フォームで問い合わせる
+        </a>
       </div>
       <p class="hub-micro">※ 車種と気になる音を送るだけ。30分目安で金額の目安をお返しします。</p>
     </div>
@@ -184,8 +187,8 @@ const jsonLd = {
     </section>
 
     <MidCTA />
-    <InquiryForm />
     <FAQ prefName="関西〜愛知" faqItems={faqItems} initiallyOpen={3} />
+    <InquiryForm />
   </main>
   <Footer />
 </Layout>
@@ -234,7 +237,8 @@ const jsonLd = {
     display: grid;
     gap: 10px;
   }
-  .hub-tel {
+  .hub-tel,
+  .hub-form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -244,6 +248,11 @@ const jsonLd = {
     border: 2px solid var(--color-gold);
     color: var(--color-gold);
     font-weight: 900;
+    min-height: 48px;
+  }
+  .hub-form:hover {
+    background: var(--color-gold);
+    color: var(--color-primary);
   }
   .hub-micro {
     margin-top: 10px;
@@ -346,6 +355,9 @@ const jsonLd = {
     .hub-cta {
       grid-template-columns: 1.4fr 1fr;
       align-items: center;
+    }
+    .hub-form {
+      grid-column: 1 / -1;
     }
   }
 </style>
