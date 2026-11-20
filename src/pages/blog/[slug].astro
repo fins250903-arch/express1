@@ -6,6 +6,7 @@ import Footer from '../../components/Footer.astro';
 import CTA from '../../components/CTA.astro';
 import { resolveBlogHeroImage } from '../../utils/blogImages';
 import Icon from '../../components/Icon.astro';
+import { ORGANIZATION_ID, SHARE_IMAGE_URL, TRUST, organizationSchema } from '../../data/trustSignals';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -26,6 +27,7 @@ const { Content } = await render(post);
 const postDate = post.data.pubDate || post.data.date;
 const coverImage = resolveBlogHeroImage(post);
 const resolvedCanonical = `https://abura.site/blog/${slug}/`;
+const description = post.data.description || `${post.data.title}の出張デッドニング施工事例を詳しくご紹介します。`;
 
 // Formatting Date helper
 const formatDate = (dateObj: Date | undefined) => {
@@ -35,11 +37,76 @@ const formatDate = (dateObj: Date | undefined) => {
   const d = String(dateObj.getDate()).padStart(2, '0');
   return `${y}.${m}.${d}`;
 };
+
+// Schema dates stay on the UTC calendar day stored in frontmatter (T00:00:00.000Z).
+const toIsoDate = (dateObj: Date) => {
+  const y = dateObj.getUTCFullYear();
+  const m = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(dateObj.getUTCDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+};
+
+const publishedIso = postDate ? toIsoDate(postDate) : undefined;
+// The blog collection has pubDate/date only — no separate updated field.
+const modifiedIso = publishedIso;
+
+const imageUrl = coverImage
+  ? (coverImage.startsWith('http') ? coverImage : `https://abura.site${coverImage.startsWith('/') ? coverImage : `/${coverImage}`}`)
+  : SHARE_IMAGE_URL;
+
+const authorPublisher = {
+  '@type': 'Organization',
+  '@id': ORGANIZATION_ID,
+  name: TRUST.brand,
+  url: 'https://abura.site/deadning/',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Article', 'BlogPosting'],
+      headline: post.data.title,
+      description,
+      ...(publishedIso ? { datePublished: publishedIso, dateModified: modifiedIso } : {}),
+      author: authorPublisher,
+      publisher: authorPublisher,
+      image: imageUrl,
+      mainEntityOfPage: resolvedCanonical,
+    },
+    organizationSchema(),
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'デッドニング',
+          item: 'https://abura.site/deadning/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'ブログ',
+          item: 'https://abura.site/blog/',
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: post.data.title,
+          item: resolvedCanonical,
+        },
+      ],
+    },
+  ],
+};
 ---
 <Layout 
   title={`${post.data.title}【特急便】`}
-  description={post.data.description || `${post.data.title}の出張デッドニング施工事例を詳しくご紹介します。`}
+  description={description}
   canonical={resolvedCanonical}
+  ogType="article"
+  jsonLd={jsonLd}
 >
   <Header />
 

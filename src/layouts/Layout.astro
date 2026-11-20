@@ -11,10 +11,12 @@ interface Props {
   keyword?: string;
   jsonLd?: any;
   noindex?: boolean;
+  ogType?: 'article' | 'website';
 }
 
-const { title, description, canonical, region, keyword, jsonLd, noindex = false } = Astro.props;
+const { title, description, canonical, region, keyword, jsonLd, noindex = false, ogType } = Astro.props;
 const defaultOgImage = SHARE_IMAGE_URL;
+const resolvedOgType = ogType ?? (keyword ? 'article' : 'website');
 ---
 
 <!DOCTYPE html>
@@ -39,7 +41,7 @@ const defaultOgImage = SHARE_IMAGE_URL;
 		<link rel="canonical" href={canonical} />
     
     <!-- Open Graph (OGP) -->
-    <meta property="og:type" content={keyword ? "article" : "website"} />
+    <meta property="og:type" content={resolvedOgType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
