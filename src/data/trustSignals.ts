@@ -1,3 +1,20 @@
+/**
+ * One wording for every page. LINE and the inquiry form accept messages
+ * anytime; the phone is answered only during these hours.
+ * `summary` is built from the two halves so the hero and the footer cannot drift.
+ */
+const lineForm = 'LINE・フォームは24時間受付';
+const phoneHours = 'お電話は9:00〜19:00';
+const phoneNote = '土日祝も対応、不定休';
+
+export const RECEPTION = {
+  lineForm,
+  phoneHours,
+  phoneNote,
+  summary: `${lineForm}／${phoneHours}`,
+  summaryWithNote: `${lineForm}／${phoneHours}（${phoneNote}）`,
+} as const;
+
 /** Shared trust / Information Gain signals for AIO + CVR */
 export const TRUST = {
   brand: '車の出張パーツ取付 特急便',
@@ -11,7 +28,7 @@ export const TRUST = {
   lineUrl: 'https://lin.ee/g4NPYZ3',
   areas:
     '大阪府・兵庫県・京都府・滋賀県・奈良県・和歌山県・三重県・愛知県',
-  hours: '9:00〜19:00（土日祝も対応、不定休）',
+  hours: RECEPTION.summaryWithNote,
 } as const;
 
 export const ORGANIZATION_ID = 'https://abura.site/#organization';

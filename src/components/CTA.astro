@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { RECEPTION } from '../data/trustSignals';
 
 interface Props {
   title?: string;
@@ -84,7 +85,7 @@ const {
     </div>
 
     <p class="text-[10px] text-white/40 text-center mt-5 leading-relaxed">
-      営業時間：9:00〜19:00（不定休）※LINEは24時間受付中
+      {RECEPTION.summaryWithNote}
     </p>
   </div>
 </section>

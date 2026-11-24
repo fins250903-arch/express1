@@ -1,14 +1,15 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Icon from '../../components/Icon.astro';
-import { TRUST } from '../../data/trustSignals';
+import { RECEPTION, TRUST } from '../../data/trustSignals';
 
-const title = '送信しました｜出張デッドニング 特急便';
-const description = 'デッドニングのお問い合わせを受け付けました。担当者から折り返します。';
+const title = 'お問い合わせありがとうございました｜出張デッドニング 特急便';
+const description = 'デッドニングのお問い合わせを受け付けました。担当者より折り返しご連絡いたします。';
 const canonical = 'https://abura.site/deadning/thanks/';
 ---
 
 <Layout title={title} description={description} canonical={canonical} noindex={true}>
+  <!-- Fired on load so GTM can count a form conversion. The container tag itself is in Layout. -->
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -21,17 +22,30 @@ const canonical = 'https://abura.site/deadning/thanks/';
   <main class="thanks">
     <div class="container">
       <p class="thanks-brand">{TRUST.brand}</p>
-      <h1>送信しました</h1>
+      <h1>お問い合わせありがとうございました</h1>
       <p class="thanks-lead">
-        お問い合わせを受け付けました。内容を確認し、担当者からお電話またはメッセージでご連絡します。
+        お問い合わせを受け付けました。担当者より折り返しご連絡いたします。
       </p>
       <p class="thanks-lead">お急ぎの場合は、LINEかお電話でもご相談いただけます。</p>
+      <p class="thanks-hours">{RECEPTION.summary}</p>
       <div class="thanks-actions">
-        <a href={TRUST.lineUrl} target="_blank" rel="noopener noreferrer" class="btn-cta-primary">
+        <a
+          href={TRUST.lineUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-cta-primary"
+          id="thanks-line-btn"
+          data-gtm="thanks-line"
+        >
           <Icon name="line" /> LINEで無料見積もり
         </a>
-        <a href={`tel:${TRUST.phone}`} class="thanks-tel">
-          <Icon name="phone-alt" /> {TRUST.phone}
+        <a
+          href={`tel:${TRUST.phone}`}
+          class="thanks-tel"
+          id="thanks-tel-btn"
+          data-gtm="thanks-tel"
+        >
+          <Icon name="phone-alt" /> 電話で相談（{TRUST.phone}）
         </a>
         <a href="/deadning/" class="thanks-back">デッドニングのページへ戻る</a>
       </div>
@@ -68,6 +82,13 @@ const canonical = 'https://abura.site/deadning/thanks/';
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.9);
     margin-bottom: 12px;
+  }
+  .thanks-hours {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--color-gold);
+    font-weight: 800;
+    margin: 4px 0 0;
   }
   .thanks-actions {
     display: grid;

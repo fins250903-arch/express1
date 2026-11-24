@@ -10,7 +10,7 @@ import HubConcerns from '../../components/HubConcerns.astro';
 import InfoGain from '../../components/InfoGain.astro';
 import UpdateDate from '../../components/UpdateDate.astro';
 import CasePhotos from '../../components/CasePhotos.astro';
-import { TRUST, organizationSchema } from '../../data/trustSignals';
+import { RECEPTION, TRUST, organizationSchema } from '../../data/trustSignals';
 import { buildDeadningFaqs, DEADNING_OFFERS } from '../../data/faqs';
 import { buildDateISO } from '../../utils/buildDate';
 import Icon from '../../components/Icon.astro';
@@ -135,6 +135,7 @@ const jsonLd = {
         </a>
       </div>
       <p class="hub-micro">※ 車種と気になる音を送るだけ。30分目安で金額の目安をお返しします。</p>
+      <p class="hub-hours">{RECEPTION.summaryWithNote}</p>
     </div>
   </header>
 
@@ -260,6 +261,14 @@ const jsonLd = {
     color: rgba(255, 255, 255, 0.65);
     text-align: center;
     line-height: 1.5;
+  }
+  .hub-hours {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--color-gold);
+    text-align: center;
+    line-height: 1.6;
   }
   .hub-section {
     padding: 40px 0;
