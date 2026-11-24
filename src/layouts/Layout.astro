@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
-import { SHARE_IMAGE_URL } from '../data/trustSignals';
+import { SHARE_IMAGE_URL, TRUST } from '../data/trustSignals';
 
 interface Props {
 	title: string;
@@ -75,78 +75,114 @@ const resolvedOgType = ogType ?? (keyword ? 'article' : 'website');
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <!-- Floating CTA (Mobile Only: 375px - 767px) -->
-    <div class="floating-cta shadow-hover" id="floatingCta">
-        <a href="https://lin.ee/g4NPYZ3" target="_blank" rel="noopener noreferrer" class="btn-line" id="floating-line-btn">
-            <Icon name="line" class="text-lg" /> LINEで無料相談
+    <!--
+      Mobile fixed bar (max-width: 767px, the site's existing phone/desktop split).
+      Desktop keeps the in-page LINE buttons and does not show this bar.
+    -->
+    <nav class="floating-cta mobile-bottom-bar" id="mobile-bottom-bar" aria-label="お問い合わせ">
+        <a
+          href={TRUST.lineUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mobile-bar-btn mobile-bar-btn--line"
+          id="mobile-bar-line"
+          data-gtm="mobile-bar-line"
+        >
+            <Icon name="line" class="mobile-bar-icon" />
+            <span>LINE</span>
         </a>
-        <a href="tel:070-8428-0866" class="btn-tel" id="floating-tel-btn">
-            <Icon name="phone-alt" class="text-lg animate-bounce" /> 電話で相談
+        <a
+          href={`tel:${TRUST.phone}`}
+          class="mobile-bar-btn mobile-bar-btn--tel"
+          id="mobile-bar-tel"
+          data-gtm="mobile-bar-tel"
+        >
+            <Icon name="phone-alt" class="mobile-bar-icon" />
+            <span>電話</span>
         </a>
-    </div>
+        <a
+          href="#contact-form"
+          class="mobile-bar-btn mobile-bar-btn--form"
+          id="mobile-bar-form"
+          data-gtm="mobile-bar-form"
+        >
+            <Icon name="envelope" class="mobile-bar-icon" />
+            <span>フォーム</span>
+        </a>
+    </nav>
 
 		<slot />
 
     <style>
-      /* Layout specific custom styles (Ensuring zero layout shifts) */
+      /* Mobile bottom bar. Hidden from 768px up so desktop stays as it is. */
       .floating-cta {
           position: fixed;
-          bottom: -100px; /* Initially hidden below viewport to avoid CLS */
+          bottom: 0;
           left: 0;
           right: 0;
           z-index: 9999;
           display: none;
-          gap: 10px;
-          padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+          gap: 8px;
+          padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
           background: rgba(26, 26, 46, 0.96);
           backdrop-filter: blur(12px);
           border-top: 1px solid rgba(212, 175, 55, 0.3);
-          transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       }
-      
+
       @media (max-width: 767px) {
-          .floating-cta { 
-              display: flex; 
+          .floating-cta {
+              display: flex;
           }
-          /* Ensure body content is not covered by floating CTA */
-          body { 
-              padding-bottom: 75px !important; 
-          } 
+          /* Keep the footer (and the last form fields) above the bar. */
+          body {
+              padding-bottom: calc(84px + env(safe-area-inset-bottom)) !important;
+          }
       }
-      
-      .floating-cta.show { 
-          bottom: 0; 
-      }
-      
+
       .floating-cta a {
-          flex: 1;
+          flex: 1 1 0;
+          min-width: 0;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          padding: 14px 10px;
-          border-radius: 9999px;
+          gap: 2px;
+          min-height: 56px;
+          padding: 8px 4px;
+          border-radius: 12px;
           font-weight: 900;
-          font-size: 14px;
+          font-size: 12px;
+          line-height: 1.2;
           color: #ffffff;
-          transition: all 0.2s ease;
+          text-align: center;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
-      
-      .btn-line { 
-          background-color: #06c755; 
+
+      .mobile-bar-icon {
+          font-size: 18px;
+          line-height: 1;
       }
-      .btn-line:hover { 
-          background-color: #05a847; 
-          transform: translateY(-2px); 
+
+      .mobile-bar-btn--line {
+          background-color: #06c755;
       }
-      
-      .btn-tel { 
-          background-color: #e94560; 
+      .mobile-bar-btn--line:hover {
+          background-color: #05a847;
       }
-      .btn-tel:hover { 
-          background-color: #c73850; 
-          transform: translateY(-2px); 
+
+      .mobile-bar-btn--tel {
+          background-color: #e94560;
+      }
+      .mobile-bar-btn--tel:hover {
+          background-color: #c73850;
+      }
+
+      .floating-cta a.mobile-bar-btn--form {
+          background-color: #d4af37;
+          color: #1a1a2e;
+      }
+      .floating-cta a.mobile-bar-btn--form:hover {
+          background-color: #e6c65c;
       }
     </style>
 
@@ -162,16 +198,10 @@ const resolvedOgType = ogType ?? (keyword ? 'article' : 'website');
 
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-      // Show/Hide Floating CTA bar based on scroll position smoothly
-      const floatingCta = document.getElementById('floatingCta');
-      if (floatingCta) {
-          window.addEventListener('scroll', () => {
-              if (window.scrollY > 250) {
-                  floatingCta.classList.add('show');
-              } else {
-                  floatingCta.classList.remove('show');
-              }
-          }, { passive: true });
+      // Pages without an inquiry form (blog, thanks) still need a place to land.
+      const mobileFormButton = document.getElementById('mobile-bar-form');
+      if (mobileFormButton && !document.getElementById('contact-form')) {
+          mobileFormButton.setAttribute('href', '/deadning/#contact-form');
       }
 
       // Legacy button-based FAQ accordion only (native <details> FAQs need no JS)

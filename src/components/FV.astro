@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import { RECEPTION } from '../data/trustSignals';
 
 interface Props {
   prefName: string;
@@ -49,7 +50,8 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
     <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
   </div>
   <div class="fv-top-notif">
-    <span class="ib">３６５日２４時間受付中</span><br>
+    <span class="ib">{RECEPTION.lineForm}</span><br>
+    <span class="ib">{RECEPTION.phoneHours}</span><br>
     <span class="ib">”出張“車内デッドニング業者</span>
   </div>
   <div class="fv-badges">
@@ -119,8 +121,9 @@ const coverageBadgeText = areaLabel ? `${areaLabel}対応` : `${prefName}全域�
     color: var(--color-gold);
     font-weight: 900;
     margin-bottom: 10px;
-    font-size: 14px;
-    letter-spacing: 0.1em;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    line-height: 1.55;
   }
   .highlight-yellow {
     background: linear-gradient(transparent 60%, rgba(255, 255, 0, 0.4) 60%);

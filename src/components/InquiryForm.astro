@@ -8,6 +8,9 @@
  * `_replyto` is copied from 返信用メールアドレス on submit (Reply-To header).
  * The visible field keeps the Japanese name so that label shows in the email.
  */
+import { RECEPTION } from '../data/trustSignals';
+
+// Absolute URL so FormSubmit always returns to this site, not a relative path.
 const nextUrl = 'https://abura.site/deadning/thanks/';
 ---
 
@@ -104,7 +107,7 @@ const nextUrl = 'https://abura.site/deadning/thanks/';
       </div>
 
       <button type="submit" class="inquiry-submit">この内容で送信する</button>
-      <p class="inquiry-note">送信後、確認画面に移動します。営業時間内に折り返します。</p>
+      <p class="inquiry-note">{RECEPTION.lineForm}です。送信後、確認画面に移動します。担当者より折り返しご連絡いたします。</p>
     </form>
   </div>
 </section>
