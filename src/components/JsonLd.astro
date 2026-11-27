@@ -21,7 +21,30 @@ const { prefName, keywordName, description, canonical, faqItems, offers, priceRa
 
 // Re-compile strict breadcrumb items based on URL path.
 // `/` is a permanent redirect, so the visible home is the deadning hub.
+// Area x menu pages are /{area}/{keyword}/. There is no page at /{area}/ (404).
+// The eight prefecture hubs that these pages link up to are /deadning/{area}/.
+const AREA_HUB_SLUGS = new Set([
+  "osaka",
+  "hyogo",
+  "wakayama",
+  "nara",
+  "mie",
+  "kyoto",
+  "shiga",
+  "aichi",
+]);
+
 const pathParts = canonical.replace("https://abura.site/", "").split("/").filter(Boolean);
+
+function breadcrumbUrl(part: string, index: number): string {
+  if (index === 0) {
+    if (AREA_HUB_SLUGS.has(part)) {
+      return `https://abura.site/deadning/${part}/`;
+    }
+    return "https://abura.site/deadning/";
+  }
+  return `https://abura.site/${pathParts.slice(0, index + 1).join("/")}/`;
+}
 
 const breadcrumbList = {
   "@type": "BreadcrumbList",
@@ -33,7 +56,6 @@ const breadcrumbList = {
       "item": "https://abura.site/deadning/"
     },
     ...pathParts.map((part, index) => {
-      const currentUrl = `https://abura.site/${pathParts.slice(0, index + 1).join("/")}/`;
       let name = part;
       if (index === 0) name = `${prefName}施工エリア`;
       if (index === 1) name = keywordName;
@@ -41,7 +63,7 @@ const breadcrumbList = {
         "@type": "ListItem",
         "position": index + 2,
         "name": name,
-        "item": currentUrl
+        "item": breadcrumbUrl(part, index)
       };
     })
   ]
